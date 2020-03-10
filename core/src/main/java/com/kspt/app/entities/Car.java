@@ -16,15 +16,17 @@ import javax.persistence.Table;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Car")
 @EqualsAndHashCode(callSuper = true)
 public class Car extends AbstractEntity{
-    @Column(name = "car_id", nullable = false)
-    private Long carId;
+
     @Column(name = "number", nullable = false)
     private int number;
+
     @Column(name = "model", nullable = false)
     private CarModels model;
+
     @Column(name = "color", nullable = false)
     private Color color;
 

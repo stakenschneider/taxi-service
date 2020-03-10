@@ -1,6 +1,8 @@
-package com.kspt.app.entities;
+package com.kspt.app.entities.actor;
 
-import com.kspt.app.configuration.Constants.PersonType;
+import com.kspt.app.entities.AbstractEntity;
+import com.kspt.app.entities.Credentials;
+import com.kspt.app.entities.Passport;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,19 +18,26 @@ import javax.persistence.*;
 @AllArgsConstructor
 @MappedSuperclass
 @EqualsAndHashCode(callSuper = true)
-public abstract class Person extends AbstractEntity{
+public abstract class Person extends AbstractEntity {
     @Column(name = "first_name", nullable = false)
     protected String firstName;
+
     @Column(name = "second_name", nullable = false)
     protected String secondName;
-    @Column(name = "person_type", nullable = false)
-    protected PersonType personType;
-    @Column(name = "passport_code", nullable = false)
-    protected int passportCode;
+
+//    @Column(name = "person_type", nullable = false)
+//    protected PersonType personType;
+//    @Column(name = "passport_code", nullable = false)
+//    protected int passportCode;
+
     @Column(name = "phone_number", nullable = false)
-    protected int phoneNumber;
+    protected String phoneNumber;
 
     @JoinColumn(name = "credentials_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Credentials credentials;
+
+    @OneToOne (optional=true, cascade=CascadeType.ALL)
+    @JoinColumn (name="passport_id")
+    private Passport passport;
 }

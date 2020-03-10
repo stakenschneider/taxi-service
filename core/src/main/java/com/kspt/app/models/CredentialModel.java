@@ -16,9 +16,9 @@ public class CredentialModel {
     private String login;
     private String password;
 
-//    public CredentialModel(@NotNull final String login,
-//                       @NotNull final String password) {
-//        this.login = login;
-//        this.password = password;
-//    }
+    public CredentialModel(@NotNull final String login,
+                       @NotNull final String password) {
+        this.login = login;
+        this.password = password;
+    }
 }

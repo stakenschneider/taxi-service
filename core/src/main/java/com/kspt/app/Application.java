@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
+/**
+ * Created by Masha on 28.02.2020
+ */
 @EnableJpaAuditing
 @EntityScan(basePackageClasses = {
         Application.class,

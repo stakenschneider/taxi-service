@@ -1,6 +1,6 @@
 package com.kspt.app.repository;
 
-import com.kspt.app.entities.Client;
+import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.Credentials;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;

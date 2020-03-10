@@ -1,6 +1,7 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.models.CredentialModel;
+import com.kspt.app.models.PersonResponse;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonController {
 
-    @Autowired
     private PersonService service;
 
-    @PostMapping("/registration")
-    public void registration(@RequestBody RegistrationModel registrationModel) {
-        service.register(registrationModel);
+    @PostMapping("/signUp")
+    public PersonResponse signUp(@RequestBody RegistrationModel registrationModel) {
+        return service.signUp(registrationModel);
     }
 
-    @PostMapping("/login")
-    public void login(@RequestBody CredentialModel credentialModel) {
-
+    @PostMapping("/signIn")
+    public PersonResponse signIn(@RequestBody CredentialModel credentialModel) {
+        return service.signIn(credentialModel);
     }
 
+    @PostMapping("signOut")
+    public boolean signOut() {
+        return true;
+    }
 
 }

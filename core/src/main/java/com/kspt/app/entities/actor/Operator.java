@@ -1,6 +1,5 @@
-package com.kspt.app.entities;
+package com.kspt.app.entities.actor;
 
-import com.kspt.app.configuration.Constants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,13 +19,9 @@ import javax.persistence.Table;
 public class Operator extends Person {
     public Operator( @NotNull final String firstName,
                    @NotNull final String secondName,
-                   @NotNull final Constants.PersonType personType,
-                   final int passportCode,
-                   final int phoneNumber) {
+                   final String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.personType = personType;
-        this.passportCode = passportCode;
         this.phoneNumber = phoneNumber;
     }
 }

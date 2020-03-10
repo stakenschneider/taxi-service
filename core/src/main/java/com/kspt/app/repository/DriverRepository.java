@@ -1,7 +1,7 @@
 package com.kspt.app.repository;
 
 import com.kspt.app.entities.Credentials;
-import com.kspt.app.entities.Driver;
+import com.kspt.app.entities.actor.Driver;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,6 @@
-package com.kspt.app.entities;
-import com.kspt.app.configuration.Constants;
+package com.kspt.app.entities.actor;
+
+import com.kspt.app.entities.Car;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,23 +16,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "Driver")
 @EqualsAndHashCode(callSuper = true)
-public class Driver extends Person  {
-    @JoinColumn(name = "car_id")
+public class Driver extends Person {
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn (name="car_id")
     private Car car;
-    @JoinColumn(name = "trip_id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Trip trip;
+
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    private Trip trip;
 
     public Driver( @NotNull final String firstName,
                    @NotNull final String secondName,
-                   @NotNull final Constants.PersonType personType,
-                   final int passportCode,
-                   final int phoneNumber) {
+                   final String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
-        this.personType = personType;
-        this.passportCode = passportCode;
         this.phoneNumber = phoneNumber;
     }
 }

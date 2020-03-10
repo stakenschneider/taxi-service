@@ -14,7 +14,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public final class Credentials extends AbstractEntity {
 
-    @Column(name = "login")
+    @Column(unique = true, name = "login")
     private String login;
 
     @Column(name = "password")

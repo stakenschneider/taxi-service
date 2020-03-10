@@ -17,12 +17,13 @@ import javax.persistence.Table;
 @Table(name = "Address")
 @EqualsAndHashCode(callSuper = true)
 class Address extends AbstractEntity {
-    @Column(name = "address_id")
-    private Long AddressId;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "street")
     private String street;
+
     @Column(name = "number_house")
     private int numberHouse;
 

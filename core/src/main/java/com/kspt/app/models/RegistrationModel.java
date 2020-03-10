@@ -15,6 +15,5 @@ public class RegistrationModel extends CredentialModel{
     protected String firstName;
     protected String secondName;
     protected PersonType personType;
-    protected int passportCode;
-    protected int phoneNumber;
+    protected String phoneNumber;
 }

@@ -5,13 +5,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by Masha on 10.03.2020
+ * Created by Masha on 11.03.2020
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
-public class PassportModel {
-    private int series;
-    private int number;
-
+public class TripModelRequest {
+    private AddressModel startAddress;
+    private AddressModel finishAddress;
 }

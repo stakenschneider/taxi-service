@@ -1,7 +1,7 @@
 package com.kspt.app.entities;
+
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
-
 import javax.persistence.*;
 
 /**
@@ -25,5 +25,4 @@ public final class Credentials extends AbstractEntity {
         this.login = login;
         this.password = password;
     }
-
 }

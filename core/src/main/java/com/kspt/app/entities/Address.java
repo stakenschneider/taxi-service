@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "Address")
 @EqualsAndHashCode(callSuper = true)
-class Address extends AbstractEntity {
+public class Address extends AbstractEntity {
 
     @Column(name = "city")
     private String city;
@@ -32,6 +32,4 @@ class Address extends AbstractEntity {
         this.street = street;
         this.numberHouse = numberHouse;
     }
-
 }
-

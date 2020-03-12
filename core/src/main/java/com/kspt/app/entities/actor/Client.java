@@ -25,5 +25,4 @@ public class Client extends Person {
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
     }
-
 }

@@ -14,22 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class PersonController {
-
+    @Autowired
     private PersonService service;
 
     @PostMapping("/signUp")
-    public PersonResponse signUp(@RequestBody RegistrationModel registrationModel) {
-        return service.signUp(registrationModel);
+    public PersonResponse signUp(@RequestBody RegistrationModel model) {
+        return service.signUp(model);
     }
 
     @PostMapping("/signIn")
-    public PersonResponse signIn(@RequestBody CredentialModel credentialModel) {
-        return service.signIn(credentialModel);
+    public PersonResponse signIn(@RequestBody CredentialModel credential) {
+        return service.signIn(credential);
     }
 
     @PostMapping("signOut")
-    public boolean signOut() {
-        return true;
-    }
-
+    public boolean signOut() { return service.signOut();}
 }

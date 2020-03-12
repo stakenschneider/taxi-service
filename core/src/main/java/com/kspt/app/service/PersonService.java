@@ -3,14 +3,15 @@ package com.kspt.app.service;
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
-import com.kspt.app.entities.actor.Operator;
+import com.kspt.app.entities.actor.Admin;
+import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.CredentialModel;
-import com.kspt.app.models.PersonResponse;
 import com.kspt.app.models.RegistrationModel;
+import com.kspt.app.models.ResponseOrMessage;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.CredentialsRepository;
 import com.kspt.app.repository.DriverRepository;
-import com.kspt.app.repository.OperatorRepository;
+import com.kspt.app.repository.AdminRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,20 +22,20 @@ public class PersonService {
 
     private ClientRepository clientRepository;
     private DriverRepository driverRepository;
-    private OperatorRepository operatorRepository;
+    private AdminRepository adminRepository;
     private final CredentialsRepository credentialsRepository;
 
     PersonService(ClientRepository clientRepository,
                   DriverRepository driverRepository,
-                  OperatorRepository operatorRepository,
+                  AdminRepository adminRepository,
                   CredentialsRepository credentialsRepository) {
         this.clientRepository = clientRepository;
         this.driverRepository = driverRepository;
-        this.operatorRepository = operatorRepository;
+        this.adminRepository = adminRepository;
         this.credentialsRepository = credentialsRepository;
     }
 
-    public PersonResponse signUp(RegistrationModel model) {
+    public ResponseOrMessage<Person> signUp(RegistrationModel model) {
         final Credentials credentials = new Credentials(model.getLogin(), model.getPassword());
 
         try {
@@ -45,7 +46,7 @@ public class PersonService {
                             model.getPhoneNumber());
                     client.setCredentials(credentials);
                     clientRepository.save(client);
-                    return new PersonResponse(client);
+                    return new ResponseOrMessage(client);
                 }
 
                 case DRIVER: {
@@ -53,24 +54,24 @@ public class PersonService {
                             model.getPhoneNumber());
                     driver.setCredentials(credentials);
                     driverRepository.save(driver);
-                    return new PersonResponse(driver);
+                    return new ResponseOrMessage(driver);
                 }
                 case OPERATOR: {
-                    Operator operator = new Operator(model.getFirstName(), model.getSecondName(),
+                    Admin admin = new Admin(model.getFirstName(), model.getSecondName(),
                             model.getPhoneNumber());
-                    operator.setCredentials(credentials);
-                    operatorRepository.save(operator);
-                    return new PersonResponse(operator);
+                    admin.setCredentials(credentials);
+                    adminRepository.save(admin);
+                    return new ResponseOrMessage(admin);
                 }
                 default:
                     return null;
             }
         } catch (Exception e) {
-            return new PersonResponse("Login already exist");
+            return new ResponseOrMessage("Login already exist");
         }
     }
 
-    public PersonResponse signIn(CredentialModel model) {
+    public ResponseOrMessage<Person> signIn(CredentialModel model) {
         final Credentials credentials = credentialsRepository.findByLoginAndPassword(
                 model.getLogin(),
                 model.getPassword()).orElse(null);
@@ -87,10 +88,10 @@ public class PersonService {
 
         //TODO Polymorphic Queries
         if (credentials != null)
-            return new PersonResponse(clientRepository.findByCredentials(credentials).orElseGet(
-                    () -> operatorRepository.findByCredentials(credentials).orElseGet(
+            return new ResponseOrMessage(clientRepository.findByCredentials(credentials).orElseGet(
+                    () -> adminRepository.findByCredentials(credentials).orElseGet(
                             () -> driverRepository.findByCredentials(credentials).orElse(null))));
-        else return new PersonResponse("Incorrect username or password");
+        else return new ResponseOrMessage("Incorrect username or password");
     }
 
     public Boolean signOut(){ return true; }

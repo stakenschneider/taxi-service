@@ -1,6 +1,5 @@
 package com.kspt.app.models;
 
-import com.kspt.app.entities.Trip;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,14 +10,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class TripModel extends ApiResult{
+public class ResponseOrMessage <T> extends ApiResult{
+    T ob;
 
-    Trip trip;
-
-    public TripModel(Trip trip){
-        this.trip = trip;
+    public ResponseOrMessage(T ob) {
+        this.ob = ob;
     }
-    public TripModel(String error){
+
+    public ResponseOrMessage(String error){
         this.message = error;
     }
 }

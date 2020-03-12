@@ -1,5 +1,7 @@
 package com.kspt.app.controllers;
 
+import com.kspt.app.entities.Trip;
+import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.*;
 import com.kspt.app.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +21,13 @@ public class DriverController {
     }
 
     @PostMapping("{driverId}/setPassportD")
-    public PersonResponse setPassport(@PathVariable final Long driverId,
-                                      @RequestBody PassportModel passport) {
+    public ResponseOrMessage<Person> setPassport(@PathVariable final Long driverId,
+                                                 @RequestBody PassportModel passport) {
         return service.setPassport(driverId, passport);
     }
 
-    @PostMapping("getFreeTrips")
-    public ListOfTripModel getFreeTrips() {
-        return service.getFreeTrips();
-    }
-
     @PostMapping("{tripId}/{driverId}/takeTrip")
-    public TripModel takeTrip(@PathVariable Long tripId, @PathVariable Long driverId) {
+    public ResponseOrMessage<Trip> takeTrip(@PathVariable Long tripId, @PathVariable Long driverId) {
         return service.takeTrip(tripId, driverId);
     }
 

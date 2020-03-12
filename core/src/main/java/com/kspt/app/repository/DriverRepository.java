@@ -5,6 +5,7 @@ import com.kspt.app.entities.actor.Driver;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,4 +14,5 @@ import java.util.Optional;
 @Repository
 public interface DriverRepository extends CommonRepository<Driver> {
     Optional<Driver> findByCredentials(@NotNull final Credentials credentials);
+    Optional<List<Driver>> findAllByAvailable(@NotNull final Boolean available);
 }

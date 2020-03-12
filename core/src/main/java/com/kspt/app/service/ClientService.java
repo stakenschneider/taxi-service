@@ -6,9 +6,10 @@ import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 
+import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.ApiResult;
 import com.kspt.app.models.PassportModel;
-import com.kspt.app.models.PersonResponse;
+import com.kspt.app.models.ResponseOrMessage;
 import com.kspt.app.models.TripModelRequest;
 import com.kspt.app.repository.AddressRepository;
 import com.kspt.app.repository.ClientRepository;
@@ -32,7 +33,7 @@ public class ClientService {
         this.addressRepository = addressRepository;
     }
 
-    public PersonResponse setPassport(Long id, PassportModel model) {
+    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
 
 //      TODO HttpMessageNotReadableException
 //           example valid data in: 012265 ->JSON parse error
@@ -43,9 +44,9 @@ public class ClientService {
             if (client.getPassport() == null) {
                 client.setPassport(passport);
                 clientRepository.save(client);
-            } else return new PersonResponse("Passport already exist");
-        } else return new PersonResponse("Client not found");
-        return new PersonResponse(client);
+            } else return new ResponseOrMessage("Passport already exist");
+        } else return new ResponseOrMessage("Client not found");
+        return new ResponseOrMessage(client);
     }
 
     public ApiResult requestCar(TripModelRequest model, Long clientId){

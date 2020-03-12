@@ -1,8 +1,9 @@
 package com.kspt.app.controllers;
 
+import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.ApiResult;
 import com.kspt.app.models.PassportModel;
-import com.kspt.app.models.PersonResponse;
+import com.kspt.app.models.ResponseOrMessage;
 import com.kspt.app.models.TripModelRequest;
 import com.kspt.app.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class ClientController {
     private ClientService service;
 
     @PostMapping("{clientId}/setPassportC")
-    public PersonResponse setPassport(@PathVariable final Long clientId,
-                                      @RequestBody PassportModel passport) {
+    public ResponseOrMessage<Person> setPassport(@PathVariable final Long clientId,
+                                                 @RequestBody PassportModel passport) {
         return service.setPassport(clientId, passport);
     }
 

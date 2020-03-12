@@ -6,6 +6,7 @@ import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
+import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.*;
 import com.kspt.app.repository.CarRepository;
 import com.kspt.app.repository.DriverRepository;
@@ -29,7 +30,7 @@ public class DriverService {
         this.carRepository = carRepository;
     }
 
-    public PersonResponse setPassport(Long id, PassportModel model) {
+    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
 //      TODO HttpMessageNotReadableException
 //           example valid data in: 012265 ->JSON parse error
         final Passport passport = new Passport(model.getSeries(), model.getNumber());
@@ -38,9 +39,9 @@ public class DriverService {
             if (driver.getPassport() == null) {
                 driver.setPassport(passport);
                 driverRepository.save(driver);
-            } else return new PersonResponse("Passport already exist");
-        } else return new PersonResponse("Driver not found");
-        return new PersonResponse(driver);
+            } else return new ResponseOrMessage("Passport already exist");
+        } else return new ResponseOrMessage("Driver not found");
+        return new ResponseOrMessage(driver);
     }
 
     public ApiResult setCar(Long driverId, CarModel carModel){
@@ -51,35 +52,29 @@ public class DriverService {
         driverRepository.save(driver);
         return new ApiResult("Car was added");
     }
-    public ListOfTripModel getFreeTrips() {
-        List<Trip> list = tripRepository.findByStatus(Constants.Status.CREATE).orElse(null);
-        if (list == null){
-            return new ListOfTripModel("No free trips");
-        } return new ListOfTripModel(list);
-    }
 
-    public TripModel takeTrip(Long tripId, Long driverId) {
+    public ResponseOrMessage<Trip> takeTrip(Long tripId, Long driverId) {
 
         Trip trip = tripRepository.findById(tripId).orElse(null);
         Driver driver = driverRepository.findById(driverId).orElse(null);
 
-        if (trip == null) return new TripModel("Trip doesn't exist");
-        if (driver == null) return new TripModel("Driver doesn't exist");
-        if (driver.getCar() == null) return new TripModel("The car is not registered");
-        if (driver.getPassport() == null) return new TripModel("The passport is not registered");
+        if (trip == null) return new ResponseOrMessage("Trip doesn't exist");
+        if (driver == null) return new ResponseOrMessage("Driver doesn't exist");
+        if (driver.getCar() == null) return new ResponseOrMessage("The car is not registered");
+        if (driver.getPassport() == null) return new ResponseOrMessage("The passport is not registered");
 
         switch (trip.getStatus()){
             case CREATE:
                 trip.setDriver(driver);
                 driver.setAvailable(false);
                 trip.setStatus(Constants.Status.START);
-                return new TripModel(tripRepository.save(trip));
+                return new ResponseOrMessage(tripRepository.save(trip));
 
             case DENY:
-                return new TripModel("Trip was deny");
+                return new ResponseOrMessage("Trip was deny");
 
             default:
-                return new TripModel("Trip was started with another driver");
+                return new ResponseOrMessage("Trip was started with another driver");
         }
     }
 

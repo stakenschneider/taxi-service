@@ -37,5 +37,4 @@ public interface CommonRepository<T extends AbstractEntity> extends CrudReposito
     @NotNull
     @Override
     <S extends T> S save (@NotNull final S entity);
-
 }

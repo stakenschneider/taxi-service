@@ -25,11 +25,6 @@ public abstract class Person extends AbstractEntity {
     @Column(name = "second_name", nullable = false)
     protected String secondName;
 
-//    @Column(name = "person_type", nullable = false)
-//    protected PersonType personType;
-//    @Column(name = "passport_code", nullable = false)
-//    protected int passportCode;
-
     @Column(name = "phone_number", nullable = false)
     protected String phoneNumber;
 
@@ -37,7 +32,7 @@ public abstract class Person extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Credentials credentials;
 
-    @OneToOne (optional=true, cascade=CascadeType.ALL)
-    @JoinColumn (name="passport_id")
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id")
     private Passport passport;
 }

@@ -1,5 +1,5 @@
 # User-specific stuff
-core/.idea/**/workspace.xml
+.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
@@ -7,7 +7,6 @@ core/.idea/**/workspace.xml
 
 # Generated files
 .idea/**/contentModel.xml
-core/.gradle
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -94,4 +93,3 @@ gradle-app.setting
 
 # macOS
 .DS_Store
-core/.idea/dataSources/0efb3ffd-8b41-4d29-92f4-e5d470c57d06.xml

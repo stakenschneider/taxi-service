@@ -22,9 +22,8 @@ public class Driver extends Person {
     @JoinColumn (name="car_id")
     private Car car;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Trip trip;
+    @Column(name = "available", nullable = false)
+    private boolean available;
 
     public Driver( @NotNull final String firstName,
                    @NotNull final String secondName,
@@ -32,5 +31,6 @@ public class Driver extends Person {
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
+        this.available = true;
     }
 }

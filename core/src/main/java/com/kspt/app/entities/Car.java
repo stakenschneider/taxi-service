@@ -1,6 +1,8 @@
 package com.kspt.app.entities;
 
-import com.kspt.app.configuration.Constants.*;
+
+import com.kspt.app.configuration.Constants.CarModels;
+import com.kspt.app.configuration.Constants.Color;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,12 +24,11 @@ import javax.persistence.Table;
 public class Car extends AbstractEntity{
 
     @Column(name = "number", nullable = false)
-    private int number;
+    private String number;
 
     @Column(name = "model", nullable = false)
     private CarModels model;
 
     @Column(name = "color", nullable = false)
     private Color color;
-
 }

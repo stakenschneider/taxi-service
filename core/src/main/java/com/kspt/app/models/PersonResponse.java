@@ -14,7 +14,7 @@ public class PersonResponse extends ApiResult {
     private Person person;
 
     public PersonResponse(String error) {
-        this.error = error;
+        this.message = error;
     }
 
     public PersonResponse(Person person) {

@@ -25,6 +25,9 @@ public class Driver extends Person {
     @Column(name = "available", nullable = false)
     private boolean available;
 
+    @Column(name = "rating", nullable = false)
+    private Double rating;
+
     public Driver( @NotNull final String firstName,
                    @NotNull final String secondName,
                    final String phoneNumber) {
@@ -32,5 +35,6 @@ public class Driver extends Person {
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
         this.available = true;
+        this.rating = 5.0;
     }
 }

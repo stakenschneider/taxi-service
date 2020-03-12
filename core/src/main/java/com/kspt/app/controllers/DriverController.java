@@ -1,11 +1,14 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.Trip;
+import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.*;
 import com.kspt.app.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Masha on 12.03.2020
@@ -26,13 +29,18 @@ public class DriverController {
         return service.setPassport(driverId, passport);
     }
 
-    @PostMapping("{tripId}/{driverId}/takeTrip")
-    public ResponseOrMessage<Trip> takeTrip(@PathVariable Long tripId, @PathVariable Long driverId) {
-        return service.takeTrip(tripId, driverId);
+    @PostMapping("{driverId}/{grade}/endTrip")
+    public ApiResult endTrip(@PathVariable Long driverId, @PathVariable int grade) {
+        return service.endTrip(driverId, grade);
     }
 
-    @PostMapping("{driverId}/endTrip")
-    public ApiResult endTrip(@PathVariable Long driverId) {
-        return service.endTrip(driverId);
+    @PostMapping("getFreeTrips")
+    public ResponseOrMessage<List<Trip>> getFreeTrips() {
+        return service.getFreeTrips();
+    }
+
+    @PostMapping("{tripId}/{driverId}/takeTrip")
+    public ApiResult takeTrip(@PathVariable Long tripId, @PathVariable Long driverId) {
+        return service.takeTrip(tripId, driverId);
     }
 }

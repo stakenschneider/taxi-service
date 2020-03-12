@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
 public class ResponseOrMessage <T> extends ApiResult{
-    T ob;
+    T body;
 
-    public ResponseOrMessage(T ob) {
-        this.ob = ob;
+    public ResponseOrMessage(T body) {
+        this.body = body;
     }
 
     public ResponseOrMessage(String error){

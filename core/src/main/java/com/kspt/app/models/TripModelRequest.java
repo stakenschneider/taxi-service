@@ -1,5 +1,6 @@
 package com.kspt.app.models;
 
+import com.kspt.app.configuration.Constants.Rate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class TripModelRequest {
     private AddressModel startAddress;
     private AddressModel finishAddress;
+    private Rate rate;
 }

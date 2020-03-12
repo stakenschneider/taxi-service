@@ -1,5 +1,6 @@
 package com.kspt.app.entities;
 
+import com.kspt.app.configuration.Constants.Rate;
 import com.kspt.app.configuration.Constants.Status;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
@@ -8,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by Masha on 27.02.2020
@@ -38,8 +40,17 @@ public class Trip extends AbstractEntity{
     @JoinColumn (name="finish_address_id")
     private Address finishAddress;
 
-    @Column(name = "rate")
-    private int rate;
+    @Column(name = "date_of_creation", nullable = false)
+    private Date dateOfCreation;
+
+    @Column(name = "date_of_completion")
+    private Date dateOfCompletion;
+
+    @Column(name = "rating")
+    private int rating;
+
+    @Column(name = "rate", nullable = false)
+    private Rate tripRate;
 
     @Column(name = "price", nullable = false)
     private Double price;

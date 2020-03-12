@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -18,11 +19,15 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Person {
 
+    @Column(name = "rating", nullable = false)
+    private Double rating;
+
     public Client( @NotNull final String firstName,
                    @NotNull final String secondName,
                    final String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;
+        this.rating = 5.0;
     }
 }

@@ -5,10 +5,10 @@ package com.kspt.app.configuration;
  */
 public class Constants {
 
-    public enum PersonType{
+    public enum PersonType {
         CLIENT,
         DRIVER,
-        OPERATOR
+        ADMIN
     }
 
     public enum Color {
@@ -23,24 +23,32 @@ public class Constants {
         PURPLE
     }
 
-    public enum  Status {
+    public enum Status {
         CREATE,
         START,
         FINISH,
         DENY
     }
 
+    public enum Rate {
+        ECONOMY,
+        COMFORT,
+        LUX,
+        GOLD,
+        GOD,
+    }
+
     public enum CarModels {
-        AUDI,
-        BMW,
-        CHEVROLET,
+        ACURA, MERCEDES,LEXUS,TESLA,
+        BMW,        MITSUBISHI,
+        AUDI,        TOYOTA,        VOLKSWAGEN, VOLVO,
+
         FORD,
         HONDA,
         HYUNDAI,
         KIA,
-        MITSUBISHI,
-        TOYOTA,
-        VOLKSWAGEN,
-        VOLVO
+        CHEVROLET
+
+
     }
 }

@@ -56,7 +56,7 @@ public class PersonService {
                     driverRepository.save(driver);
                     return new ResponseOrMessage(driver);
                 }
-                case OPERATOR: {
+                case ADMIN: {
                     Admin admin = new Admin(model.getFirstName(), model.getSecondName(),
                             model.getPhoneNumber());
                     admin.setCredentials(credentials);

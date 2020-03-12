@@ -31,12 +31,12 @@ public class ClientController {
         return service.requestCar(model, clientId);
     }
 
-    @PostMapping("{tripId}/{rate}/setRate")
-    public ApiResult setRate(@PathVariable Long tripId, @PathVariable int rate) {
-        return service.setRate( tripId, rate);
+    @PostMapping("{tripId}/{grade}/setGrade")
+    public ApiResult setGrade(@PathVariable Long tripId, @PathVariable int grade) {
+        return service.setGrade( tripId, grade);
     }
 
-    @PostMapping("{tripId}/{denyTrip")
+    @PostMapping("{tripId}/denyTrip")
     public ApiResult denyTrip(@PathVariable Long tripId) {
         return service.denyTrip( tripId);
     }

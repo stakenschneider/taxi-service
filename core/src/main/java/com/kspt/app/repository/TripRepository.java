@@ -2,6 +2,7 @@ package com.kspt.app.repository;
 
 import com.kspt.app.configuration.Constants;
 import com.kspt.app.entities.Trip;
+import com.kspt.app.entities.actor.Client;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

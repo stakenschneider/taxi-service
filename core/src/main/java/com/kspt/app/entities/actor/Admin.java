@@ -14,12 +14,12 @@ import javax.persistence.Table;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "Operator")
+@Table(name = "Admin")
 @EqualsAndHashCode(callSuper = true)
-public class Operator extends Person {
-    public Operator( @NotNull final String firstName,
-                   @NotNull final String secondName,
-                   final String phoneNumber) {
+public class Admin extends Person {
+    public Admin(@NotNull final String firstName,
+                 @NotNull final String secondName,
+                 final String phoneNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.phoneNumber = phoneNumber;

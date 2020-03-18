@@ -1,5 +1,6 @@
 package com.kspt.app.models;
 
+import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.configuration.Constants.Rate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,4 +16,5 @@ public class TripModelRequest {
     private AddressModel startAddress;
     private AddressModel finishAddress;
     private Rate rate;
+    private PaymentMethod paymentMethod;
 }

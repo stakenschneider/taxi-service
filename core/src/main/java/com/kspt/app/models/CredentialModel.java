@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CredentialModel {
-    private String login;
+    private String email;
     private String password;
 }

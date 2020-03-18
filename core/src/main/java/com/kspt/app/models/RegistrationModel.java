@@ -13,7 +13,5 @@ import com.kspt.app.configuration.Constants.PersonType;
 @EqualsAndHashCode(callSuper=true)
 public class RegistrationModel extends CredentialModel{
     protected String firstName;
-    protected String secondName;
-    protected PersonType personType;
-    protected String phoneNumber;
+    protected String lastName;
 }

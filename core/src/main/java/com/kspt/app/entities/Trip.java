@@ -1,5 +1,6 @@
 package com.kspt.app.entities;
 
+import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.configuration.Constants.Rate;
 import com.kspt.app.configuration.Constants.Status;
 import com.kspt.app.entities.actor.Client;
@@ -54,4 +55,7 @@ public class Trip extends AbstractEntity{
 
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @Column(name = "payment_method", nullable = false)
+    private PaymentMethod paymentMethod;
 }

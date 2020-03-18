@@ -21,7 +21,7 @@ public class Admin extends Person {
                  @NotNull final String secondName,
                  final String phoneNumber) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = secondName;
         this.phoneNumber = phoneNumber;
     }
 }

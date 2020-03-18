@@ -29,8 +29,8 @@ public class DriverController {
         return service.setPassport(driverId, passport);
     }
 
-    @PostMapping("{driverId}/{grade}/endTrip")
-    public ApiResult endTrip(@PathVariable Long driverId, @PathVariable int grade) {
+    @PostMapping("{driverId}/endTrip")
+    public ApiResult endTrip(@PathVariable Long driverId, @RequestBody int grade) {
         return service.endTrip(driverId, grade);
     }
 

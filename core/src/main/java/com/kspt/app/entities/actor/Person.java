@@ -22,10 +22,10 @@ public abstract class Person extends AbstractEntity {
     @Column(name = "first_name", nullable = false)
     protected String firstName;
 
-    @Column(name = "second_name", nullable = false)
-    protected String secondName;
+    @Column(name = "last_name", nullable = false)
+    protected String lastName;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     protected String phoneNumber;
 
     @JoinColumn(name = "credentials_id")

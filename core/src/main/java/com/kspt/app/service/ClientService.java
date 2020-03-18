@@ -1,5 +1,6 @@
 package com.kspt.app.service;
 
+import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.configuration.Constants.Rate;
 import com.kspt.app.configuration.Constants.Status;
 
@@ -21,6 +22,7 @@ import com.kspt.app.repository.TripRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -72,6 +74,7 @@ public class ClientService {
         Trip trip = new Trip();
         Rate rate = model.getRate();
 
+        trip.setPaymentMethod(model.getPaymentMethod());
         trip.setDateOfCreation(new Date());
         trip.setStartAddress(addressRepository.save(startAddress));
         trip.setFinishAddress(addressRepository.save(finishAddress));
@@ -123,5 +126,18 @@ public class ClientService {
                 return new Random().nextInt(Integer.MAX_VALUE) + 0.0;
             default: return 0.0;
         }
+    }
+
+    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(Long clientId) {
+        List<Trip> list = tripRepository.findAllByClientId(clientId).orElse(null);
+        if (list == null) return new ResponseOrMessage<>("Trips not found");
+        else return new ResponseOrMessage<>(list);
+    }
+
+    public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
+        Trip trip = tripRepository.findById(tripId).orElse(null);
+        if (trip==null) return new ApiResult("Trip not found");
+        trip.setPaymentMethod(newPaymentMethod);
+        return new ApiResult("Payment Method was changed");
     }
 }

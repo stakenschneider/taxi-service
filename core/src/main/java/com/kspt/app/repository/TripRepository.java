@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface TripRepository extends CommonRepository<Trip>  {
     Optional<List<Trip>> findByStatus(Constants.Status status);
     Optional<Trip> findByDriverId(Long id);
+    Optional<List<Trip>> findAllByClientId(Long id);
 }

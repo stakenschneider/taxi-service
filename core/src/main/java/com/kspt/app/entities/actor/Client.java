@@ -23,11 +23,9 @@ public class Client extends Person {
     private Double rating;
 
     public Client( @NotNull final String firstName,
-                   @NotNull final String secondName,
-                   final String phoneNumber) {
+                   @NotNull final String secondName) {
         this.firstName = firstName;
-        this.secondName = secondName;
-        this.phoneNumber = phoneNumber;
+        this.lastName = secondName;
         this.rating = 5.0;
     }
 }

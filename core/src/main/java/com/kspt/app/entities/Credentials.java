@@ -14,15 +14,15 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public final class Credentials extends AbstractEntity {
 
-    @Column(unique = true, name = "login")
-    private String login;
+    @Column(unique = true, name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
 
-    public Credentials(@NotNull final String login,
+    public Credentials(@NotNull final String email,
                        @NotNull final String password) {
-        this.login = login;
+        this.email = email;
         this.password = password;
     }
 }

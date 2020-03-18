@@ -2,8 +2,6 @@ package com.kspt.app.service;
 
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.actor.Client;
-import com.kspt.app.entities.actor.Driver;
-import com.kspt.app.entities.actor.Admin;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.CredentialModel;
 import com.kspt.app.models.RegistrationModel;
@@ -36,44 +34,59 @@ public class PersonService {
     }
 
     public ResponseOrMessage<Person> signUp(RegistrationModel model) {
-        final Credentials credentials = new Credentials(model.getLogin(), model.getPassword());
+        final Credentials credentials = new Credentials(model.getEmail(), model.getPassword());
 
         try {
-            //TODO Polymorphic Queries
-            switch (model.getPersonType()) {
-                case CLIENT: {
-                    Client client = new Client(model.getFirstName(), model.getSecondName(),
-                            model.getPhoneNumber());
-                    client.setCredentials(credentials);
-                    clientRepository.save(client);
-                    return new ResponseOrMessage(client);
-                }
-
-                case DRIVER: {
-                    Driver driver = new Driver(model.getFirstName(), model.getSecondName(),
-                            model.getPhoneNumber());
-                    driver.setCredentials(credentials);
-                    driverRepository.save(driver);
-                    return new ResponseOrMessage(driver);
-                }
-                case ADMIN: {
-                    Admin admin = new Admin(model.getFirstName(), model.getSecondName(),
-                            model.getPhoneNumber());
-                    admin.setCredentials(credentials);
-                    adminRepository.save(admin);
-                    return new ResponseOrMessage(admin);
-                }
-                default:
-                    return null;
-            }
+            Client client = new Client(model.getFirstName(), model.getLastName());
+            client.setCredentials(credentials);
+            clientRepository.save(client);
+            return new ResponseOrMessage<Person>(client);
         } catch (Exception e) {
-            return new ResponseOrMessage("Login already exist");
+            return new ResponseOrMessage<Person>("Login already exist");
         }
+
     }
 
+
+//    public ResponseOrMessage<Person> signUp(RegistrationModel model) {
+//        final Credentials credentials = new Credentials(model.getLogin(), model.getPassword());
+//
+//        try {
+//            //TODO Polymorphic Queries
+//            switch (model.getPersonType()) {
+//                case CLIENT: {
+//                    Client client = new Client(model.getFirstName(), model.getSecondName(),
+//                            model.getPhoneNumber());
+//                    client.setCredentials(credentials);
+//                    clientRepository.save(client);
+//                    return new ResponseOrMessage(client);
+//                }
+//
+//                case DRIVER: {
+//                    Driver driver = new Driver(model.getFirstName(), model.getSecondName(),
+//                            model.getPhoneNumber());
+//                    driver.setCredentials(credentials);
+//                    driverRepository.save(driver);
+//                    return new ResponseOrMessage(driver);
+//                }
+//                case ADMIN: {
+//                    Admin admin = new Admin(model.getFirstName(), model.getSecondName(),
+//                            model.getPhoneNumber());
+//                    admin.setCredentials(credentials);
+//                    adminRepository.save(admin);
+//                    return new ResponseOrMessage(admin);
+//                }
+//                default:
+//                    return null;
+//            }
+//        } catch (Exception e) {
+//            return new ResponseOrMessage("Login already exist");
+//        }
+//    }
+
     public ResponseOrMessage<Person> signIn(CredentialModel model) {
-        final Credentials credentials = credentialsRepository.findByLoginAndPassword(
-                model.getLogin(),
+        final Credentials credentials = credentialsRepository.findByEmailAndPassword(
+                model.getEmail(),
                 model.getPassword()).orElse(null);
 
 //        EntityManager em = entityManagerFactory.createEntityManager();
@@ -94,5 +107,7 @@ public class PersonService {
         else return new ResponseOrMessage("Incorrect username or password");
     }
 
-    public Boolean signOut(){ return true; }
+    public Boolean signOut() {
+        return true;
+    }
 }

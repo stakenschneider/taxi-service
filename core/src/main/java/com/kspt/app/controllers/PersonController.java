@@ -18,16 +18,17 @@ public class PersonController {
     @Autowired
     private PersonService service;
 
-    @PostMapping("/signUp")
+    @PostMapping("/sign-up")
     public ResponseOrMessage<Person> signUp(@RequestBody RegistrationModel model) {
         return service.signUp(model);
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/sign-in")
     public ResponseOrMessage<Person> signIn(@RequestBody CredentialModel credential) {
-        return service.signIn(credential);
+        ResponseOrMessage<Person> responseOrMessage = service.signIn(credential);
+        return responseOrMessage;
     }
 
-    @PostMapping("signOut")
+    @PostMapping("sign-out")
     public boolean signOut() { return service.signOut();}
 }

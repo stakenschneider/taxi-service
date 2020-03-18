@@ -18,7 +18,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class Driver extends Person {
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn (name="car_id")
     private Car car;
 
@@ -32,7 +32,7 @@ public class Driver extends Person {
                    @NotNull final String secondName,
                    final String phoneNumber) {
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = secondName;
         this.phoneNumber = phoneNumber;
         this.available = true;
         this.rating = 5.0;

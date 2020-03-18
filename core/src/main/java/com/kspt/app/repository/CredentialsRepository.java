@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CredentialsRepository extends CommonRepository<Credentials> {
 
-    Optional<Credentials> findByLoginAndPassword(@NotNull final String login,
+    Optional<Credentials> findByEmailAndPassword(@NotNull final String email,
                                                  @NotNull final String password);
 
     @Override

@@ -40,6 +40,12 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // https://mvnrepository.com/artifact/com.okta.spring/okta-spring-boot-starter
+    implementation("com.okta.spring:okta-spring-boot-starter:1.2.1")
+
+    // https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure
+    compile group: 'org.springframework.security.oauth.boot', name: 'spring-security-oauth2-autoconfigure', version: '2.2.5.RELEASE'
+
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -44,9 +44,9 @@ public class DriverService {
             if (driver.getPassport() == null) {
                 driver.setPassport(passport);
                 driverRepository.save(driver);
-            } else return new ResponseOrMessage<Person>("Passport already exist");
-        } else return new ResponseOrMessage<Person>("Driver not found");
-        return new ResponseOrMessage<Person>(driver);
+            } else return new ResponseOrMessage<>("Passport already exist");
+        } else return new ResponseOrMessage<>("Driver not found");
+        return new ResponseOrMessage<>(driver);
     }
 
     public ApiResult setCar(Long driverId, CarModel carModel){
@@ -85,10 +85,10 @@ public class DriverService {
     }
 
     public ResponseOrMessage<List<Trip>> getFreeTrips() {
-        List<Trip> list = tripRepository.findByStatus(Constants.Status.CREATE).orElse(null);
+        List<Trip> list = tripRepository.findAllByStatus(Constants.Status.CREATE).orElse(null);
         if (list == null){
-            return new ResponseOrMessage<List<Trip>>("No free trips");
-        } return new ResponseOrMessage<List<Trip>>(list);
+            return new ResponseOrMessage<>("No free trips");
+        } return new ResponseOrMessage<>(list);
     }
 
     public ApiResult endTrip(Long driverId, int grade){

@@ -42,14 +42,10 @@ public class Constants {
         ACURA, MERCEDES, LEXUS, TESLA,
         BMW, MITSUBISHI,
         AUDI, TOYOTA, VOLKSWAGEN, VOLVO,
-        FORD,
-        HONDA,
-        HYUNDAI,
-        KIA,
-        CHEVROLET
+        FORD, HONDA, HYUNDAI, KIA, CHEVROLET
     }
 
-    public enum PaymentMethod{
+    public enum PaymentMethod {
         CASH,
         CARD,
         APPLE_PAY

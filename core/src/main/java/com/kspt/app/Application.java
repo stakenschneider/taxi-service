@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -12,6 +13,7 @@ import java.util.TimeZone;
 /**
  * Created by Masha on 28.02.2020
  */
+@EnableResourceServer
 @EnableJpaAuditing
 @EntityScan(basePackageClasses = {
         Application.class,

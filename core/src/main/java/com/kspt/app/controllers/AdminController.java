@@ -25,4 +25,10 @@ public class AdminController {
     public ApiResult deleteClient( @PathVariable Long clientId) {
         return service.deleteClient( clientId);
     }
+
+//    TODO
+    @DeleteMapping("/createDriver")
+    public ApiResult createDriver() {
+        return service.createDriver();
+    }
 }

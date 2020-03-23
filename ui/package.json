@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~9.0.6",
     "@angular/platform-browser-dynamic": "~9.0.6",
     "@angular/router": "~9.0.6",
+    "@okta/okta-angular": "^2.0.0",
     "bcrypt": "^4.0.1",
     "inputmask": "^5.0.3",
     "rxjs": "~6.5.4",

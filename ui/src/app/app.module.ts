@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 
-import {Routes, RouterModule} from '@angular/router';
+import { RouterModule} from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LogOutComponent } from './log-out/log-out.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -14,17 +14,18 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
-// определение маршрутов
-const appRoutes: Routes = [
-  { path: '', component: ProfileComponent},
-  { path: 'sign-in', component: SignInComponent},
-  { path: 'sign-up', component: SignUpComponent},
-  { path: 'fp', component: ForgotPasswordComponent},
-  { path: 'home', component: HomeComponent},
-  { path: '**', component: NotFoundComponent }
-];
+import {AppRoutingModule} from './app-routing.module';
+import {OktaAuthModule} from '@okta/okta-angular';
+import {AuthInterceptor} from './okta/auth.interceptor';
+
+const config = {
+  issuer: 'https://dev-151550/oauth2/default',
+  redirectUri: 'http://localhost:4200/implicit/callback',
+  clientId: '0oa471givxVyMkXtX4x6',
+  pkce: true
+}
 
 @NgModule({
   declarations: [
@@ -36,15 +37,16 @@ const appRoutes: Routes = [
     TopBarComponent,
     HomeComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    AppRoutingModule
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    OktaAuthModule.initAuth(config)
   ],
-  providers: [AuthService],
+  providers: [AuthService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })

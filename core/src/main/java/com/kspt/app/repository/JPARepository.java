@@ -12,7 +12,7 @@ import java.util.Optional;
  * Created by Masha on 10.03.2020
  */
 @NoRepositoryBean
-public interface CommonRepository<T extends AbstractEntity> extends CrudRepository<T, Long> {
+public interface JPARepository<T extends AbstractEntity> extends CrudRepository<T, Long> {
 
     @Override
     long count();

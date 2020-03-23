@@ -10,7 +10,7 @@ import java.util.Optional;
  * Created by Masha on 10.03.2020
  */
 @Repository
-public interface CredentialsRepository extends CommonRepository<Credentials> {
+public interface CredentialsRepository extends JPARepository<Credentials> {
 
     Optional<Credentials> findByEmailAndPassword(@NotNull final String email,
                                                  @NotNull final String password);

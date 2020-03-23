@@ -33,6 +33,10 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
 
+    // spring security
+    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '3.2.0.RELEASE'
+
+
     // work with database
     runtime group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
 
@@ -43,4 +47,5 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }

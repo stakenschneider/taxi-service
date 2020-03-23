@@ -10,13 +10,16 @@ import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.CredentialsRepository;
 import com.kspt.app.repository.DriverRepository;
 import com.kspt.app.repository.AdminRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by Masha on 10.03.2020
  */
 @Service
-public class PersonService {
+public class PersonService implements UserDetailsService {
 
     private ClientRepository clientRepository;
     private DriverRepository driverRepository;
@@ -34,7 +37,7 @@ public class PersonService {
     }
 
     public ResponseOrMessage<Person> signUp(RegistrationModel model) {
-        final Credentials credentials = new Credentials(model.getEmail(), model.getPassword());
+        final Credentials credentials = new Credentials(model.getUsername(), model.getPassword());
 
         try {
             Client client = new Client(model.getFirstName(), model.getLastName());
@@ -85,8 +88,8 @@ public class PersonService {
 //    }
 
     public ResponseOrMessage<Person> signIn(CredentialModel model) {
-        final Credentials credentials = credentialsRepository.findByEmailAndPassword(
-                model.getEmail(),
+        final Credentials credentials = credentialsRepository.findByUsernameAndPassword(
+                model.getUsername(),
                 model.getPassword()).orElse(null);
 
 //        EntityManager em = entityManagerFactory.createEntityManager();
@@ -109,5 +112,12 @@ public class PersonService {
 
     public Boolean signOut() {
         return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return credentialsRepository.findByUsername(username).
+                orElseThrow(()->{throw new UsernameNotFoundException("User not found");});
+
     }
 }

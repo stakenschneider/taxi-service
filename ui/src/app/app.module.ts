@@ -15,6 +15,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
+import { RegistrationComponent } from './registration/registration.component';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     TopBarComponent,
     HomeComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

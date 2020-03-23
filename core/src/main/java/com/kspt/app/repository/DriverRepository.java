@@ -12,7 +12,7 @@ import java.util.Optional;
  * Created by Masha on 10.03.2020
  */
 @Repository
-public interface DriverRepository extends CommonRepository<Driver> {
+public interface DriverRepository extends JPARepository<Driver> {
     Optional<Driver> findByCredentials(@NotNull final Credentials credentials);
     Optional<List<Driver>> findAllByAvailable(@NotNull final Boolean available);
 }

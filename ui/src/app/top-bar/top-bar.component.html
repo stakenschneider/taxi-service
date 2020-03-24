@@ -2,6 +2,13 @@
   <li><a href="/home">Home</a></li>
   <li><a href="/not-found">404</a></li>
   <li><a href="/profile">profile</a></li>
-  <li style="float:right"><a class="active" href="/sign-in">SignIn/SignUp</a></li>
+  <li *ngIf="isAuthenticated" class="active" style="float:right" class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
+    <div class="dropdown-content">
+      <a href="/settings">settings</a>
+      <a (click)="logOut()">Log Out</a>
+    </div>
+  </li>
+  <li *ngIf="!isAuthenticated" style="float:right"><a class="active" href="/sign-in">SignIn</a></li>
 </ul>
 

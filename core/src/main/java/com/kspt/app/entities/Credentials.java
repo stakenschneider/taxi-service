@@ -20,9 +20,15 @@ public final class Credentials extends AbstractEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "username")
+    private String username;
+
     public Credentials(@NotNull final String email,
-                       @NotNull final String password) {
+                       @NotNull final String password,
+                       @NotNull final String username) {
         this.email = email;
         this.password = password;
+        this.username = username;
+
     }
 }

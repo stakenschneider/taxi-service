@@ -35,15 +35,17 @@ public class PersonService {
     }
 
     public ResponseOrMessage<Person> signUp(RegistrationModel model) {
-        final Credentials credentials = new Credentials(model.getEmail(), model.getPassword());
+        final Credentials credentials = new Credentials(model.getEmail(),
+                model.getPassword(),
+                model.getEmail().split("@")[0]);
 
         try {
             Client client = new Client(model.getFirstName(), model.getLastName());
             client.setCredentials(credentials);
             clientRepository.save(client);
-            return new ResponseOrMessage<Person>(client);
+            return new ResponseOrMessage<>(client);
         } catch (Exception e) {
-            return new ResponseOrMessage<Person>("Login already exist");
+            return new ResponseOrMessage<>("Login already exist");
         }
 
     }
@@ -85,9 +87,10 @@ public class PersonService {
 //        }
 //    }
 
-    public ResponseOrMessage<Person> signIn(Map<String, String> email) {
-        if (email.containsKey("email")) {
-            final Credentials credentials = credentialsRepository.findByEmail(email.get("email")).orElse(null);
+    public ResponseOrMessage<Person> signIn(Map<String, String> emailOrUserName) {
+        if (emailOrUserName.containsKey("email")) {
+            final Credentials credentials = credentialsRepository.findByEmail(emailOrUserName.get("email"))
+                    .orElseGet(()-> credentialsRepository.findByUsername(emailOrUserName.get("email")).orElse(null));
             //TODO Polymorphic Queries
             if (credentials != null) {
                 return new ResponseOrMessage<>(clientRepository.findByCredentials(credentials).orElseGet(

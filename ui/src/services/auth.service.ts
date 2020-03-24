@@ -13,6 +13,7 @@ export class AuthService {
 
   signIn(email: string) {
     const url = environment.signIn;
+    // на самом деле это не почта а почта или юсернейм
     return this.http.post<any>(url, {email});
   }
 

@@ -11,9 +11,9 @@ export class AuthService {
     this.http = http;
   }
 
-  signIn(email: string, password: string) {
+  signIn(email: string) {
     const url = environment.signIn;
-    return this.http.post<any>(url, {email, password});
+    return this.http.post<any>(url, {email});
   }
 
   signUp(email: string, password: string, firstName: string, lastName: string) {

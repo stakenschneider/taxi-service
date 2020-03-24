@@ -3,7 +3,6 @@ package com.kspt.app.service;
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.CredentialModel;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.models.ResponseOrMessage;
 import com.kspt.app.repository.ClientRepository;
@@ -11,6 +10,8 @@ import com.kspt.app.repository.CredentialsRepository;
 import com.kspt.app.repository.DriverRepository;
 import com.kspt.app.repository.AdminRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * Created by Masha on 10.03.2020
@@ -84,27 +85,16 @@ public class PersonService {
 //        }
 //    }
 
-    public ResponseOrMessage<Person> signIn(CredentialModel model) {
-        final Credentials credentials = credentialsRepository.findByEmailAndPassword(
-                model.getEmail(),
-                model.getPassword()).orElse(null);
-
-//        EntityManager em = entityManagerFactory.createEntityManager();
-//        em.getTransaction().begin();
-//        CriteriaBuilder cb = em.getCriteriaBuilder();
-//
-//        CriteriaQuery<Credentials> credentialsCriteriaQuery = cb.createQuery(Credentials.class);
-//        Root<Person> personPassportRoot = credentialsCriteriaQuery.from(Person.class);
-//        credentialsCriteriaQuery.select(personPassportRoot.get("passport"));
-//        em.createQuery(credentialsCriteriaQuery)
-//                .getResultList();
-
-        //TODO Polymorphic Queries
-        if (credentials != null)
-            return new ResponseOrMessage(clientRepository.findByCredentials(credentials).orElseGet(
-                    () -> adminRepository.findByCredentials(credentials).orElseGet(
-                            () -> driverRepository.findByCredentials(credentials).orElse(null))));
-        else return new ResponseOrMessage("Incorrect username or password");
+    public ResponseOrMessage<Person> signIn(Map<String, String> email) {
+        if (email.containsKey("email")) {
+            final Credentials credentials = credentialsRepository.findByEmail(email.get("email")).orElse(null);
+            //TODO Polymorphic Queries
+            if (credentials != null) {
+                return new ResponseOrMessage<>(clientRepository.findByCredentials(credentials).orElseGet(
+                        () -> adminRepository.findByCredentials(credentials).orElseGet(
+                                () -> driverRepository.findByCredentials(credentials).orElse(null))));
+            } else return new ResponseOrMessage<>("Incorrect username");
+        } else return new ResponseOrMessage<>("Wrong parameter");
     }
 
     public Boolean signOut() {

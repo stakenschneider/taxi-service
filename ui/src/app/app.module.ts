@@ -3,15 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
-
 import {Routes, RouterModule} from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { LogOutComponent } from './log-out/log-out.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { HomeComponent } from './home/home.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './auth/sign-in/sign-in.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
@@ -22,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'sign-in', component: SignInComponent},
   { path: 'sign-up', component: SignUpComponent},
   { path: 'fp', component: ForgotPasswordComponent},
+  { path: 'profile', component: ProfileComponent},
   { path: 'home', component: HomeComponent},
   { path: '**', component: NotFoundComponent }
 ];
@@ -31,7 +30,6 @@ const appRoutes: Routes = [
     AppComponent,
     ProfileComponent,
     NotFoundComponent,
-    LogOutComponent,
     ForgotPasswordComponent,
     TopBarComponent,
     HomeComponent,

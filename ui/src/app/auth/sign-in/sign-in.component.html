@@ -11,13 +11,19 @@
       <h1 class="wv-heading--title">
         Welcome back! Please sign in
       </h1>
-      <h2 class="wv-heading--subtitle">
-        Lorem ipsum dolor sit amet! Neque porro quisquam est qui do dolor amet, adipisci velit...
-      </h2>
+<!--      <h2 class="wv-heading&#45;&#45;subtitle">-->
+<!--        Lorem ipsum dolor sit amet! Neque porro quisquam est qui do dolor amet, adipisci velit...-->
+<!--      </h2>-->
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 mx-auto">
+
+      <div *ngIf="flag" class="alert" id="login_error">
+        <span>Неверный адрес электронной почты и/или пароль.<br>Требуется помощь, чтобы <a href="">войти</a>?</span>
+      </div>
+
+
       <div class="myform form ">
         <form action="" method="post" name="login">
           <div class="form-group">

@@ -15,6 +15,8 @@ public interface CredentialsRepository extends JPARepository<Credentials> {
     Optional<Credentials> findByEmailAndPassword(@NotNull final String email,
                                                  @NotNull final String password);
 
+    Optional<Credentials> findByEmail(@NotNull final String email);
+
     @Override
     void delete(@NotNull final Credentials credentials);
 }

@@ -20,14 +20,14 @@
     <div class="col-md-4 mx-auto">
 
       <div *ngIf="flag" class="alert" id="login_error">
-        <span>Неверный адрес электронной почты и/или пароль.<br>Требуется помощь, чтобы <a href="">войти</a>?</span>
+        <span>Invalid email address and / or password.<br>Help is needed to <a href="/fp">sign in</a>?</span>
       </div>
 
 
       <div class="myform form ">
         <form action="" method="post" name="login">
           <div class="form-group">
-            <input [(ngModel)]="email" type="email" name="email"  class="form-control my-input" id="email" placeholder="Email" required>
+            <input [(ngModel)]="email" type="email" name="email"  class="form-control my-input" id="email" placeholder="Email\UserName" required>
           </div>
           <div class="form-group">
             <input [(ngModel)]="password"  type="password" name="password"  class="form-control my-input" id="password" placeholder="Password" required>

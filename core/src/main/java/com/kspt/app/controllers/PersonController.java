@@ -26,9 +26,8 @@ public class PersonController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseOrMessage<Person> signIn(@RequestBody Map<String,String> email) {
-        ResponseOrMessage<Person> responseOrMessage = service.signIn(email);
-        return responseOrMessage;
+    public ResponseOrMessage<Person> signIn(@RequestBody Map<String,String> emailOrUserName) {
+        return service.signIn(emailOrUserName);
     }
 
     @PostMapping("sign-out")

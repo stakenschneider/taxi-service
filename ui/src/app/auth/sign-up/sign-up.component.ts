@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import Inputmask from 'inputmask';
 import {Client} from '../../../models/client.model';
 import {Router} from '@angular/router';
@@ -18,35 +18,55 @@ export class SignUpComponent implements OnInit {
   public firstName: string;
   public lastName: string;
   protected person: Person;
+  public flag: boolean;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.flag = false;
+  }
 
   ngOnInit(): void {
-    var selector = document.getElementById("phone");
-
-    var im = new Inputmask("+7(999)-999-99-99");
-    im.mask(selector);
+    // var selector = document.getElementById('phone');
+    //
+    // var im = new Inputmask('+7(999)-999-99-99');
+    // im.mask(selector);
   }
 
   signUp() {
     if (this.password !== this.passwordRepeat) {
-      alert('passwords don\'t match');
+      //todo пароль не совпалает
+      this.flag = true;
     } else {
+      if (!this.isEmail(this.email)) {
+        //todo эмейл не корректный
+        this.flag = true;
+      } else {
+        if (this.password.length < 7) {
+          //  todo пароль маленький
+          this.flag = true;
+        } else {
+          const salt = bcrypt.genSaltSync(10);
+          this.password = bcrypt.hashSync(this.password, salt);
 
-      const salt = bcrypt.genSaltSync(10);
-      this.password = bcrypt.hashSync(this.password, salt);
-
-      this.authService.signUp(this.email, this.password,  this.firstName, this.lastName).subscribe(
-        data => {
-           this.person = data as Client;
-        }, error => console.error(error)
-      );
-      this.router.navigateByUrl('/sign-in');
+          this.authService.signUp(this.email, this.password, this.firstName, this.lastName).subscribe(
+            data => {
+              this.person = data as Client;
+            }, error => console.error(error)
+          );
+          this.router.navigateByUrl('/sign-in');
+        }
+      }
     }
   }
 
 
   signIn() {
     return this.router.navigateByUrl('/sign-in');
+  }
+
+  isEmail(search: string): boolean {
+    let serchfind: boolean;
+    // tslint:disable-next-line:max-line-length
+    serchfind = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(search);
+    return serchfind;
   }
 }

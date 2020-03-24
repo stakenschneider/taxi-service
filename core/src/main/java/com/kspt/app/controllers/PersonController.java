@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * Created by Masha on 10.03.2020
  */
@@ -24,8 +26,8 @@ public class PersonController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseOrMessage<Person> signIn(@RequestBody CredentialModel credential) {
-        ResponseOrMessage<Person> responseOrMessage = service.signIn(credential);
+    public ResponseOrMessage<Person> signIn(@RequestBody Map<String,String> email) {
+        ResponseOrMessage<Person> responseOrMessage = service.signIn(email);
         return responseOrMessage;
     }
 

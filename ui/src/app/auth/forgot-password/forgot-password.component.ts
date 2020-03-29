@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-forgot-password',
@@ -6,22 +6,19 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-
   public flag: boolean;
-  public flag2: boolean;
-  public email: string;
-
+  public email = '';
+  @ViewChild('emailInput') emailInput: ElementRef;
 
   constructor() {
     this.flag = false;
-    this.flag2 = true;
   }
 
   ngOnInit(): void {
   }
 
   sendMail() {
+    this.email = this.emailInput.nativeElement.value;
     this.flag = true;
-    this.flag2 = false;
   }
 }

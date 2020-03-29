@@ -63,3 +63,10 @@ li.dropdown {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.image{
+  border-radius: 30px;
+}
+/*.fas{*/
+/*  color: white;*/
+/*}*/

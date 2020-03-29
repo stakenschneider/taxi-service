@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {Person} from '../models/person.model';
+import {Person} from '../models/actor/person.model';
+import {ResponseOrMessage} from '../models/response.or.message.model';
 
 @Injectable()
 export class AuthService {
@@ -14,12 +15,12 @@ export class AuthService {
   signIn(email: string) {
     const url = environment.signIn;
     // на самом деле это не почта а почта или юсернейм
-    return this.http.post<any>(url, {email});
+    return this.http.post<ResponseOrMessage<Person>>(url, {email});
   }
 
   signUp(email: string, password: string, firstName: string, lastName: string) {
     const url = environment.signUp;
-    return this.http.post<Person>(url, {email, password, firstName, lastName});
+    return this.http.post<boolean>(url, {email, password, firstName, lastName});
   }
 
   // signOut(id: number, personType: string) {

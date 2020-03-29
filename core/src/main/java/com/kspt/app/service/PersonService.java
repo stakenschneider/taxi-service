@@ -34,7 +34,7 @@ public class PersonService {
         this.credentialsRepository = credentialsRepository;
     }
 
-    public ResponseOrMessage<Person> signUp(RegistrationModel model) {
+    public ResponseOrMessage<Boolean> signUp(RegistrationModel model) {
         final Credentials credentials = new Credentials(model.getEmail(),
                 model.getPassword(),
                 model.getEmail().split("@")[0]);
@@ -43,7 +43,7 @@ public class PersonService {
             Client client = new Client(model.getFirstName(), model.getLastName());
             client.setCredentials(credentials);
             clientRepository.save(client);
-            return new ResponseOrMessage<>(client);
+            return new ResponseOrMessage<>(true);
         } catch (Exception e) {
             return new ResponseOrMessage<>("Login already exist");
         }

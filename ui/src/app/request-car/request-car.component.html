@@ -1,0 +1,45 @@
+<!--BACKGROUND MAP-->
+<div id="yandex">
+  <iframe src="https://yandex.ru/map-widget/v1/-/CKuNjB71" allowfullscreen></iframe>
+</div>
+
+<!--REQUEST MAP FORM-->
+<div class="request-form">
+  <form method="post">
+    <div>FROM:</div>
+    <div class="address">
+      <div>
+        <input  type="text" class="city" placeholder="City" required>
+      </div>
+      <div>
+        <input  type="text" class="street" placeholder="Street" required>
+      </div>
+      <div>
+        <input  type="number" class="number-house" placeholder="#" required>
+      </div>
+    </div>
+    <div>TO:</div>
+    <div class="address">
+      <div>
+        <input type="text" class="city" placeholder="City" required>
+      </div>
+      <div>
+        <input [(ngModel)]="toStreet"  [ngModelOptions]="{standalone: true}" type="text" class="street" placeholder="Street" required>
+      </div>
+      <div>
+        <input [(ngModel)]="toNumber"  [ngModelOptions]="{standalone: true}" type="number" class="number-house" placeholder="#" required>
+      </div>
+    </div>
+    <div>RATE:</div>
+    <div class="rate"><select>
+      <option *ngFor="let title of rate" [ngValue]="title">{{title}}</option>
+    </select></div>
+    <div>PAYMENT METHOD:</div>
+    <div class="paymentMethod"><select>
+      <option *ngFor="let title of paymentMethods" [ngValue]="title">{{title}}</option>
+    </select></div>
+    <div class="bttn">
+      <button (click)="requestCar()" type="submit">Request Car</button>
+    </div>
+  </form>
+</div>

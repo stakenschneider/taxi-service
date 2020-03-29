@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
+// import {StoreService} from '../../../services/store.service';
 import * as bcrypt from 'bcryptjs';
 
 @Component({
@@ -34,6 +35,7 @@ export class SignInComponent implements OnInit {
           const router = this.router;
           bcrypt.compare(this.password, data.body.credentials.password, function(err, result) {
             if (result) {
+              // this.storeService.setId(data.body.id);
               return router.navigateByUrl('/home');
             } else {
               this.flag = true;

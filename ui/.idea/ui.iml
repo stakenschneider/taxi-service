@@ -14,5 +14,6 @@
     <orderEntry type="library" name="jquery.fancybox" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="animate" level="application" />
+    <orderEntry type="library" name="a076d05399" level="application" />
   </component>
 </module>

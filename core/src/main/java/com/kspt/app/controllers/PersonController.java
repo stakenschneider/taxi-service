@@ -21,7 +21,7 @@ public class PersonController {
     private PersonService service;
 
     @PostMapping("/sign-up")
-    public ResponseOrMessage<Person> signUp(@RequestBody RegistrationModel model) {
+    public ResponseOrMessage<Boolean> signUp(@RequestBody RegistrationModel model) {
         return service.signUp(model);
     }
 

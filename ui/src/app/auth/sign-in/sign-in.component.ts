@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
-// import {StoreService} from '../../../services/store.service';
 import * as bcrypt from 'bcryptjs';
+import {StoreService} from '../../../services/store.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,7 +15,7 @@ export class SignInComponent implements OnInit {
   public flag: boolean;
 
   constructor(private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService, private storeService: StoreService) {
     this.authService = authService;
   }
 
@@ -23,20 +23,17 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
-    if (!this.email || this.email.length === 0 || this.password.length === 0) {
-      alert('You must fill all fields');
-    }
+    this.flag = this.email || this.password ? this.flag : true;
 
     this.authService.signIn(this.email).subscribe(
       data => {
         if (data.message !== null) {
           this.flag = true;
         } else {
-          const router = this.router;
-          bcrypt.compare(this.password, data.body.credentials.password, function(err, result) {
+          bcrypt.compare(this.password, data.body.credentials.password, (err, result) => {
             if (result) {
-              // this.storeService.setId(data.body.id);
-              return router.navigateByUrl('/home');
+              this.storeService.setId(data.body.id);
+              return this.router.navigateByUrl('/home');
             } else {
               this.flag = true;
             }

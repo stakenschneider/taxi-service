@@ -15,6 +15,7 @@ import {AuthService} from '../services/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import {RequestCarComponent} from './request-car/request-car.component';
 import {DataService} from '../services/data.service';
+import {StoreService} from '../services/store.service';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -48,7 +49,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule
   ],
   providers: [AuthService,
-    DataService],
+    DataService, StoreService],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })

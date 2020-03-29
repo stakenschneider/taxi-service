@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import Inputmask from 'inputmask';
-import {Client} from '../../../models/client.model';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
-import {Person} from '../../../models/person.model';
 import * as bcrypt from 'bcryptjs';
 
 @Component({
@@ -17,7 +14,6 @@ export class SignUpComponent implements OnInit {
   public passwordRepeat: string;
   public firstName: string;
   public lastName: string;
-  protected person: Person;
   public flag: boolean;
 
   constructor(private router: Router, private authService: AuthService) {
@@ -49,7 +45,7 @@ export class SignUpComponent implements OnInit {
 
           this.authService.signUp(this.email, this.password, this.firstName, this.lastName).subscribe(
             data => {
-              this.person = data as Client;
+              // this.person = data as Client;
             }, error => console.error(error)
           );
           this.router.navigateByUrl('/sign-in');
@@ -64,9 +60,7 @@ export class SignUpComponent implements OnInit {
   }
 
   isEmail(search: string): boolean {
-    let serchfind: boolean;
     // tslint:disable-next-line:max-line-length
-    serchfind = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(search);
-    return serchfind;
+    return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(search);
   }
 }

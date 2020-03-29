@@ -1,8 +1,8 @@
 <ul>
-  <li><a href="/home">Home</a></li>
-  <li><a href="/not-found">404</a></li>
-  <li><a href="/profile">profile</a></li>
-  <li><a href="/request-car">request car</a></li>
+  <li><a (click)="home()">Home</a></li>
+  <li><a (click)="notFound()">404</a></li>
+  <li><a (click)="profile()">profile</a></li>
+  <li><a (click)="requestCar()">request car</a></li>
 
   <li *ngIf="isAuthenticated" class="dropdown" style="float:right">
     <!--     TODO fix dropdown-content вылазит за пределы экрана -->
@@ -11,7 +11,7 @@
            src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha"></a>
 
     <div class="dropdown-content">
-      <a href="/settings">Settings</a>
+      <a (click)="settings()">Settings</a>
       <a (click)="logOut()">Sign Out</a>
     </div>
   </li>

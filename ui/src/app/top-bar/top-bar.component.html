@@ -4,21 +4,19 @@
   <li><a href="/profile">profile</a></li>
   <li><a href="/request-car">request car</a></li>
 
+  <li *ngIf="isAuthenticated" class="dropdown" style="float:right">
+    <!--     TODO fix dropdown-content вылазит за пределы экрана -->
+    <a class="dropbtn">
+      <img class="image" height="32" width="32"
+           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha"></a>
 
-  <li *ngIf="isAuthenticated" class="active" style="float:right" class="dropdown">
-    <!--    todo user icon-->
-    <a href="javascript:void(0)" class="dropbtn">
-      <span class="user-profile-mini-avatar d-table-cell v-align-middle lh-condensed-ultra pr-2">
-          <img class="image" height="32" width="32"
-               src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha">
-        </span>
-    </a>
     <div class="dropdown-content">
-      <a href="/settings">settings</a>
-      <a (click)="logOut()">Log Out</a>
+      <a href="/settings">Settings</a>
+      <a (click)="logOut()">Sign Out</a>
     </div>
   </li>
 
-  <li *ngIf="!isAuthenticated" style="float:right"><a class="active" href="/sign-in">SignIn</a></li>
+  <li *ngIf="!isAuthenticated" style="float:right">
+    <a class="active" href="/sign-in">SignIn</a></li>
 </ul>
 

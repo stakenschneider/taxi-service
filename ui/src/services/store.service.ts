@@ -1,11 +1,16 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
+// TODO refactor this code when implement spring security
 @Injectable()
 export class StoreService {
+  public id: number;
+  public isAuth: boolean;
+  public authChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private id: number;
-
-  constructor() {}
+  constructor() {
+    this.isAuth = false;
+  }
 
   getId() {
     return this.id;
@@ -13,5 +18,15 @@ export class StoreService {
 
   setId(id: number) {
     this.id = id;
+    this.setIsAuth(true);
+  }
+
+  getIsAuth() {
+    return this.isAuth;
+  }
+
+  setIsAuth(bool: boolean) {
+    this.isAuth = bool;
+    this.authChanged.next(bool);
   }
 }

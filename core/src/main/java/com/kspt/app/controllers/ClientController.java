@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Masha on 11.03.2020
@@ -30,8 +31,8 @@ public class ClientController {
         return service.setPassport(clientId, passport);
     }
 
-    @PostMapping("{clientId}/getHistoryOfTrips")
-    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@PathVariable final Long clientId) {
+    @PostMapping("/getHistoryOfTrips")
+    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
         return service.getHistoryOfTrips(clientId);
     }
 

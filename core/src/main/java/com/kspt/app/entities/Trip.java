@@ -31,6 +31,7 @@ public class Trip extends AbstractEntity{
     private Driver driver;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -51,11 +52,13 @@ public class Trip extends AbstractEntity{
     private int rating;
 
     @Column(name = "rate", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Rate tripRate;
 
     @Column(name = "price", nullable = false)
     private Double price;
 
     @Column(name = "payment_method", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 }

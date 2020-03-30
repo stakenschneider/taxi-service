@@ -210,6 +210,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="33" parent="15" name="car">
       <ObjectId>49166</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>633</StateNumber>
     </table>
@@ -225,6 +226,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="36" parent="15" name="driver">
       <ObjectId>49196</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>631</StateNumber>
     </table>
@@ -235,6 +237,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="38" parent="15" name="passport">
       <ObjectId>49218</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>630</StateNumber>
     </table>

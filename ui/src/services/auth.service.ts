@@ -12,10 +12,9 @@ export class AuthService {
     this.http = http;
   }
 
-  signIn(email: string) {
+  signIn(emailOrUserName: string) {
     const url = environment.signIn;
-    // на самом деле это не почта а почта или юсернейм
-    return this.http.post<ResponseOrMessage<Person>>(url, {email});
+    return this.http.post<ResponseOrMessage<Person>>(url, {emailOrUserName});
   }
 
   signUp(email: string, password: string, firstName: string, lastName: string) {
@@ -23,8 +22,8 @@ export class AuthService {
     return this.http.post<boolean>(url, {email, password, firstName, lastName});
   }
 
-  // signOut(id: number, personType: string) {
-  //   const url = environment.signOut;
-  //   return this.http.post(url, {id, personType});
-  // }
+  signOut(id: number) {
+    const url = environment.signOut;
+    return this.http.post(url, {id});
+  }
 }

@@ -18,7 +18,6 @@ export class TopBarComponent implements OnInit, OnDestroy {
     this.authChangedSubscriber = this.storeService.authChanged.asObservable().subscribe(x => {
       this.isAuthenticated = x;
     });
-    // TODO true - виден logout, profile, settings | false - виден sign-in привязка к StoreService
   }
 
   ngOnDestroy(): void {
@@ -49,4 +48,5 @@ export class TopBarComponent implements OnInit, OnDestroy {
   settings() {
     return this.router.navigateByUrl('/settings');
   }
+
 }

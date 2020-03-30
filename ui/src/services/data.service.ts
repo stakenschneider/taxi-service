@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
 import {Observable} from 'rxjs';
+import {Person} from '../models/actor/person.model';
+import {ResponseOrMessage} from '../models/response.or.message.model';
+import {Trip} from '../models/trip.model';
 
 @Injectable()
 export class DataService {
@@ -20,5 +23,15 @@ export class DataService {
   getRate() {
     const url = environment.getRate;
     return this.http.get<any>(url, {});
+  }
+
+  getPersonById(id: number) {
+    const url = environment.getPersonById;
+    return this.http.post<ResponseOrMessage<Person>>(url, {id});
+  }
+
+  getHistoryOfTips(id: number) {
+    const url = environment.getHistoryOfTips;
+    return this.http.post<ResponseOrMessage<Array<Trip>>>(url, {id});
   }
 }

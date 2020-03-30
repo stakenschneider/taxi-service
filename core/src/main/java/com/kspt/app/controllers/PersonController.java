@@ -1,7 +1,6 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.CredentialModel;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.models.ResponseOrMessage;
 import com.kspt.app.service.PersonService;
@@ -30,6 +29,6 @@ public class PersonController {
         return service.signIn(emailOrUserName);
     }
 
-    @PostMapping("sign-out")
+    @PostMapping("/sign-out")
     public boolean signOut() { return service.signOut();}
 }

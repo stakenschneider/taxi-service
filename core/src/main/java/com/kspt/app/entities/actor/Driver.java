@@ -1,5 +1,6 @@
 package com.kspt.app.entities.actor;
 
+import com.kspt.app.configuration.Constants.PersonType;
 import com.kspt.app.entities.Car;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,5 +37,6 @@ public class Driver extends Person {
         this.phoneNumber = phoneNumber;
         this.available = true;
         this.rating = 5.0;
+        this.personType = PersonType.DRIVER;
     }
 }

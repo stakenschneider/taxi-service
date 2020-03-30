@@ -1,7 +1,42 @@
-<div id="body">
-  <img alt="" width="260" height="260" class="avatar width-full height-full avatar-before-user-status"
-                    src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+<div class="container-fluid">
+  <div class='row'>
+    <div id="left" class='col-xs-12 col-md-1' >
+      <div id="first">
+      <img id="avatar" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="avatar"/>
+      <div class="text"><b>{{firstName}}  {{lastName}}</b></div>
+      <div class="text">@{{username}}</div>
+      <div class="text">e: {{email}}</div>
+      <div class="text">{{personType}}</div>
+        <button (click)="showHistoryOfTrips()">Show trips history</button>
+      </div>
+    </div>
 
-
+    <div class='col-xs-12 col-md' id="right">
+      <div *ngIf="showTrips" id="second">
+        <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th *ngFor = "let column of headers">
+              {{column}}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor = "let row of tripsArray">
+            <td *ngFor = "let column of headers">
+              {{row[column]}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+

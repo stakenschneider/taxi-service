@@ -1,5 +1,4 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
 
 // TODO refactor this code when implement spring security
 @Injectable()

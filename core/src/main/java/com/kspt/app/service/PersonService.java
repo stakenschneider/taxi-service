@@ -88,9 +88,9 @@ public class PersonService {
 //    }
 
     public ResponseOrMessage<Person> signIn(Map<String, String> emailOrUserName) {
-        if (emailOrUserName.containsKey("email")) {
-            final Credentials credentials = credentialsRepository.findByEmail(emailOrUserName.get("email"))
-                    .orElseGet(()-> credentialsRepository.findByUsername(emailOrUserName.get("email")).orElse(null));
+        if (emailOrUserName.containsKey("emailOrUserName")) {
+            final Credentials credentials = credentialsRepository.findByEmail(emailOrUserName.get("emailOrUserName"))
+                    .orElseGet(()-> credentialsRepository.findByUsername(emailOrUserName.get("emailOrUserName")).orElse(null));
             //TODO Polymorphic Queries
             if (credentials != null) {
                 return new ResponseOrMessage<>(clientRepository.findByCredentials(credentials).orElseGet(

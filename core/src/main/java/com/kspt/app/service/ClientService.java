@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -35,7 +36,7 @@ public class ClientService {
     private AddressRepository addressRepository;
     private DriverRepository driverRepository;
 
-    public ClientService(DriverRepository driverRepository,ClientRepository clientRepository, TripRepository tripRepository, AddressRepository addressRepository) {
+    public ClientService(DriverRepository driverRepository, ClientRepository clientRepository, TripRepository tripRepository, AddressRepository addressRepository) {
         this.clientRepository = clientRepository;
         this.tripRepository = tripRepository;
         this.addressRepository = addressRepository;
@@ -52,8 +53,8 @@ public class ClientService {
             if (client.getPassport() == null) {
                 client.setPassport(passport);
                 clientRepository.save(client);
-            } else return new ResponseOrMessage<Person> ("Passport already exist");
-        } else return new ResponseOrMessage<Person> ("Client not found");
+            } else return new ResponseOrMessage<Person>("Passport already exist");
+        } else return new ResponseOrMessage<Person>("Client not found");
         return new ResponseOrMessage<Person>(client);
     }
 
@@ -95,7 +96,7 @@ public class ClientService {
         Driver driver = driverRepository.findById(trip.getDriver().id).orElse(null);
         if (driver == null) return new ApiResult("Driver not found");
 
-        driver.setRating((driver.getRating()+trip.getRating())/2);
+        driver.setRating((driver.getRating() + trip.getRating()) / 2);
 
         trip.setRating(grade);
 
@@ -124,20 +125,33 @@ public class ClientService {
                 return new Random().nextInt(10000) + 5000.0;
             case GOD:
                 return new Random().nextInt(Integer.MAX_VALUE) + 0.0;
-            default: return 0.0;
+            default:
+                return 0.0;
         }
     }
 
-    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(Long clientId) {
-        List<Trip> list = tripRepository.findAllByClientId(clientId).orElse(null);
-        if (list == null) return new ResponseOrMessage<>("Trips not found");
-        else return new ResponseOrMessage<>(list);
+    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(Map<String, Long> clientId) {
+        if (clientId.containsKey("id")) {
+            List<Trip> list = tripRepository.findAllByClientId(clientId.get("id")).orElse(null);
+            if (list == null) return new ResponseOrMessage<>("Trips not found");
+            else return new ResponseOrMessage<>(list);
+        } else return new ResponseOrMessage<>("Wrong parameter");
     }
 
     public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
         Trip trip = tripRepository.findById(tripId).orElse(null);
-        if (trip==null) return new ApiResult("Trip not found");
+        if (trip == null) return new ApiResult("Trip not found");
         trip.setPaymentMethod(newPaymentMethod);
         return new ApiResult("Payment Method was changed");
+    }
+
+    public ResponseOrMessage<Person> getClientById(Map<String, Long> clientId) {
+        if (clientId.containsKey("id")) {
+            Client client = clientRepository.findById(clientId.get("id")).orElse(null);
+            if (client == null) {
+                return new ResponseOrMessage<>("Client not found");
+            }
+            return new ResponseOrMessage<>(client);
+        } else return new ResponseOrMessage<>("Wrong parameter");
     }
 }

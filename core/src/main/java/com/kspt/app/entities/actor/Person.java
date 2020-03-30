@@ -1,5 +1,6 @@
 package com.kspt.app.entities.actor;
 
+import com.kspt.app.configuration.Constants.PersonType;
 import com.kspt.app.entities.AbstractEntity;
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.Passport;
@@ -27,6 +28,10 @@ public abstract class Person extends AbstractEntity {
 
     @Column(name = "phone_number")
     protected String phoneNumber;
+
+    @Column(name = "personType")
+    @Enumerated(EnumType.STRING)
+    protected PersonType personType;
 
     @JoinColumn(name = "credentials_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

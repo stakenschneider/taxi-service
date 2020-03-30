@@ -5,10 +5,10 @@
   <li><a (click)="requestCar()">request car</a></li>
 
   <li *ngIf="isAuthenticated" class="dropdown" style="float:right">
-    <!--     TODO fix dropdown-content вылазит за пределы экрана -->
     <a class="dropbtn">
-      <img class="image" height="32" width="32"
-           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha"></a>
+      <img class="image"
+           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha">
+    </a>
 
     <div class="dropdown-content">
       <a (click)="settings()">Settings</a>

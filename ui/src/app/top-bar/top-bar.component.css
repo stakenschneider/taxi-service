@@ -4,10 +4,6 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #333;
-  /*  fixed*/
-  /*position: fixed;*/
-  /*top: 0;*/
-  /*width: 100%;*/
 }
 
 li {
@@ -23,12 +19,18 @@ li a, .dropbtn {
   text-decoration: none;
 }
 
-li a:hover, .dropdown:hover .dropbtn {
+li a:hover:not(.dropbtn) {
   background-color: red;
 }
 
 li.dropdown {
   display: inline-block;
+}
+
+a.dropbtn{
+  padding: 8px !important;
+  /*TODO оооооочень плохо ай яй*/
+  padding-left: 100px !important;
 }
 
 .active {
@@ -44,7 +46,7 @@ li.dropdown {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -65,5 +67,7 @@ li.dropdown {
 }
 
 .image{
+  height: 32px;
+  /*width: 20px;*/
   border-radius: 30px;
 }

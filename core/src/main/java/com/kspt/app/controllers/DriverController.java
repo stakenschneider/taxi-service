@@ -1,7 +1,6 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.Trip;
-import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.*;
 import com.kspt.app.service.DriverService;

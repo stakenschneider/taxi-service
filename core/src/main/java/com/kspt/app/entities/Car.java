@@ -9,9 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Masha on 27.02.2020
@@ -25,15 +23,18 @@ import javax.persistence.Table;
 public class Car extends AbstractEntity {
 
     @Column(name = "car_rate", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Rate carRate;
 
     @Column(name = "number", nullable = false)
     private String number;
 
     @Column(name = "model", nullable = false)
+    @Enumerated(EnumType.STRING)
     private CarModels model;
 
     @Column(name = "color", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Color color;
 
     public Car(String number, CarModels model, Color color) {

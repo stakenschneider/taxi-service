@@ -44,7 +44,6 @@ public class ClientService {
     }
 
     public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
-
 //      TODO HttpMessageNotReadableException
 //           example valid data in: 012265 ->JSON parse error
         final Passport passport = new Passport(model.getSeries(), model.getNumber());
@@ -53,12 +52,12 @@ public class ClientService {
             if (client.getPassport() == null) {
                 client.setPassport(passport);
                 clientRepository.save(client);
-            } else return new ResponseOrMessage<Person>("Passport already exist");
-        } else return new ResponseOrMessage<Person>("Client not found");
-        return new ResponseOrMessage<Person>(client);
+            } else return new ResponseOrMessage<>("Passport already exist");
+        } else return new ResponseOrMessage<>("Client not found");
+        return new ResponseOrMessage<>(client);
     }
 
-    public ApiResult requestCar(TripModelRequest model, Long clientId) {
+    public ApiResult requestCar(TripModelRequest model) {
 
         Address startAddress = new Address(model.getStartAddress().getCity(),
                 model.getStartAddress().getStreet(),
@@ -68,7 +67,7 @@ public class ClientService {
                 model.getFinishAddress().getStreet(),
                 model.getFinishAddress().getNumberHouse());
 
-        Client client = clientRepository.findById(clientId).orElse(null);
+        Client client = clientRepository.findById(model.getClientId()).orElse(null);
 
         if (client == null) return new ApiResult("Client doesnt exist");
 
@@ -105,13 +104,15 @@ public class ClientService {
         return new ApiResult("Thank you for rating");
     }
 
-    public ApiResult denyTrip(Long tripId) {
-        Trip trip = tripRepository.findById(tripId).orElse(null);
-        if (trip == null) return new ApiResult("Trip doesnt exist");
-        trip.setStatus(Status.DENY);
-        trip.setDateOfCompletion(new Date());
-        tripRepository.save(trip);
-        return new ApiResult("The trip was canceled");
+    public ApiResult denyTrip(Map<String,Long> tripId) {
+        if (tripId.containsKey("id")) {
+            Trip trip = tripRepository.findById(tripId.get("id")).orElse(null);
+            if (trip == null) return new ApiResult("Trip doesnt exist");
+            trip.setStatus(Status.DENY);
+            trip.setDateOfCompletion(new Date());
+            tripRepository.save(trip);
+            return new ApiResult("The trip was canceled");} else return new ApiResult("Wrong parameter");
+
     }
 
     private Double setPrice(Rate rate) {

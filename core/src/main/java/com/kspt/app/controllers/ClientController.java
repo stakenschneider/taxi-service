@@ -36,9 +36,9 @@ public class ClientController {
         return service.getHistoryOfTrips(clientId);
     }
 
-    @PostMapping("{clientId}/requestCar")
-    public ApiResult requestCar(@RequestBody TripModelRequest model, @PathVariable Long clientId) {
-        return service.requestCar(model, clientId);
+    @PostMapping("/requestCar")
+    public ApiResult requestCar(@RequestBody TripModelRequest model) {
+        return service.requestCar(model);
     }
 
     @PostMapping("{tripId}/setGrade")
@@ -51,8 +51,8 @@ public class ClientController {
         return service.changePaymentMethod( tripId,newPaymentMethod);
     }
 
-    @PostMapping("{tripId}/denyTrip")
-    public ApiResult denyTrip(@PathVariable Long tripId) {
-        return service.denyTrip( tripId);
+    @PostMapping("/denyTrip")
+    public ApiResult denyTrip(@RequestBody Map<String,Long> tripId) {
+        return service.denyTrip(tripId);
     }
 }

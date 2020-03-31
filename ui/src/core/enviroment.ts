@@ -8,7 +8,9 @@ export function createEnv() {
     getRate: baseUrl + 'getRate',
     getPersonById: baseUrl + 'getClientById',
     signOut: baseUrl + 'sign-out',
-    getHistoryOfTips: baseUrl +'getHistoryOfTrips'
+    getHistoryOfTips: baseUrl + 'getHistoryOfTrips',
+    requestCar: baseUrl + 'requestCar',
+    denyTrip: baseUrl + 'denyTrip'
   };
 }
 

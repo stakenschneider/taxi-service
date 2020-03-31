@@ -1,6 +1,7 @@
 package com.kspt.app.service;
 
 import com.kspt.app.configuration.Constants;
+import com.kspt.app.configuration.SSEController;
 import com.kspt.app.entities.Car;
 import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
@@ -12,10 +13,15 @@ import com.kspt.app.repository.CarRepository;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;
 import com.kspt.app.repository.TripRepository;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Masha on 12.03.2020
@@ -34,76 +40,93 @@ public class DriverService {
         this.carRepository = carRepository;
         this.clientRepository = clientRepository;
     }
+
     public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
-//com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: com.kspt.app.models.ResponseOrMessage["body"]->com.kspt.app.entities.actor.Driver["car"]->com.kspt.app.entities.Car$HibernateProxy$D85mTwiN["hibernateLazyInitializer"])
         //      TODO HttpMessageNotReadableException
-//           example valid data in: 012265 ->JSON parse error
         final Passport passport = new Passport(model.getSeries(), model.getNumber());
         Driver driver = driverRepository.findById(id).orElse(null);
         if (driver != null) {
             if (driver.getPassport() == null) {
                 driver.setPassport(passport);
                 driverRepository.save(driver);
-            } else return new ResponseOrMessage<Person>("Passport already exist");
-        } else return new ResponseOrMessage<Person>("Driver not found");
-        return new ResponseOrMessage<Person>(driver);
+            } else return new ResponseOrMessage<>("Passport already exist");
+        } else return new ResponseOrMessage<>("Driver not found");
+        return new ResponseOrMessage<>(driver);
     }
 
-    public ApiResult setCar(Long driverId, CarModel carModel){
-        Car car = new Car(carModel.getNumber(),carModel.getModel(),carModel.getColor());
+    public ApiResult setCar(Long driverId, CarModel carModel) {
+        Car car = new Car(carModel.getNumber(), carModel.getModel(), carModel.getColor());
         Driver driver = driverRepository.findById(driverId).orElse(null);
-        if(driver == null) return new ApiResult("Driver not found");
-        if(driver.getCar()!=null) return new ApiResult("Car already exist");
+        if (driver == null) return new ApiResult("Driver not found");
+        if (driver.getCar() != null) return new ApiResult("Car already exist");
         driver.setCar(carRepository.save(car));
         driverRepository.save(driver);
         return new ApiResult("Car was added");
     }
 
-    public ApiResult takeTrip(Long tripId, Long driverId) {
-        Trip trip = tripRepository.findById(tripId).orElse(null);
-        Driver driver = driverRepository.findById(driverId).orElse(null);
+    public void sendSseEventsToUI(Driver notification) {
+        List<SseEmitter> sseEmitterListToRemove = new ArrayList<>();
+        SSEController.emitters.forEach((SseEmitter emitter) -> {
+            try {
+                emitter.send(notification, MediaType.APPLICATION_JSON);
+            } catch (IOException e) {
+                emitter.complete();
+                sseEmitterListToRemove.add(emitter);
+                e.printStackTrace();
+            }
+        });
+        SSEController.emitters.removeAll(sseEmitterListToRemove);
+    }
 
-        if (trip == null) return new ApiResult("Trip not found");
-        if (driver == null) return new ApiResult("Driver not found");
-        if (driver.getCar() == null) return new ApiResult("The car is not registered");
-        if (driver.getPassport() == null) return new ApiResult("The passport is not registered");
+    public ApiResult takeTrip(Map<String, Long> id) {
+        if (id.containsKey("tripId") || id.containsKey("driverId")) {
+            Trip trip = tripRepository.findById(id.get("tripId")).orElse(null);
+            Driver driver = driverRepository.findById(id.get("driverId")).orElse(null);
 
-        switch (trip.getStatus()){
-            case CREATE:
-                trip.setDriver(driver);
-                driver.setAvailable(false);
-                trip.setStatus(Constants.Status.START);
-                tripRepository.save(trip);
-                return new ApiResult("Trip was assign");
+            if (trip == null) return new ApiResult("Trip not found");
+            if (driver == null) return new ApiResult("Driver not found");
+            if (driver.getCar() == null) return new ApiResult("The car is not registered");
+            if (driver.getPassport() == null) return new ApiResult("The passport is not registered");
 
-            case DENY:
-                return new ApiResult("Trip was deny");
+            switch (trip.getStatus()) {
+                case CREATE:
+                    trip.setDriver(driver);
+                    driver.setAvailable(false);
+                    trip.setStatus(Constants.Status.START);
+                    tripRepository.save(trip);
+                    sendSseEventsToUI(driver);
+                    return new ApiResult("Trip was assign");
 
-            default:
-                return new ApiResult("Trip already assign");
-        }
+                case DENY:
+                    return new ApiResult("Trip was deny");
+
+                default:
+                    return new ApiResult("Trip already assign");
+            }
+        } else return new ApiResult("Wrong parameter");
     }
 
     public ResponseOrMessage<List<Trip>> getFreeTrips() {
         List<Trip> list = tripRepository.findByStatus(Constants.Status.CREATE).orElse(null);
-        if (list == null){
-            return new ResponseOrMessage<List<Trip>>("No free trips");
-        } return new ResponseOrMessage<List<Trip>>(list);
+        if (list == null) {
+            return new ResponseOrMessage<>("No free trips");
+        }
+        return new ResponseOrMessage<>(list);
     }
 
-    public ApiResult endTrip(Long driverId, int grade){
+    public ApiResult endTrip(Long driverId, int grade) {
 //        todo
         Driver driver = driverRepository.findById(driverId).orElse(null);
         Trip trip = tripRepository.findByDriverId(driverId).orElse(null);
 
-        if (driver == null ) return new ApiResult("Driver not found");
+        if (driver == null) return new ApiResult("Driver not found");
         if (trip == null) return new ApiResult("Trip not found");
 
         Client client = trip.getClient();
 
         if (client == null) return new ApiResult("Client not found");
 
-        client.setRating((client.getRating()+grade)/2);
+        client.setRating((client.getRating() + grade) / 2);
 
         driver.setAvailable(true);
         trip.setStatus(Constants.Status.FINISH);

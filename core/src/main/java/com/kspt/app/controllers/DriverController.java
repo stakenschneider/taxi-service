@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Masha on 12.03.2020
@@ -28,18 +29,18 @@ public class DriverController {
         return service.setPassport(driverId, passport);
     }
 
-    @PostMapping("{driverId}/endTrip")
-    public ApiResult endTrip(@PathVariable Long driverId, @RequestBody int grade) {
+    @PostMapping("/endTrip")
+    public ApiResult endTrip(@RequestBody Long driverId, @RequestBody int grade) {
         return service.endTrip(driverId, grade);
     }
 
-    @PostMapping("getFreeTrips")
+    @PostMapping("/getFreeTrips")
     public ResponseOrMessage<List<Trip>> getFreeTrips() {
         return service.getFreeTrips();
     }
 
-    @PostMapping("{tripId}/{driverId}/takeTrip")
-    public ApiResult takeTrip(@PathVariable Long tripId, @PathVariable Long driverId) {
-        return service.takeTrip(tripId, driverId);
+    @PostMapping("/takeTrip")
+    public ApiResult takeTrip(@RequestBody Map<String,Long> id) {
+        return service.takeTrip(id);
     }
 }

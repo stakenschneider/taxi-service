@@ -205,6 +205,7 @@ sequence|table|49224|49226|1
     </sequence>
     <table id="32" parent="15" name="address">
       <ObjectId>49155</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>619</StateNumber>
     </table>
@@ -221,6 +222,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="35" parent="15" name="credentials">
       <ObjectId>49185</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>629</StateNumber>
     </table>
@@ -243,6 +245,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="39" parent="15" name="trip">
       <ObjectId>49226</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>636</StateNumber>
     </table>

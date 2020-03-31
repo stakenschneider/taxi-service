@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {RequestCarComponent} from './request-car/request-car.component';
 import {DataService} from '../services/data.service';
 import {StoreService} from '../services/store.service';
+import {ClientService} from '../services/client.service';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -48,8 +49,11 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService,
-    DataService, StoreService],
+  providers: [
+    AuthService,
+    DataService,
+    StoreService,
+    ClientService],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })

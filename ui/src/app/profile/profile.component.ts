@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {StoreService} from '../../services/store.service';
 import {DataService} from '../../services/data.service';
 import {Trip} from '../../models/trip.model';
+import {Driver} from '../../models/actor/driver.model';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
   public showTrips: boolean;
   public headers = ['id', 'driver', 'status', 'rating', 'tripRate', 'price', 'paymentMethod', 'dateOfCreation', 'dateOfCompletion'];
   public tripsArray: Array<Trip>;
+  public driver: Driver;
 
   constructor(private router: Router,
               private dataService: DataService) {

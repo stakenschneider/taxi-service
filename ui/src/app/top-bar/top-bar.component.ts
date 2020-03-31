@@ -42,7 +42,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
   requestCar() {
-    return this.router.navigateByUrl('/request-care');
+    return this.router.navigateByUrl('/request-car');
   }
 
   settings() {

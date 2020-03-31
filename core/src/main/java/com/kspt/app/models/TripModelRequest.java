@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 public class TripModelRequest {
+    private Long clientId;
     private AddressModel startAddress;
     private AddressModel finishAddress;
     private Rate rate;

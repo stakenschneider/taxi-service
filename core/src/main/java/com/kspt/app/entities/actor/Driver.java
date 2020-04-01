@@ -30,11 +30,9 @@ public class Driver extends Person {
     private Double rating;
 
     public Driver( @NotNull final String firstName,
-                   @NotNull final String secondName,
-                   final String phoneNumber) {
+                   @NotNull final String secondName) {
         this.firstName = firstName;
         this.lastName = secondName;
-        this.phoneNumber = phoneNumber;
         this.available = true;
         this.rating = 5.0;
         this.personType = PersonType.DRIVER;

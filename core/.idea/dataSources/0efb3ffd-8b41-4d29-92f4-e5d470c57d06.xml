@@ -217,6 +217,7 @@ sequence|table|49224|49226|1
     </table>
     <table id="34" parent="15" name="client">
       <ObjectId>49174</ObjectId>
+      <Outdated>1</Outdated>
       <Owner>postgres</Owner>
       <StateNumber>629</StateNumber>
     </table>

@@ -2,6 +2,7 @@ package com.kspt.app.service;
 
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.actor.Client;
+import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.models.ResponseOrMessage;
@@ -38,12 +39,20 @@ public class PersonService {
         final Credentials credentials = new Credentials(model.getEmail(),
                 model.getPassword(),
                 model.getEmail().split("@")[0]);
-
         try {
-            Client client = new Client(model.getFirstName(), model.getLastName());
-            client.setCredentials(credentials);
-            clientRepository.save(client);
-            return new ResponseOrMessage<>(true);
+            switch (model.getPersonType()){
+                case CLIENT:
+                    Client client = new Client(model.getFirstName(), model.getLastName());
+                    client.setCredentials(credentials);
+                    clientRepository.save(client);
+                    return new ResponseOrMessage<>(true);
+                case DRIVER:
+                    Driver driver = new Driver(model.getFirstName(), model.getLastName());
+                    driver.setCredentials(credentials);
+                    driverRepository.save(driver);
+                    return new ResponseOrMessage<>(true);
+                default: return new ResponseOrMessage<>("Wrong parameter");
+            }
         } catch (Exception e) {
             return new ResponseOrMessage<>("Login already exist");
         }

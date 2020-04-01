@@ -17,9 +17,9 @@ export class AuthService {
     return this.http.post<ResponseOrMessage<Person>>(url, {emailOrUserName});
   }
 
-  signUp(email: string, password: string, firstName: string, lastName: string) {
+  signUp(email: string, password: string, firstName: string, lastName: string, personType: string) {
     const url = environment.signUp;
-    return this.http.post<boolean>(url, {email, password, firstName, lastName});
+    return this.http.post<ResponseOrMessage<boolean>>(url, {email, password, firstName, lastName, personType});
   }
 
   signOut(id: number) {

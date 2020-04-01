@@ -15,6 +15,8 @@ export class SignUpComponent implements OnInit {
   public firstName: string;
   public lastName: string;
   public flag: boolean;
+  checkBoxValue: boolean;
+  personType: string;
 
   constructor(private router: Router, private authService: AuthService) {
     this.flag = false;
@@ -43,12 +45,18 @@ export class SignUpComponent implements OnInit {
           const salt = bcrypt.genSaltSync(10);
           this.password = bcrypt.hashSync(this.password, salt);
 
-          this.authService.signUp(this.email, this.password, this.firstName, this.lastName).subscribe(
+          if (this.checkBoxValue) {
+            this.personType = 'DRIVER';
+          } else {
+            this.personType = 'CLIENT';
+          }
+          this.authService.signUp(this.email, this.password, this.firstName, this.lastName, this.personType).subscribe(
             data => {
-              // this.person = data as Client;
-            }, error => console.error(error)
+              if (data.body) {
+                this.router.navigateByUrl('/sign-in');
+              } else { alert(data.message); }
+            }, error => alert(error)
           );
-          this.router.navigateByUrl('/sign-in');
         }
       }
     }

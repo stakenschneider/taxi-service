@@ -14,4 +14,5 @@ import com.kspt.app.configuration.Constants.PersonType;
 public class RegistrationModel extends CredentialModel{
     protected String firstName;
     protected String lastName;
+    protected PersonType personType;
 }

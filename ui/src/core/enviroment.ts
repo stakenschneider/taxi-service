@@ -6,11 +6,15 @@ export function createEnv() {
     signUp: baseUrl + 'sign-up',
     getPaymentMethod: baseUrl + 'getPaymentMethods',
     getRate: baseUrl + 'getRate',
-    getPersonById: baseUrl + 'getClientById',
+    getPersonById: baseUrl + 'getPersonById',
     signOut: baseUrl + 'sign-out',
     getHistoryOfTips: baseUrl + 'getHistoryOfTrips',
     requestCar: baseUrl + 'requestCar',
-    denyTrip: baseUrl + 'denyTrip'
+    denyTrip: baseUrl + 'denyTrip',
+    getCarColor: baseUrl + 'getCarColor',
+    setCar: baseUrl + 'setCar',
+    setPassport: baseUrl + 'setPassport',
+    getCarModels: baseUrl + 'getCarModels'
   };
 }
 

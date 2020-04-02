@@ -18,13 +18,13 @@ import javax.persistence.Table;
 @Table(name="Passport")
 public class Passport extends AbstractEntity {
     @Column(name = "series")
-    private int series;
+    private String series;
 
     @Column(name = "number")
-    private int number;
+    private String number;
 
-    public Passport(final int series,
-                    final int number) {
+    public Passport(final String series,
+                    final String number) {
         this.series = series;
         this.number = number;
     }

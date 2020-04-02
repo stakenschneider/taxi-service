@@ -14,14 +14,23 @@ export class DataService {
     this.http = http;
   }
 
-  // tslint:disable-next-line:ban-types
-  getPaymentMethod(): Observable<Object> {
+  getPaymentMethod() {
     const url = environment.getPaymentMethod;
     return this.http.get<any>(url, {});
   }
 
   getRate() {
     const url = environment.getRate;
+    return this.http.get<any>(url, {});
+  }
+
+  getCarColorList() {
+    const url = environment.getCarColor;
+    return this.http.get<any>(url, {});
+  }
+
+  getCarModelList() {
+    const url = environment.getCarModels;
     return this.http.get<any>(url, {});
   }
 

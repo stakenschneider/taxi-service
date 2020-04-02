@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {Address} from '../models/address.model';
 import {ApiResult} from '../models/api.result.model';
 
 @Injectable()

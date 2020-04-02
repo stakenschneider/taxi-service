@@ -1,6 +1,6 @@
 package com.kspt.app.repository;
 
-import com.kspt.app.configuration.Constants;
+import com.kspt.app.configuration.Constants.Status;
 import com.kspt.app.entities.Trip;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +12,8 @@ import java.util.Optional;
  */
 @Repository
 public interface TripRepository extends JPARepository<Trip> {
-    Optional<List<Trip>> findByStatus(Constants.Status status);
+    Optional<List<Trip>> findByStatus(Status status);
     Optional<Trip> findByDriverId(Long id);
     Optional<List<Trip>> findAllByClientId(Long id);
+    Optional<Trip> findByClientIdAndStatus(Long clientId, Status status);
 }

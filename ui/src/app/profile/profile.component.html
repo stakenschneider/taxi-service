@@ -2,38 +2,68 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container-fluid">
-  <div class='row'>
-    <div id="left" class='col-xs-12 col-md-1' >
+<!--PAGE CONTENT-->
+  <div *ngIf="ifPersonExist" class='row'>
+<!--PERSON COLUMN-->
+    <div id="left" class='col-xs-12 col-md-1'>
       <div id="first">
-      <img id="avatar" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="avatar"/>
-      <div class="text"><b>{{firstName}}  {{lastName}}</b></div>
-      <div class="text">@{{username}}</div>
-      <div class="text">e: {{email}}</div>
-      <div class="text">{{personType}}</div>
-        <button (click)="showHistoryOfTrips()">Show trips history</button>
+        <img id="avatar" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
+             alt="avatar"/>
+        <div class="text"><b>{{firstName}}  {{lastName}}</b></div>
+        <div class="text">@{{username}}</div>
+        <div class="text">e: {{email}}</div>
+        <div class="text">{{personType}}</div>
+        <button *ngIf="isClient" (click)="showHistoryOfTrips()">Show trips history</button>
+        <button *ngIf="isDriver" (click)="openRegisterCarForm()">Register a car</button>
+        <button *ngIf="isDriver" (click)="openPassportForm()">Register a passport</button>
+
       </div>
     </div>
-
+<!--CONTENT COLUMN-->
     <div class='col-xs-12 col-md' id="right">
-      <div *ngIf="showTrips" id="second">
+<!--      TRIPS CLIENT TABLE-->
+      <div *ngIf="showTrips" class="second">
         <div class="table-responsive text-nowrap">
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th *ngFor = "let column of headers">
-              {{column}}
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor = "let row of tripsArray">
-            <td *ngFor = "let column of headers">
-              {{row[column]}}
-            </td>
-          </tr>
-          </tbody>
-        </table>
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th *ngFor="let column of headers">
+                {{column}}
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of tripsArray">
+              <td *ngFor="let column of headers">
+                {{row[column]}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+<!--      SET PASSPORT FORM-->
+      <div *ngIf="showPassportForm" class="second">
+        <input [(ngModel)]="passport.series" type="text" placeholder="series">
+        <input [(ngModel)]="passport.number" type="text" placeholder="number">
+        <button (click)="setPassport()">SAVE</button>
+      </div>
+<!--      SET CAR FORM-->
+      <div *ngIf="showRegisterCarForm" class="second">
+        <div class="child">MODEL:</div>
+        <div class="rate">
+          <select class=" can-disable" [(ngModel)]="modelTitle" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let title of carModels" [ngValue]="title">{{title}}</option>
+          </select>
+        </div>
+        <div class="child">COLOR:</div>
+        <div class="rate">
+          <select class=" can-disable" [(ngModel)]="colorTitle" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let title of carColors" [ngValue]="title">{{title}}</option>
+          </select>
+        </div>
+        <input [(ngModel)]="carNumber" type="text" placeholder="number">
+        <button (click)="setCar()">SAVE</button>
       </div>
     </div>
   </div>

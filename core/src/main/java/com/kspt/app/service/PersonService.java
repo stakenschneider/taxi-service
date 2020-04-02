@@ -62,9 +62,7 @@ public class PersonService {
 
 //    public ResponseOrMessage<Person> signUp(RegistrationModel model) {
 //        final Credentials credentials = new Credentials(model.getLogin(), model.getPassword());
-//
 //        try {
-//            //TODO Polymorphic Queries
 //            switch (model.getPersonType()) {
 //                case CLIENT: {
 //                    Client client = new Client(model.getFirstName(), model.getSecondName(),
@@ -111,5 +109,23 @@ public class PersonService {
 
     public Boolean signOut() {
         return true;
+    }
+
+    public ResponseOrMessage<Person> getPersonById(Map<String, Long> id) {
+        if (id.containsKey("id")) {
+            Long personId = id.get("id");
+            //TODO Polymorphic Queries
+
+            Person person = clientRepository.findById(personId).orElse(null);
+            if (person == null){
+                person = driverRepository.findById(personId).orElse(null);
+                if (person == null){
+                    person = adminRepository.findById(personId).orElse(null);
+                }
+            }
+            if (person == null) {
+                return new ResponseOrMessage<>("Person not found");
+            } else return new ResponseOrMessage<>(person);
+        } else return new ResponseOrMessage<>("Wrong parameter");
     }
 }

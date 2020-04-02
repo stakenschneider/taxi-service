@@ -18,15 +18,14 @@ public class DriverController {
     @Autowired
     private DriverService service;
 
-    @PostMapping("{driverId}/setCar")
-    public ApiResult setCar(@PathVariable Long driverId, @RequestBody CarModel model) {
-        return service.setCar(driverId, model);
+    @PostMapping("/setCar")
+    public ApiResult setCar(@RequestBody CarModel model) {
+        return service.setCar(model);
     }
 
-    @PostMapping("{driverId}/setPassportD")
-    public ResponseOrMessage<Person> setPassport(@PathVariable final Long driverId,
-                                                 @RequestBody PassportModel passport) {
-        return service.setPassport(driverId, passport);
+    @PostMapping("/setPassport")
+    public ApiResult setPassport(@RequestBody PassportModel passport) {
+        return service.setPassport(passport);
     }
 
     @PostMapping("/endTrip")

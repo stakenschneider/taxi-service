@@ -43,20 +43,6 @@ public class ClientService {
         this.driverRepository = driverRepository;
     }
 
-    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
-//      TODO HttpMessageNotReadableException
-//           example valid data in: 012265 ->JSON parse error
-        final Passport passport = new Passport(model.getSeries(), model.getNumber());
-        Client client = clientRepository.findById(id).orElse(null);
-        if (client != null) {
-            if (client.getPassport() == null) {
-                client.setPassport(passport);
-                clientRepository.save(client);
-            } else return new ResponseOrMessage<>("Passport already exist");
-        } else return new ResponseOrMessage<>("Client not found");
-        return new ResponseOrMessage<>(client);
-    }
-
     public ApiResult requestCar(TripModelRequest model) {
 
         Address startAddress = new Address(model.getStartAddress().getCity(),
@@ -69,7 +55,14 @@ public class ClientService {
 
         Client client = clientRepository.findById(model.getClientId()).orElse(null);
 
-        if (client == null) return new ApiResult("Client doesnt exist");
+        if (client == null) {
+            return new ApiResult("Client doesnt exist");
+        }
+
+        if (tripRepository.findByClientIdAndStatus(client.getId(), Status.CREATE).isPresent()
+                || tripRepository.findByClientIdAndStatus(client.getId(), Status.START).isPresent()) {
+            return new ApiResult("U already have active trip, u can't request to car the same time");
+        }
 
         Trip trip = new Trip();
         Rate rate = model.getRate();
@@ -104,14 +97,15 @@ public class ClientService {
         return new ApiResult("Thank you for rating");
     }
 
-    public ApiResult denyTrip(Map<String,Long> tripId) {
-        if (tripId.containsKey("id")) {
-            Trip trip = tripRepository.findById(tripId.get("id")).orElse(null);
+    public ApiResult denyTrip(Map<String, Long> clientId) {
+        if (clientId.containsKey("id")) {
+            Trip trip = tripRepository.findByClientIdAndStatus(clientId.get("id"), Status.CREATE).orElse(null);
             if (trip == null) return new ApiResult("Trip doesnt exist");
             trip.setStatus(Status.DENY);
             trip.setDateOfCompletion(new Date());
             tripRepository.save(trip);
-            return new ApiResult("The trip was canceled");} else return new ApiResult("Wrong parameter");
+            return new ApiResult("The trip was canceled");
+        } else return new ApiResult("Wrong parameter");
 
     }
 
@@ -139,20 +133,22 @@ public class ClientService {
         } else return new ResponseOrMessage<>("Wrong parameter");
     }
 
+//    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
+//        final Passport passport = new Passport(model.getSeries(), model.getNumber());
+//        Client client = clientRepository.findById(id).orElse(null);
+//        if (client != null) {
+//            if (client.getPassport() == null) {
+//                client.setPassport(passport);
+//                clientRepository.save(client);
+//            } else return new ResponseOrMessage<>("Passport already exist");
+//        } else return new ResponseOrMessage<>("Client not found");
+//        return new ResponseOrMessage<>(client);
+//    }
+
     public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
         Trip trip = tripRepository.findById(tripId).orElse(null);
         if (trip == null) return new ApiResult("Trip not found");
         trip.setPaymentMethod(newPaymentMethod);
         return new ApiResult("Payment Method was changed");
-    }
-
-    public ResponseOrMessage<Person> getClientById(Map<String, Long> clientId) {
-        if (clientId.containsKey("id")) {
-            Client client = clientRepository.findById(clientId.get("id")).orElse(null);
-            if (client == null) {
-                return new ResponseOrMessage<>("Client not found");
-            }
-            return new ResponseOrMessage<>(client);
-        } else return new ResponseOrMessage<>("Wrong parameter");
     }
 }

@@ -2,9 +2,11 @@ package com.kspt.app.controllers;
 
 import com.kspt.app.configuration.Constants.Rate;
 import com.kspt.app.configuration.Constants.PaymentMethod;
+import com.kspt.app.configuration.Constants.Color;
+import com.kspt.app.configuration.Constants.CarModels;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.ResponseOrMessage;
-import com.kspt.app.service.ClientService;
+import com.kspt.app.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -15,11 +17,21 @@ import java.util.Map;
 @RestController
 public class DataController {
     @Autowired
-    private ClientService clientService;
+    private PersonService personService;
 
     @GetMapping("/getPaymentMethods")
     public PaymentMethod[] getPaymentMethod() {
         return PaymentMethod.values();
+    }
+
+    @GetMapping("/getCarColor")
+    public Color[] getCarColor() {
+        return Color.values();
+    }
+
+    @GetMapping("/getCarModels")
+    public CarModels[] getCarModels() {
+        return CarModels.values();
     }
 
     @GetMapping("/getRate")
@@ -27,8 +39,8 @@ public class DataController {
         return Rate.values();
     }
 
-    @PostMapping("/getClientById")
-    public ResponseOrMessage<Person> getClientById(@RequestBody Map<String,Long> clientId) {
-        return clientService.getClientById(clientId);
+    @PostMapping("/getPersonById")
+    public ResponseOrMessage<Person> getPersonById(@RequestBody Map<String,Long> id) {
+        return personService.getPersonById(id);
     }
 }

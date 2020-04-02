@@ -25,11 +25,10 @@ public class ClientController {
     @Autowired
     private ClientService service;
 
-    @PostMapping("{clientId}/setPassportC")
-    public ResponseOrMessage<Person> setPassport(@PathVariable final Long clientId,
-                                                 @RequestBody PassportModel passport) {
-        return service.setPassport(clientId, passport);
-    }
+//    @PostMapping("/setPassport")
+//    public ResponseOrMessage<Person> setPassport(@RequestBody PassportModel passport) {
+//        return service.setPassport(passport);
+//    }
 
     @PostMapping("/getHistoryOfTrips")
     public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
@@ -52,7 +51,7 @@ public class ClientController {
     }
 
     @PostMapping("/denyTrip")
-    public ApiResult denyTrip(@RequestBody Map<String,Long> tripId) {
-        return service.denyTrip(tripId);
+    public ApiResult denyTrip(@RequestBody Map<String,Long> clientId) {
+        return service.denyTrip(clientId);
     }
 }

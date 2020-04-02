@@ -1,5 +1,6 @@
 package com.kspt.app.models;
 
+import com.kspt.app.configuration.Constants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 public class PassportModel {
-    private int series;
-    private int number;
-
+    private String series;
+    private String number;
+    private Long id;
 }

@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CarModel {
-    private String number;
+    private String carNumber;
     private CarModels model;
     private Color color;
+    private Long driverId;
 }

@@ -43,18 +43,19 @@ export class SignUpComponent implements OnInit {
           this.flag = true;
         } else {
           const salt = bcrypt.genSaltSync(10);
-          this.password = bcrypt.hashSync(this.password, salt);
-
           if (this.checkBoxValue) {
             this.personType = 'DRIVER';
           } else {
             this.personType = 'CLIENT';
           }
-          this.authService.signUp(this.email, this.password, this.firstName, this.lastName, this.personType).subscribe(
+          this.authService.signUp(this.email, bcrypt.hashSync(this.password, salt),
+            this.firstName, this.lastName, this.personType).subscribe(
             data => {
               if (data.body) {
                 this.router.navigateByUrl('/sign-in');
-              } else { alert(data.message); }
+              } else {
+                alert(data.message);
+              }
             }, error => alert(error)
           );
         }

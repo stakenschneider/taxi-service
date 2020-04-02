@@ -17,6 +17,7 @@ import {RequestCarComponent} from './request-car/request-car.component';
 import {DataService} from '../services/data.service';
 import {StoreService} from '../services/store.service';
 import {ClientService} from '../services/client.service';
+import {DriverService} from '../services/driver.service';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule
   ],
   providers: [
+    DriverService,
     AuthService,
     DataService,
     StoreService,

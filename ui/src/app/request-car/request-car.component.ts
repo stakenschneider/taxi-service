@@ -3,6 +3,7 @@ import {DataService} from '../../services/data.service';
 import {ClientService} from '../../services/client.service';
 import {Address} from '../../models/address.model';
 import {Driver} from '../../models/actor/driver.model';
+import {StoreService} from '../../services/store.service';
 
 declare let EventSource: any;
 
@@ -36,17 +37,21 @@ export class RequestCarComponent implements OnInit {
 
   statusFrameTitle: string;
 
-  constructor(private dataService: DataService, private clientService: ClientService) {
+  constructor(private dataService: DataService, private clientService: ClientService, private storeService: StoreService) {
     this.dataService = dataService;
+    this.storeService = storeService;
   }
 
   ngOnInit(): void {
+
+    // TODO add method GET to backend and call it here
+    // that method must show exist activ trip on this client
+    // if client was activ trips must create a component with this context
+    // TODO AND add to backend a verification which can check: 'have a person activ trip or no?'
+
     this.source.addEventListener('message', message => {
-      const n = JSON.parse(message.data) as Driver;
-      this.driver = n;
+      this.driver = JSON.parse(message.data) as Driver;;
       this.statusFrameTitle = 'The driver is already coming to you!';
-      // '\n Last name:' + n.lastName + '\n phone number' +
-      //   n.phoneNumber + '\nCar: ' + n.car.number + n.car.model + n.car.color;
     });
 
     this.dataService.getPaymentMethod().subscribe(
@@ -67,7 +72,7 @@ export class RequestCarComponent implements OnInit {
       const startAddress = new Address(this.fromCity, this.fromStreet, this.fromNumber);
       const finishAddress = new Address(this.toCity, this.toStreet, this.toNumber);
 
-      this.clientService.requestCar(1, startAddress, finishAddress, this.paymentMethodsTitle, this.rateTitle).subscribe(
+      this.clientService.requestCar(this.storeService.getId(), startAddress, finishAddress, this.paymentMethodsTitle, this.rateTitle).subscribe(
         data => {
           this.disabled = true;
           this.statusFrameTitle = data.message;
@@ -83,7 +88,7 @@ export class RequestCarComponent implements OnInit {
   }
 
   denyTrip() {
-    this.clientService.denyTrip(8).subscribe(
+    this.clientService.denyTrip(2).subscribe(
       data => {
         this.statusFrameTitle = data.message;
         this.disabled = false;

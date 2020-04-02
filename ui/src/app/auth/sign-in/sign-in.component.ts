@@ -33,13 +33,14 @@ export class SignInComponent implements OnInit {
           bcrypt.compare(this.password, data.body.credentials.password, (err, result) => {
             if (result) {
               this.storeService.setId(data.body.id);
-              return this.router.navigateByUrl('/home');
+              this.storeService.setPersonType(data.body.personType);
+              return this.router.navigateByUrl('/profile');
             } else {
               this.flag = true;
             }
           });
         }
-      });
+      }, error => alert(error));
   }
 
   // ngOnDestroy() {

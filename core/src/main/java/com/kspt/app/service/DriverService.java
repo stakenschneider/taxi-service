@@ -41,22 +41,21 @@ public class DriverService {
         this.clientRepository = clientRepository;
     }
 
-    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
-        //      TODO HttpMessageNotReadableException
+    public ApiResult setPassport(PassportModel model) {
         final Passport passport = new Passport(model.getSeries(), model.getNumber());
-        Driver driver = driverRepository.findById(id).orElse(null);
+        Driver driver = driverRepository.findById(model.getId()).orElse(null);
         if (driver != null) {
             if (driver.getPassport() == null) {
                 driver.setPassport(passport);
                 driverRepository.save(driver);
-            } else return new ResponseOrMessage<>("Passport already exist");
-        } else return new ResponseOrMessage<>("Driver not found");
-        return new ResponseOrMessage<>(driver);
+            } else return new ApiResult("Passport already exist");
+        } else return new ApiResult("Driver not found");
+        return new ApiResult("Passport was added");
     }
 
-    public ApiResult setCar(Long driverId, CarModel carModel) {
-        Car car = new Car(carModel.getNumber(), carModel.getModel(), carModel.getColor());
-        Driver driver = driverRepository.findById(driverId).orElse(null);
+    public ApiResult setCar(CarModel carModel) {
+        Car car = new Car(carModel.getCarNumber(), carModel.getModel(), carModel.getColor());
+        Driver driver = driverRepository.findById(carModel.getDriverId()).orElse(null);
         if (driver == null) return new ApiResult("Driver not found");
         if (driver.getCar() != null) return new ApiResult("Car already exist");
         driver.setCar(carRepository.save(car));

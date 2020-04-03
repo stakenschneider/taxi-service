@@ -43,10 +43,6 @@ export class SignInComponent implements OnInit {
       }, error => alert(error));
   }
 
-  // ngOnDestroy() {
-  //   // this.authService.signIn().unsubscribe();
-  // }
-
   createAccount() {
     return this.router.navigateByUrl('/sign-up');
   }

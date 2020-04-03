@@ -15,7 +15,10 @@ export function createEnv() {
     setCar: baseUrl + 'setCar',
     setPassport: baseUrl + 'setPassport',
     getCarModels: baseUrl + 'getCarModels',
-    getActiveTrip: baseUrl + 'getActiveTrip'
+    getActiveTrip: baseUrl + 'getActiveTrip',
+    getFreeTrips: baseUrl + 'getFreeTrips',
+    takeTrip: baseUrl + 'takeTrip',
+    endTrip: baseUrl + 'endTrip'
   };
 }
 

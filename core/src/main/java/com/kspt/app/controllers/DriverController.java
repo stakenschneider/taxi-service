@@ -1,7 +1,6 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.Trip;
-import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.*;
 import com.kspt.app.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +28,11 @@ public class DriverController {
     }
 
     @PostMapping("/endTrip")
-    public ApiResult endTrip(@RequestBody Long driverId, @RequestBody int grade) {
-        return service.endTrip(driverId, grade);
+    public ApiResult endTrip(@RequestBody EndTripModel model) {
+        return service.endTrip(model);
     }
 
-    @PostMapping("/getFreeTrips")
+    @GetMapping("/getFreeTrips")
     public ResponseOrMessage<List<Trip>> getFreeTrips() {
         return service.getFreeTrips();
     }

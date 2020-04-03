@@ -21,7 +21,9 @@ export class ProfileComponent implements OnInit {
   public phoneNumber: string;
   public personType: string;
   public showTrips: boolean;
-  public headers = ['id', 'driver', 'status', 'rating', 'tripRate', 'price', 'paymentMethod', 'dateOfCreation', 'dateOfCompletion'];
+
+  public headers = ['id', 'price', 'paymentMethod', 'tripRate', 'rating',
+    'driver', 'car', 'start address', 'finish address', 'dateOfCreation', 'dateOfCompletion'];
   public tripsArray: Array<Trip>;
   public driver: Driver;
   isClient = false;
@@ -29,7 +31,7 @@ export class ProfileComponent implements OnInit {
   isAdmin = false;
   showPassportForm = false;
   showRegisterCarForm = false;
-  passport: {series: string, number: string} = {series: '', number: ''};
+  passport: { series: string, number: string } = {series: '', number: ''};
   ifPersonExist = false;
   public carColors: Array<string>;
   public carModels: Array<string>;
@@ -97,7 +99,7 @@ export class ProfileComponent implements OnInit {
         alert(error);
       });
 
-    if (this.tripsArray){
+    if (this.tripsArray) {
       this.showTrips = true;
     }
   }

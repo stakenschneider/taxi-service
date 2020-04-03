@@ -1,8 +1,9 @@
 <ul>
   <li><a (click)="home()">Home</a></li>
-  <li><a (click)="notFound()">404</a></li>
-  <li><a (click)="profile()">profile</a></li>
-  <li><a (click)="requestCar()">request car</a></li>
+  <li><a *ngIf="isAuthenticated" (click)="profile()">profile</a></li>
+  <li><a *ngIf="isClient" (click)="requestCar()">request car</a></li>
+  <li><a *ngIf="isDriver" (click)="takeTrip()">Take trip</a></li>
+
 
   <li *ngIf="isAuthenticated" class="dropdown" style="float:right">
     <a class="dropbtn">

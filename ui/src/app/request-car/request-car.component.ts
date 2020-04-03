@@ -49,8 +49,44 @@ export class RequestCarComponent implements OnInit {
     // if client was activ trips must create a component with this context
     // TODO AND add to backend a verification which can check: 'have a person activ trip or no?'
 
+    this.clientService.getActiveTrip(this.storeService.getId()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.toCity = data.body.finishAddress.city;
+          this.toNumber = data.body.finishAddress.numberHouse;
+          this.toStreet = data.body.finishAddress.street;
+
+          this.fromCity = data.body.startAddress.city;
+          this.fromStreet = data.body.startAddress.street;
+          this.fromNumber = data.body.startAddress.numberHouse;
+
+          this.disabled = true;
+          this.statusFrameShow = true;
+          this.bttnRequestOrDeny = false;
+
+          this.rateTitle = data.body.tripRate;
+          this.paymentMethodsTitle = data.body.paymentMethod;
+
+          switch (data.body.status) {
+            case 'CREATE':
+              this.statusFrameTitle = 'The trip was created. Wait for a response.';
+              break;
+            case 'START':
+              // TODO status maybe should be CREATE START DENY FINISH IN_PROCESS
+              this.statusFrameTitle = 'Start trip status';
+              this.driver = data.body.driver;
+              break;
+          }
+        } else {
+          alert(data.message);
+        }
+      }, error => {
+        alert(error);
+      }
+    );
+
     this.source.addEventListener('message', message => {
-      this.driver = JSON.parse(message.data) as Driver;;
+      this.driver = JSON.parse(message.data) as Driver;
       this.statusFrameTitle = 'The driver is already coming to you!';
     });
 
@@ -72,7 +108,8 @@ export class RequestCarComponent implements OnInit {
       const startAddress = new Address(this.fromCity, this.fromStreet, this.fromNumber);
       const finishAddress = new Address(this.toCity, this.toStreet, this.toNumber);
 
-      this.clientService.requestCar(this.storeService.getId(), startAddress, finishAddress, this.paymentMethodsTitle, this.rateTitle).subscribe(
+      this.clientService.requestCar(this.storeService.getId(),
+        startAddress, finishAddress, this.paymentMethodsTitle, this.rateTitle).subscribe(
         data => {
           this.disabled = true;
           this.statusFrameTitle = data.message;

@@ -31,7 +31,7 @@ this.getFreeTrips();
     }
   }
 
-  getFreeTrips(){
+  getFreeTrips() {
     this.driverService.getFreeTrips().subscribe(
       data => {
         if (data.message === null) {

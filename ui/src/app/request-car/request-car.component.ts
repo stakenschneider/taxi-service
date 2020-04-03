@@ -38,72 +38,86 @@ export class RequestCarComponent implements OnInit {
 
   statusFrameTitle: string;
 
-  constructor(private router: Router, private dataService: DataService, private clientService: ClientService, private storeService: StoreService) {
+  constructor(private router: Router, private dataService: DataService,
+              private clientService: ClientService, private storeService: StoreService) {
     this.dataService = dataService;
     this.storeService = storeService;
   }
 
   ngOnInit(): void {
-
     // TODO add method GET to backend and call it here
     // that method must show exist activ trip on this client
     // if client was activ trips must create a component with this context
     // TODO AND add to backend a verification which can check: 'have a person activ trip or no?'
     if (this.storeService.getId()) {
-      this.clientService.getActiveTrip(this.storeService.getId()).subscribe(
-        data => {
-          if (data.message === null) {
-            this.toCity = data.body.finishAddress.city;
-            this.toNumber = data.body.finishAddress.numberHouse;
-            this.toStreet = data.body.finishAddress.street;
-
-            this.fromCity = data.body.startAddress.city;
-            this.fromStreet = data.body.startAddress.street;
-            this.fromNumber = data.body.startAddress.numberHouse;
-
-            this.disabled = true;
-            this.statusFrameShow = true;
-            this.bttnRequestOrDeny = false;
-
-            this.rateTitle = data.body.tripRate;
-            this.paymentMethodsTitle = data.body.paymentMethod;
-
-            switch (data.body.status) {
-              case 'CREATE':
-                this.statusFrameTitle = 'The trip was created. Wait for a response.';
-                break;
-              case 'START':
-                // TODO status maybe should be CREATE START DENY FINISH IN_PROCESS
-                this.statusFrameTitle = 'Start trip status';
-                this.driver = data.body.driver;
-                break;
-            }
-          } else {
-            alert(data.message);
-          }
-        }, error => {
-          alert(error);
-        }
-      );
-
-      this.source.addEventListener('message', message => {
-        this.driver = JSON.parse(message.data) as Driver;
-        this.statusFrameTitle = 'The driver is already coming to you!';
-      });
-
-      this.dataService.getPaymentMethod().subscribe(
-        data => {
-          this.paymentMethods = data as string[];
-        }, error => {
-        });
-
-      this.dataService.getRate().subscribe(
-        data => {
-          this.rate = data;
-        });
+      this.getActiveTrips();
+      this.addEventListener();
+      this.getPM();
+      this.getRate();
     } else {
       this.router.navigateByUrl('/sign-in');
     }
+  }
+
+  getRate() {
+    this.dataService.getRate().subscribe(
+      data => {
+        this.rate = data;
+      });
+  }
+
+  getPM() {
+    this.dataService.getPaymentMethod().subscribe(
+      data => {
+        this.paymentMethods = data as string[];
+      }, error => {
+        alert(error);
+      });
+  }
+
+  addEventListener() {
+    this.source.addEventListener('message', message => {
+      this.driver = JSON.parse(message.data) as Driver;
+      this.statusFrameTitle = 'The driver is already coming to you!';
+    });
+  }
+
+  getActiveTrips() {
+    this.clientService.getActiveTrip(this.storeService.getId()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.toCity = data.body.finishAddress.city;
+          this.toNumber = data.body.finishAddress.numberHouse;
+          this.toStreet = data.body.finishAddress.street;
+
+          this.fromCity = data.body.startAddress.city;
+          this.fromStreet = data.body.startAddress.street;
+          this.fromNumber = data.body.startAddress.numberHouse;
+
+          this.disabled = true;
+          this.statusFrameShow = true;
+          this.bttnRequestOrDeny = false;
+
+          this.rateTitle = data.body.tripRate;
+          this.paymentMethodsTitle = data.body.paymentMethod;
+
+          switch (data.body.status) {
+            case 'CREATE':
+              this.statusFrameTitle = 'The trip was created. Wait for a response.';
+              break;
+            case 'START':
+              // TODO status maybe should be CREATE START DENY FINISH IN_PROCESS
+              this.statusFrameTitle = 'Start trip status';
+              this.driver = data.body.driver;
+              break;
+          }
+        } else {
+          alert(data.message);
+        }
+      }, error => {
+        alert(error);
+      }
+    );
   }
 
   requestCar(): void {

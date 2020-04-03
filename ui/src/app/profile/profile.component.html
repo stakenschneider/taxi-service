@@ -34,9 +34,27 @@
             </thead>
             <tbody>
             <tr *ngFor="let row of tripsArray">
-              <td *ngFor="let column of headers">
-                {{row[column]}}
+              <td>{{row.id}}</td>
+              <td>{{row.price}}$</td>
+              <td>{{row.paymentMethod}}</td>
+              <td>{{row.tripRate}}</td>
+              <td>{{row.rating}}</td>
+              <td>{{row.status}}</td>
+              <td>FN:{{row.driver.firstName}}
+                <br>LN:{{row.driver.lastName}}
+                <br>Rating: {{row.driver.rating}}
+                <br>PN:{{row.driver.phoneNumber}}
+                <br>Email: {{row.driver.credentials.email}}
               </td>
+              <td>{{row.driver.car.color}} {{row.driver.car.model}}
+                <br>{{row.driver.car.number}}
+              </td>
+              <td>City:{{row.startAddress.city}} <br>Street: {{row.startAddress.street}}
+                <br>#: {{row.startAddress.numberHouse}}</td>
+              <td>City:{{row.finishAddress.city}} <br>Street: {{row.finishAddress.street}}
+                <br>#: {{row.finishAddress.numberHouse}}</td>
+              <td>{{row.dateOfCreation}}</td>
+              <td>{{row.dateOfCompletion}}</td>
             </tr>
             </tbody>
           </table>

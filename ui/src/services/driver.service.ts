@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
 import {ApiResult} from '../models/api.result.model';
 import {ResponseOrMessage} from '../models/response.or.message.model';
-import {Person} from '../models/actor/person.model';
+import {Trip} from '../models/trip.model';
 
 @Injectable()
 export class DriverService {
@@ -21,5 +21,20 @@ export class DriverService {
   setPassport(id: number, series: string, number: string) {
     const url = environment.setPassport;
     return this.http.post<ApiResult>(url, {id, series, number});
+  }
+
+  getFreeTrips() {
+    const url = environment.getFreeTrips;
+    return this.http.get<ResponseOrMessage<Array<Trip>>>(url, {});
+  }
+
+  reserveTrip(driverId: number, tripId: number) {
+    const url = environment.takeTrip;
+    return this.http.post<ApiResult>(url, {driverId, tripId});
+  }
+
+  endTrip(grade: number, tripId: number) {
+    const url = environment.endTrip;
+    return this.http.post<ApiResult>(url, {grade, tripId});
   }
 }

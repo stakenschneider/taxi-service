@@ -113,19 +113,21 @@ public class DriverService {
         return new ResponseOrMessage<>(list);
     }
 
-    public ApiResult endTrip(Long driverId, int grade) {
+    public ApiResult endTrip(EndTripModel model) {
 //        todo
-        Driver driver = driverRepository.findById(driverId).orElse(null);
-        Trip trip = tripRepository.findByDriverId(driverId).orElse(null);
+        Trip trip = tripRepository.findById(model.getTripId()).orElse(null);
+
+        if (trip == null) return new ApiResult("Trip not found");
+
+        Driver driver = trip.getDriver();
 
         if (driver == null) return new ApiResult("Driver not found");
-        if (trip == null) return new ApiResult("Trip not found");
 
         Client client = trip.getClient();
 
         if (client == null) return new ApiResult("Client not found");
 
-        client.setRating((client.getRating() + grade) / 2);
+        client.setRating((client.getRating() + model.getGrade()) / 2);
 
         driver.setAvailable(true);
         trip.setStatus(Constants.Status.FINISH);

@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<div class="container-fluid">
+  <div>
+    <div class="table-responsive text-nowrap">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th *ngFor="let column of headers">
+            {{column}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of trips">
+          <td>
+            <button *ngIf="!isReserve" (click)="reserveTrip(row.id)">reserve</button>
+            <button *ngIf="isReserve" (click)="endTrip(row.id)">end trip</button>
+          </td>
+          <td>{{row.id}}</td>
+          <td>{{row.price}}$</td>
+          <td>{{row.paymentMethod}}</td>
+          <td>{{row.tripRate}}</td>
+          <td>{{row.client.rating}}</td>
+          <td>{{row.client.phoneNumber}}</td>
+          <td>City:{{row.startAddress.city}} <br>Street: {{row.startAddress.street}}
+            <br>#: {{row.startAddress.numberHouse}}</td>
+          <td>City:{{row.finishAddress.city}} <br>Street: {{row.finishAddress.street}}
+            <br>#: {{row.finishAddress.numberHouse}}</td>
+          <!--          TODO date to normal format-->
+<!--          <td>{{row.dateOfCreation.getDay()}}.{{row.dateOfCreation.getMonth()}}.{{row.dateOfCreation.getFullYear()}}</td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

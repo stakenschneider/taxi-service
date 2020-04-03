@@ -32,8 +32,8 @@ export class SignInComponent implements OnInit {
         } else {
           bcrypt.compare(this.password, data.body.credentials.password, (err, result) => {
             if (result) {
-              this.storeService.setId(data.body.id);
               this.storeService.setPersonType(data.body.personType);
+              this.storeService.setId(data.body.id);
               return this.router.navigateByUrl('/profile');
             } else {
               this.flag = true;

@@ -151,4 +151,16 @@ public class ClientService {
         trip.setPaymentMethod(newPaymentMethod);
         return new ApiResult("Payment Method was changed");
     }
+
+    public ResponseOrMessage<Trip> getActiveTrip(Map<String, Long> clientId) {
+        if (clientId.containsKey("clientId")) {
+            Trip trip = tripRepository.findByClientIdAndStatus(clientId.get("clientId"), Status.CREATE).orElseGet(
+                    () -> tripRepository.findByClientIdAndStatus(clientId.get("clientId"), Status.START).orElse(null));
+
+            if (trip == null) {
+                return new ResponseOrMessage<>("Client does not have active trips");
+            } else return new ResponseOrMessage<>(trip);
+
+        } else return new ResponseOrMessage<>("Wrong parameter");
+    }
 }

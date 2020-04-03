@@ -6,6 +6,7 @@ import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.models.ResponseOrMessage;
+import com.kspt.app.models.SignInModel;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.CredentialsRepository;
 import com.kspt.app.repository.DriverRepository;
@@ -40,7 +41,7 @@ public class PersonService {
                 model.getPassword(),
                 model.getEmail().split("@")[0]);
         try {
-            switch (model.getPersonType()){
+            switch (model.getPersonType()) {
                 case CLIENT:
                     Client client = new Client(model.getFirstName(), model.getLastName());
                     client.setCredentials(credentials);
@@ -51,7 +52,8 @@ public class PersonService {
                     driver.setCredentials(credentials);
                     driverRepository.save(driver);
                     return new ResponseOrMessage<>(true);
-                default: return new ResponseOrMessage<>("Wrong parameter");
+                default:
+                    return new ResponseOrMessage<>("Wrong parameter");
             }
         } catch (Exception e) {
             return new ResponseOrMessage<>("Login already exist");
@@ -97,7 +99,7 @@ public class PersonService {
     public ResponseOrMessage<Person> signIn(Map<String, String> emailOrUserName) {
         if (emailOrUserName.containsKey("emailOrUserName")) {
             final Credentials credentials = credentialsRepository.findByEmail(emailOrUserName.get("emailOrUserName"))
-                    .orElseGet(()-> credentialsRepository.findByUsername(emailOrUserName.get("emailOrUserName")).orElse(null));
+                    .orElseGet(() -> credentialsRepository.findByUsername(emailOrUserName.get("emailOrUserName")).orElse(null));
             //TODO Polymorphic Queries
             if (credentials != null) {
                 return new ResponseOrMessage<>(clientRepository.findByCredentials(credentials).orElseGet(
@@ -111,21 +113,22 @@ public class PersonService {
         return true;
     }
 
-    public ResponseOrMessage<Person> getPersonById(Map<String, Long> id) {
-        if (id.containsKey("id")) {
-            Long personId = id.get("id");
-            //TODO Polymorphic Queries
-
-            Person person = clientRepository.findById(personId).orElse(null);
-            if (person == null){
+    public ResponseOrMessage<Person> getPersonById(SignInModel model) {
+        Long personId = model.getPersonId();
+        Person person;
+        switch (model.getPersonType()) {
+            case CLIENT:
+                person = clientRepository.findById(personId).orElse(null);
+                break;
+            case DRIVER:
                 person = driverRepository.findById(personId).orElse(null);
-                if (person == null){
-                    person = adminRepository.findById(personId).orElse(null);
-                }
-            }
-            if (person == null) {
+                break;
+            case ADMIN:
+                person = adminRepository.findById(personId).orElse(null);
+                break;
+            default:
                 return new ResponseOrMessage<>("Person not found");
-            } else return new ResponseOrMessage<>(person);
-        } else return new ResponseOrMessage<>("Wrong parameter");
+        }
+        return new ResponseOrMessage<>(person);
     }
 }

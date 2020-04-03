@@ -18,6 +18,7 @@ import {DataService} from '../services/data.service';
 import {StoreService} from '../services/store.service';
 import {ClientService} from '../services/client.service';
 import {DriverService} from '../services/driver.service';
+import { TakeTripComponent } from './take-trip/take-trip.component';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -27,6 +28,7 @@ const appRoutes: Routes = [
   {path: 'fp', component: ForgotPasswordComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'request-car', component: RequestCarComponent},
+  {path: 'take-trip', component: TakeTripComponent},
   {path: 'home', component: HomeComponent},
   {path: '**', component: NotFoundComponent}
 ];
@@ -38,10 +40,12 @@ const appRoutes: Routes = [
     NotFoundComponent,
     ForgotPasswordComponent,
     TopBarComponent,
+    TakeTripComponent,
     HomeComponent,
     SignInComponent,
     SignUpComponent,
-    RequestCarComponent
+    RequestCarComponent,
+    TakeTripComponent
   ],
   imports: [
     BrowserModule,

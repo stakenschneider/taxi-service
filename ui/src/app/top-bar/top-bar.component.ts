@@ -11,13 +11,35 @@ import {Subscription} from 'rxjs';
 export class TopBarComponent implements OnInit, OnDestroy {
   public isAuthenticated: boolean;
   private authChangedSubscriber: Subscription;
+  isClient: boolean;
+  isDriver: boolean;
+  isAdmin: boolean;
+
   constructor(private router: Router, private storeService: StoreService) {
   }
 
   ngOnInit(): void {
-    this.authChangedSubscriber = this.storeService.authChanged.asObservable().subscribe(x => {
-      this.isAuthenticated = x;
-    });
+    this.authChangedSubscriber = this.storeService.authChanged.asObservable().subscribe(
+      x => {
+        this.isAuthenticated = x;
+        if (this.isAuthenticated) {
+          switch (this.storeService.getPersonType()) {
+            case 'CLIENT':
+              this.isClient = true;
+              break;
+            case 'DRIVER':
+              this.isDriver = true;
+              break;
+            case 'ADMIN':
+              this.isAdmin = true;
+              break;
+            default:
+              this.isAuthenticated = false;
+              break;
+          }
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
@@ -49,4 +71,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
     return this.router.navigateByUrl('/settings');
   }
 
+  takeTrip() {
+    return this.router.navigateByUrl('/take-trip');
+  }
 }

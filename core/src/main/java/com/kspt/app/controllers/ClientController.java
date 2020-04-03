@@ -30,6 +30,11 @@ public class ClientController {
 //        return service.setPassport(passport);
 //    }
 
+    @PostMapping("/getActiveTrip")
+    public ResponseOrMessage<Trip> getActiveTrip(@RequestBody Map<String,Long> clientId) {
+        return service.getActiveTrip(clientId);
+    }
+
     @PostMapping("/getHistoryOfTrips")
     public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
         return service.getHistoryOfTrips(clientId);

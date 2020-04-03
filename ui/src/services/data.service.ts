@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {Observable} from 'rxjs';
 import {Person} from '../models/actor/person.model';
 import {ResponseOrMessage} from '../models/response.or.message.model';
 import {Trip} from '../models/trip.model';
@@ -34,9 +33,9 @@ export class DataService {
     return this.http.get<any>(url, {});
   }
 
-  getPersonById(id: number) {
+  getPersonById(personId: number, personType: string) {
     const url = environment.getPersonById;
-    return this.http.post<ResponseOrMessage<Person>>(url, {id});
+    return this.http.post<ResponseOrMessage<Person>>(url, {personId, personType});
   }
 
   getHistoryOfTips(id: number) {

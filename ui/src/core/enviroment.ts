@@ -14,7 +14,8 @@ export function createEnv() {
     getCarColor: baseUrl + 'getCarColor',
     setCar: baseUrl + 'setCar',
     setPassport: baseUrl + 'setPassport',
-    getCarModels: baseUrl + 'getCarModels'
+    getCarModels: baseUrl + 'getCarModels',
+    getActiveTrip: baseUrl + 'getActiveTrip'
   };
 }
 

@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.storeService.getIsAuth()) {
-      this.dataService.getPersonById(this.storeService.getId()).subscribe(
+      this.dataService.getPersonById(this.storeService.getId(), this.storeService.getPersonType()).subscribe(
         data => {
           if (data.message === null) {
             this.firstName = data.body.firstName;
@@ -85,8 +85,7 @@ export class ProfileComponent implements OnInit {
   }
 
   showHistoryOfTrips() {
-    // todo clientid
-    this.dataService.getHistoryOfTips(1).subscribe(
+    this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
       data => {
         if (data.message === null) {
           this.tripsArray = data.body;
@@ -130,9 +129,9 @@ export class ProfileComponent implements OnInit {
   }
 
   openPassportForm() {
-    const a = this.passport;
     this.showPassportForm = true;
   }
+
   setPassport() {
     if (this.passport.series && this.passport.number) {
       this.driverService.setPassport(this.storeService.getId(), this.passport.series, this.passport.number).subscribe(

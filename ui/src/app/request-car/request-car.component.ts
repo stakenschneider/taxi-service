@@ -5,6 +5,7 @@ import {Address} from '../../models/address.model';
 import {Driver} from '../../models/actor/driver.model';
 import {StoreService} from '../../services/store.service';
 import {Router} from '@angular/router';
+import {Trip} from '../../models/trip.model';
 
 declare let EventSource: any;
 
@@ -34,9 +35,14 @@ export class RequestCarComponent implements OnInit {
   public statusFrameShow = false;
 
   public disabled = false;
-  public driver: Driver;
+  public trip: Trip;
 
   statusFrameTitle: string;
+  endFrameTitle: string;
+  grade: number;
+  // TODO hardcode
+  lol = 0;
+  private driver: Driver;
 
   constructor(private router: Router, private dataService: DataService,
               private clientService: ClientService, private storeService: StoreService) {
@@ -77,8 +83,16 @@ export class RequestCarComponent implements OnInit {
 
   addEventListener() {
     this.source.addEventListener('message', message => {
-      this.driver = JSON.parse(message.data) as Driver;
+      this.trip = JSON.parse(message.data) as Trip;
       this.statusFrameTitle = 'The driver is already coming to you!';
+
+      if (this.lol !== 0) {
+        this.endFrameTitle = 'Trip is over';
+        this.statusFrameShow = true;
+        this.disabled = true;
+      } else {
+        this.lol++;
+      }
     });
   }
 
@@ -94,9 +108,9 @@ export class RequestCarComponent implements OnInit {
           this.fromStreet = data.body.startAddress.street;
           this.fromNumber = data.body.startAddress.numberHouse;
 
-          this.disabled = true;
           this.statusFrameShow = true;
           this.bttnRequestOrDeny = false;
+          this.disabled = true;
 
           this.rateTitle = data.body.tripRate;
           this.paymentMethodsTitle = data.body.paymentMethod;
@@ -108,11 +122,11 @@ export class RequestCarComponent implements OnInit {
             case 'START':
               // TODO status maybe should be CREATE START DENY FINISH IN_PROCESS
               this.statusFrameTitle = 'Start trip status';
-              this.driver = data.body.driver;
+              this.trip = data.body;
               break;
           }
         } else {
-          alert(data.message);
+          console.log(data.message);
         }
       }, error => {
         alert(error);
@@ -143,14 +157,19 @@ export class RequestCarComponent implements OnInit {
   }
 
   denyTrip() {
-    this.clientService.denyTrip(2).subscribe(
+    this.clientService.denyTrip(this.storeService.getId()).subscribe(
       data => {
         this.statusFrameTitle = data.message;
         this.disabled = false;
         this.bttnRequestOrDeny = true;
+        this.statusFrameShow = false;
       }, error => {
         alert(error);
       }
     );
+  }
+
+  setGrade() {
+    //  TODO service
   }
 }

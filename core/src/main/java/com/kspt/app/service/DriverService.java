@@ -63,7 +63,7 @@ public class DriverService {
         return new ApiResult("Car was added");
     }
 
-    public void sendSseEventsToUI(Driver notification) {
+    public void sendSseEventsToUI(Trip notification) {
         List<SseEmitter> sseEmitterListToRemove = new ArrayList<>();
         SSEController.emitters.forEach((SseEmitter emitter) -> {
             try {
@@ -93,7 +93,7 @@ public class DriverService {
                     driver.setAvailable(false);
                     trip.setStatus(Constants.Status.START);
                     tripRepository.save(trip);
-                    sendSseEventsToUI(driver);
+                    sendSseEventsToUI(trip);
                     return new ApiResult("Trip was assign");
 
                 case DENY:
@@ -136,6 +136,7 @@ public class DriverService {
         clientRepository.save(client);
         driverRepository.save(driver);
         tripRepository.save(trip);
+        sendSseEventsToUI(trip);
         return new ApiResult("Trip is over");
     }
 }

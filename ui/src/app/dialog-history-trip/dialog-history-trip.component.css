@@ -1,0 +1,46 @@
+.modal-content-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#modal-title {
+  font-size: 44px;
+  margin-bottom: 35px;
+}
+
+#modal-footer {
+  justify-self: right;
+  align-self: center;
+}
+
+#modal-action-button {
+  margin-right: 30px;
+}
+
+.qwe{
+  display: flex;
+  flex-direction: row;
+}
+
+.content-title{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.content-fields{
+  font-size: 15px;
+}
+
+.label{
+  font-size: 22px;
+}
+
+p.content-title{
+  margin-bottom: 0;
+}
+
+p.content-fields{
+  padding-left: 14px;
+}

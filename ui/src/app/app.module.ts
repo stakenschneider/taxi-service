@@ -18,7 +18,13 @@ import {DataService} from '../services/data.service';
 import {StoreService} from '../services/store.service';
 import {ClientService} from '../services/client.service';
 import {DriverService} from '../services/driver.service';
-import { TakeTripComponent } from './take-trip/take-trip.component';
+import {TakeTripComponent} from './take-trip/take-trip.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogHistoryTripComponent } from './dialog-history-trip/dialog-history-trip.component';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -34,8 +40,10 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [DialogComponent],
   declarations: [
     AppComponent,
+    DialogComponent,
     ProfileComponent,
     NotFoundComponent,
     ForgotPasswordComponent,
@@ -45,14 +53,21 @@ const appRoutes: Routes = [
     SignInComponent,
     SignUpComponent,
     RequestCarComponent,
-    TakeTripComponent
+    TakeTripComponent,
+    DialogComponent,
+    DialogHistoryTripComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [
     DriverService,

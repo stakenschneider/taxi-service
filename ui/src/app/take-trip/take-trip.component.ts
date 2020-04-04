@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Trip} from '../../models/trip.model';
 import {Router} from '@angular/router';
 import {DriverService} from '../../services/driver.service';
@@ -6,6 +6,8 @@ import {DataService} from '../../services/data.service';
 import {StoreService} from '../../services/store.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from '../dialog/dialog.component';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 export interface DialogData {
   trip: Trip;
@@ -17,9 +19,11 @@ export interface DialogData {
   styleUrls: ['./take-trip.component.css']
 })
 export class TakeTripComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'price', 'dateOfCreation', 'client', 'startAddress','finishAddress'];
+  dataSource: MatTableDataSource<Trip>;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   trip: Trip;
-  headers = ['', 'id', 'price', 'pm', 'rate', 'client rating', 'phone number', 'start address', 'nd address'];
-  trips: Array<Trip>;
+  trips: Trip[];
 
   constructor(private router: Router, private driverService: DriverService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
@@ -41,6 +45,9 @@ export class TakeTripComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.trips = data.body;
+          const dataSource = new MatTableDataSource(this.trips);
+          dataSource.sort = this.sort;
+          this.dataSource = dataSource;
         } else {
           // alert(data.message);
         }
@@ -68,8 +75,6 @@ export class TakeTripComponent implements OnInit {
   reserveTrip(trip: Trip) {
 
     const dialogRef = this.dialog.open(DialogComponent, {
-      // width: '600px',
-      // height: '600px',
       data: {trip},
       disableClose: true
     });
@@ -78,18 +83,6 @@ export class TakeTripComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       result => {
         this.endTrip(trip.id);
-      });
-
-    this.driverService.reserveTrip(this.storeService.getId(), trip.id).subscribe(
-      data => {
-        if (data.message === null) {
-          // alert(data.message);
-        } else {
-          // alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
       });
   }
 }

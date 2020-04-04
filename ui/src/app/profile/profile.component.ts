@@ -4,8 +4,14 @@ import {DataService} from '../../services/data.service';
 import {Trip} from '../../models/trip.model';
 import {Driver} from '../../models/actor/driver.model';
 import {StoreService} from '../../services/store.service';
-import {Car} from '../../models/car.model';
 import {DriverService} from '../../services/driver.service';
+import {DialogComponent} from '../dialog/dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogHistoryTripComponent} from '../dialog-history-trip/dialog-history-trip.component';
+
+export interface DataHistoryTrip {
+  trip: Trip;
+}
 
 @Component({
   selector: 'app-profile',
@@ -22,8 +28,11 @@ export class ProfileComponent implements OnInit {
   public personType: string;
   public showTrips: boolean;
 
-  public headers = ['id', 'price', 'paymentMethod', 'tripRate', 'rating',
-    'driver', 'car', 'start address', 'finish address', 'dateOfCreation', 'dateOfCompletion'];
+  // public headers = ['id', 'price', 'paymentMethod', 'tripRate', 'rating', 'status',
+  //   'driver', 'car', 'start address', 'finish address'];
+
+  public headers = ['start address', 'finish address'];
+
   public tripsArray: Array<Trip>;
   public driver: Driver;
   isClient = false;
@@ -38,9 +47,10 @@ export class ProfileComponent implements OnInit {
   public colorTitle: string;
   public modelTitle: string;
   public carNumber: string;
+  tripsHistoryTitle = 'Show trips';
 
   constructor(private router: Router, private driverService: DriverService,
-              private dataService: DataService, private storeService: StoreService) {
+              private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
     this.dataService = dataService;
     this.showTrips = false;
     this.storeService = storeService;
@@ -87,20 +97,22 @@ export class ProfileComponent implements OnInit {
   }
 
   showHistoryOfTrips() {
-    this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
-      data => {
-        if (data.message === null) {
-          this.tripsArray = data.body;
-        } else {
-          alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
-      });
-
-    if (this.tripsArray) {
-      this.showTrips = true;
+    if (this.showTrips) {
+      this.showTrips = false;
+    } else {
+      this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
+        data => {
+          if (data.message === null) {
+            this.tripsHistoryTitle = 'Hide history of trips';
+            this.tripsArray = data.body;
+            this.showTrips = true;
+          } else {
+            alert(data.message);
+          }
+        },
+        error => {
+          alert(error);
+        });
     }
   }
 
@@ -145,6 +157,16 @@ export class ProfileComponent implements OnInit {
     } else {
       alert('All fields required');
     }
+  }
+
+  clickOnTableRow(trip: Trip) {
+
+    const dialogRef = this.dialog.open(DialogHistoryTripComponent, {
+      data: {trip}});
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+      });
   }
 }
 

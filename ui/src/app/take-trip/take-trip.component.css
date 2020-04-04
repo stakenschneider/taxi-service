@@ -17,3 +17,15 @@ that have an id of `modal-component` */
 mat-dialog-container#modal-component {
   border-radius: 11px;
 }
+
+table {
+  width: auto;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+div.container-fluid {
+  padding: 30px;
+}

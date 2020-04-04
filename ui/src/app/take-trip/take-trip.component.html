@@ -2,36 +2,51 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container-fluid">
-  <div>
     <div class="table-responsive text-nowrap">
-      <table class="table table-hover">
-        <thead>
-        <tr>
-          <th *ngFor="let column of headers">
-            {{column}}
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of trips">
-          <td>
-            <button (click)="reserveTrip(row)">reserve</button>
-          </td>
-          <td>{{row.id}}</td>
-          <td>{{row.price}}$</td>
-          <td>{{row.paymentMethod}}</td>
-          <td>{{row.tripRate}}</td>
-          <td>{{row.client.rating}}</td>
-          <td>{{row.client.phoneNumber}}</td>
-          <td>City:{{row.startAddress.city}} <br>Street: {{row.startAddress.street}}
-            <br>#: {{row.startAddress.numberHouse}}</td>
-          <td>City:{{row.finishAddress.city}} <br>Street: {{row.finishAddress.street}}
-            <br>#: {{row.finishAddress.numberHouse}}</td>
-          <!--          TODO date to normal format-->
-<!--          <td>{{row.dateOfCreation.getDay()}}.{{row.dateOfCreation.getMonth()}}.{{row.dateOfCreation.getFullYear()}}</td>-->
-        </tr>
-        </tbody>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table table-hover">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.price}}$</td>
+        </ng-container>
+
+<!--         TODO date to normal format-->
+        <ng-container matColumnDef="dateOfCreation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Creation </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.dateOfCreation}} </td>
+        </ng-container>
+
+<!--        TODO math round-->
+        <ng-container matColumnDef="client">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Client rating </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.client.rating}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="startAddress">
+          <th mat-header-cell *matHeaderCellDef> Start Address </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.startAddress.city}}, {{element.startAddress.street}}, {{element.startAddress.numberHouse}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="finishAddress">
+          <th mat-header-cell *matHeaderCellDef> Finish Address </th>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.finishAddress.city}}, {{element.finishAddress.street}}, {{element.finishAddress.numberHouse}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+
+
+<!--          <td>{{row.client.rating}}</td>-->
+<!--          <td>{{row.client.phoneNumber}}</td>-->
+<!--          <td>City:{{row.startAddress.city}} <br>Street: {{row.startAddress.street}}-->
+<!--            <br>#: {{row.startAddress.numberHouse}}</td>-->
+<!--          <td>City:{{row.finishAddress.city}} <br>Street: {{row.finishAddress.street}}-->
+<!--            <br>#: {{row.finishAddress.numberHouse}}</td>-->
     </div>
-  </div>
 </div>

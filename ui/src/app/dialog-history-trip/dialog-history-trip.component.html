@@ -1,40 +1,47 @@
 <div class="modal-content-wrapper">
   <table>
-    <caption id="modal-title">Trip №{{data.trip.id}}       {{data.trip.rating}}</caption>
     <tr>
-      <th rowspan="2" class="first">START</th>
-      <th colspan="2">END</th>
+      <th id="title" colspan="4">Trip №{{data.trip.id}} {{data.trip.rating}}</th>
+    </tr>
+    <tr>
+      <th colspan="2" class="content-title">START <br>
+        <p class="content-fields">{{data.trip.startAddress.city}}, {{data.trip.startAddress.street}}
+          , {{data.trip.startAddress.numberHouse}}</p>
+      </th>
+      <th colspan="2">END<br>
+        <p class="content-fields">{{data.trip.finishAddress.city}}, {{data.trip.finishAddress.street}}
+          , {{data.trip.finishAddress.numberHouse}}</p>
+      </th>
     </tr>
 
-  <header id="modal-header">
-    <h1 id="modal-title">Trip №{{data.trip.id}}       {{data.trip.rating}}</h1>
-  </header>
-  <section id="modal-body">
-    <div class="qwe">
-      <p class="content-title">START: </p>
-      <p class="content-fields">{{data.trip.startAddress.city}}, {{data.trip.startAddress.street}}, {{data.trip.startAddress.numberHouse}}</p>
-    </div>
 
-    <div class="qwe">
-      <p class="content-title">END: </p>
-      <p class="content-fields">{{data.trip.finishAddress.city}}, {{data.trip.finishAddress.street}}, {{data.trip.finishAddress.numberHouse}}</p>
-    </div>
-
-    <div class="qwe">
-      <div class="modal-content-wrapper">
-        <p class="content-title">DRIVER:</p>
-        <p class="content-fields">{{data.trip.driver.firstName}} {{data.trip.driver.lastName}} {{data.trip.driver.rating}}</p>
-        <p class="content-fields">{{data.trip.driver.phoneNumber}}</p></div>
-
-      <div class="modal-content-wrapper">
-        <p class="content-title">CAR:</p>
+    <tr>
+      <th colspan="2" class="content-title">DRIVER <br>
+        <p
+          class="content-fields">{{data.trip.driver.firstName}} {{data.trip.driver.lastName}} {{data.trip.driver.rating}}</p>
+        <p class="content-fields">{{data.trip.driver.phoneNumber}}</p>
+      </th>
+      <th colspan="2">CAR<br>
         <p class="content-fields">{{data.trip.driver.car.color}} {{data.trip.driver.car.model}} {{data.trip.driver.car.number}}</p>
-      </div>
-    </div>
-    <p class="label">{{data.trip.paymentMethod}} {{data.trip.tripRate}} {{data.trip.price}}$</p>
 
-  </section>
-  <footer id="modal-footer">
-    <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Close</button>
-  </footer>
+      </th>
+    </tr>
+    <tr>
+      <th colspan="1" class="content-title">
+        <p> {{data.trip.paymentMethod}}</p>
+      </th>
+      <th colspan="2">
+        <p class="content-fields">{{data.trip.tripRate}}</p>
+      </th>
+      <th colspan="1">
+        <p class="content-fields">{{data.trip.price}}$</p>
+      </th>
+    </tr>
+    <tr>
+      <th colspan="4">
+        <button id="modal-cancel-button" (click)="closeModal()">Close</button>
+      </th>
+    </tr>
+    <tr>
+  </table>
 </div>

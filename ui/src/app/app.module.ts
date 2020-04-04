@@ -25,6 +25,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogHistoryTripComponent } from './dialog-history-trip/dialog-history-trip.component';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -40,10 +42,9 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent, DialogHistoryTripComponent],
   declarations: [
     AppComponent,
-    DialogComponent,
     ProfileComponent,
     NotFoundComponent,
     ForgotPasswordComponent,
@@ -67,7 +68,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [
     DriverService,

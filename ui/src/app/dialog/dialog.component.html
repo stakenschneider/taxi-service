@@ -1,6 +1,6 @@
 <div id="modal-content-wrapper">
   <header id="modal-header">
-    <h1 id="modal-title">Trip started</h1>
+    <h1 id="modal-title">Trip No.{{data.trip.id}}</h1>
   </header>
   <section id="modal-body">
     <p>Start Address: {{data.trip.startAddress.city}} {{data.trip.startAddress.street}} {{data.trip.startAddress.numberHouse}}</p>
@@ -14,6 +14,7 @@
     <p>Email: {{data.trip.client.credentials.email}}</p>
   </section>
   <footer id="modal-footer">
-    <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">End trip</button>
+    <button mat-raised-button id="modal-action-button" (click)="startTrip(data.trip)">{{buttonLabel}}</button>
+    <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Close</button>
   </footer>
 </div>

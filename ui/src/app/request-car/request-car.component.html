@@ -47,7 +47,7 @@
           </div>
           <div class="bttn child">
             <button *ngIf="bttnRequestOrDeny" (click)="requestCar()" type="submit">Request Car</button>
-            <button *ngIf="!bttnRequestOrDeny" (click)="denyTrip()" type="submit">Deny Trip</button>
+            <button [attr.disabled]="disabled ? '' : null"   *ngIf="!bttnRequestOrDeny" (click)="denyTrip()" type="submit">Deny Trip</button>
           </div>
         </form>
       </div>
@@ -58,13 +58,14 @@
       <div *ngIf="statusFrameShow" class="request-form">
         <form method="post">
           <div>{{statusFrameTitle}}</div>
-          <div class="child">Name: {{driver.firstName}}</div>
-          <div class="child">Last name: {{driver.lastName}}</div>
-          <div class="child">phoneNumber: {{driver.phoneNumber}}</div>
-          <div class="child">Rating: {{driver.rating}}</div>
-          <div class="child">Color: {{driver.car.color}}</div>
-          <div class="child">Model: {{driver.car.model}}</div>
-          <div class="child">Number: {{driver.car.number}}</div>
+          <div class="child">Name: {{trip.driver.firstName}}</div>
+          <div class="child">Last name: {{trip.driver.lastName}}</div>
+          <div class="child">phoneNumber: {{trip.driver.phoneNumber}}</div>
+          <div class="child">Rating: {{trip.driver.rating}}</div>
+          <div class="child">Color: {{trip.driver.car.color}}</div>
+          <div class="child">Model: {{trip.driver.car.model}}</div>
+          <div class="child">Number: {{trip.driver.car.number}}</div>
+          <div class="child">Price: {{trip.price}}$</div>
         </form>
       </div>
     </div>
@@ -73,6 +74,18 @@
       <!--END-->
       <div *ngIf="endFrameShow" class="request-form">
         <form method="post">
+          <div>{{endFrameTitle}}</div>
+          <div class="child">Please set grade:</div>
+          <select [(ngModel)]="grade">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          <div class="child">
+            <button (click)="setGrade()">OK</button>
+          </div>
         </form>
       </div>
     </div>

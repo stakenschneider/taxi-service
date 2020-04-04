@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Trip} from '../../models/trip.model';
 import {Router} from '@angular/router';
 import {DriverService} from '../../services/driver.service';
 import {DataService} from '../../services/data.service';
 import {StoreService} from '../../services/store.service';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-take-trip',
@@ -25,7 +26,7 @@ export class TakeTripComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.storeService.getId()) {
-this.getFreeTrips();
+      this.getFreeTrips();
     } else {
       this.router.navigateByUrl('/sign-in');
     }
@@ -77,3 +78,22 @@ this.getFreeTrips();
     this.getFreeTrips();
   }
 }
+
+// @Component({
+//   selector: 'app-dialog',
+//   templateUrl: 'dialog.html',
+// })
+// export class Dialog {
+//
+//   constructor(
+//     public dialogRef: MatDialogRef<Dialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+//
+//
+//   }
+//
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+//
+// }

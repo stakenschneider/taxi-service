@@ -15,8 +15,7 @@
         <tbody>
         <tr *ngFor="let row of trips">
           <td>
-            <button *ngIf="!isReserve" (click)="reserveTrip(row.id)">reserve</button>
-            <button *ngIf="isReserve" (click)="endTrip(row.id)">end trip</button>
+            <button (click)="reserveTrip(row)">reserve</button>
           </td>
           <td>{{row.id}}</td>
           <td>{{row.price}}$</td>
@@ -33,12 +32,6 @@
         </tr>
         </tbody>
       </table>
-
-<!--      TODO card with info about current trip-->
-      <div class="active-trip">
-
-      </div>
-
     </div>
   </div>
 </div>

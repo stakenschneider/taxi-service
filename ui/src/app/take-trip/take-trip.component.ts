@@ -4,7 +4,12 @@ import {Router} from '@angular/router';
 import {DriverService} from '../../services/driver.service';
 import {DataService} from '../../services/data.service';
 import {StoreService} from '../../services/store.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '../dialog/dialog.component';
+
+export interface DialogData {
+  trip: Trip;
+}
 
 @Component({
   selector: 'app-take-trip',
@@ -12,13 +17,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./take-trip.component.css']
 })
 export class TakeTripComponent implements OnInit {
-
-  headers = ['', 'id', 'price', 'pm', 'rate', 'client rating', 'phone number', 'start address', 'nd address', 'date'];
+  trip: Trip;
+  headers = ['', 'id', 'price', 'pm', 'rate', 'client rating', 'phone number', 'start address', 'nd address'];
   trips: Array<Trip>;
-  isReserve = false;
 
   constructor(private router: Router, private driverService: DriverService,
-              private dataService: DataService, private storeService: StoreService) {
+              private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
     this.dataService = dataService;
     this.storeService = storeService;
     this.driverService = driverService;
@@ -38,62 +42,54 @@ export class TakeTripComponent implements OnInit {
         if (data.message === null) {
           this.trips = data.body;
         } else {
-          alert(data.message);
+          // alert(data.message);
         }
       },
       error => {
         alert(error);
       });
-  }
-
-  reserveTrip(id: number) {
-    this.driverService.reserveTrip(this.storeService.getId(), id).subscribe(
-      data => {
-        if (data.message === null) {
-          alert(data.message);
-        } else {
-          alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
-      });
-    // TODO fix reserve into end in all rows
-    this.isReserve = true;
   }
 
   endTrip(id: number) {
     this.driverService.endTrip(4.3, id).subscribe(
       data => {
         if (data.message === null) {
-          alert(data.message);
+          // alert(data.message);
         } else {
-          alert(data.message);
+          // alert(data.message);
         }
       },
       error => {
         alert(error);
       });
-    this.isReserve = false;
     this.getFreeTrips();
   }
-}
 
-// @Component({
-//   selector: 'app-dialog',
-//   templateUrl: 'dialog.html',
-// })
-// export class Dialog {
-//
-//   constructor(
-//     public dialogRef: MatDialogRef<Dialog>,
-//     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-//
-//
-//   }
-//
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-//
-// }
+  reserveTrip(trip: Trip) {
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      // width: '600px',
+      // height: '600px',
+      data: {trip},
+      disableClose: true
+    });
+
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+        this.endTrip(trip.id);
+      });
+
+    this.driverService.reserveTrip(this.storeService.getId(), trip.id).subscribe(
+      data => {
+        if (data.message === null) {
+          // alert(data.message);
+        } else {
+          // alert(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      });
+  }
+}

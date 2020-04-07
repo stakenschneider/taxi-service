@@ -42,7 +42,8 @@ export class RequestCarComponent implements OnInit {
   grade: number;
   // TODO hardcode
   lol = 0;
-  private driver: Driver;
+  starRating: any;
+  contentStatusFrame = false;
 
   constructor(private router: Router, private dataService: DataService,
               private clientService: ClientService, private storeService: StoreService) {
@@ -85,10 +86,11 @@ export class RequestCarComponent implements OnInit {
     this.source.addEventListener('message', message => {
       this.trip = JSON.parse(message.data) as Trip;
       this.statusFrameTitle = 'The driver is already coming to you!';
+      this.contentStatusFrame = true;
 
       if (this.lol !== 0) {
         this.endFrameTitle = 'Trip is over';
-        this.statusFrameShow = true;
+        this.endFrameShow = true;
         this.disabled = true;
       } else {
         this.lol++;
@@ -123,6 +125,7 @@ export class RequestCarComponent implements OnInit {
               // TODO status maybe should be CREATE START DENY FINISH IN_PROCESS
               this.statusFrameTitle = 'Start trip status';
               this.trip = data.body;
+              this.contentStatusFrame = true;
               break;
           }
         } else {
@@ -170,6 +173,17 @@ export class RequestCarComponent implements OnInit {
   }
 
   setGrade() {
-    //  TODO service
+    this.clientService.setGrade(this.trip.id, this.starRating).subscribe(
+      data => {
+        this.endFrameTitle = data.message;
+        this.disabled = false;
+        this.bttnRequestOrDeny = true;
+        this.statusFrameShow = false;
+        this.endFrameShow = false;
+        this.contentStatusFrame = false;
+      }, error => {
+        alert(error);
+      }
+    );
   }
 }

@@ -27,4 +27,9 @@ export class ClientService {
     const url = environment.getActiveTrip;
     return this.http.post<ResponseOrMessage<Trip>>(url, {clientId});
   }
+
+  setGrade(tripId: number, grade: number) {
+    const url = environment.setGrade;
+    return this.http.post<ApiResult>(url, {tripId, grade});
+  }
 }

@@ -24,7 +24,7 @@
 /*  flex-direction: row;*/
 /*}*/
 
-.content-title{
+.content{
   font-size: 20px;
   font-weight: bold;
 }
@@ -67,5 +67,11 @@ td {
 }
 
 #title{
-  font-size: 5em;
+  font-size: 4em;
+}
+
+
+.fa-star{
+  margin-left: 5px;
+  height: 70%;
 }

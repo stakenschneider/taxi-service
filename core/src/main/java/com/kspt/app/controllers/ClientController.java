@@ -3,10 +3,7 @@ package com.kspt.app.controllers;
 import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.ApiResult;
-import com.kspt.app.models.PassportModel;
-import com.kspt.app.models.ResponseOrMessage;
-import com.kspt.app.models.TripModelRequest;
+import com.kspt.app.models.*;
 import com.kspt.app.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,15 +42,15 @@ public class ClientController {
         return service.requestCar(model);
     }
 
-    @PostMapping("{tripId}/setGrade")
-    public ApiResult setGrade(@PathVariable Long tripId, @RequestBody int grade) {
-        return service.setGrade( tripId, grade);
+    @PostMapping("/setGrade")
+    public ApiResult setGrade(@RequestBody SetGradeModel model) {
+        return service.setGrade(model);
     }
 
-    @PostMapping("{tripId}/changePaymentMethod")
-    public ApiResult changePaymentMethod(@PathVariable Long tripId, @RequestBody PaymentMethod newPaymentMethod) {
-        return service.changePaymentMethod( tripId,newPaymentMethod);
-    }
+//    @PostMapping("{tripId}/changePaymentMethod")
+//    public ApiResult changePaymentMethod(@PathVariable Long tripId, @RequestBody PaymentMethod newPaymentMethod) {
+//        return service.changePaymentMethod( tripId,newPaymentMethod);
+//    }
 
     @PostMapping("/denyTrip")
     public ApiResult denyTrip(@RequestBody Map<String,Long> clientId) {

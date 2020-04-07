@@ -30,7 +30,50 @@
 }
 
 .text{
+  margin-bottom: 5px;
   /*font-size: 3vw;*/
   /*front-size: 100%;*/
 }
 
+.table{
+  width: auto !important;
+}
+
+.fullName{
+  padding-top: 16px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+#userName{
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 24px;
+  color: #666;
+}
+
+.myButton{
+  text-align: center;
+  color: #24292e;
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(27,31,35,.2);
+  border-radius: .25em;
+  width: 300px;
+  margin-top: 16px;
+}
+
+#nameRow{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.fa-star{
+  margin-left: 5px;
+  height: 70%;
+}

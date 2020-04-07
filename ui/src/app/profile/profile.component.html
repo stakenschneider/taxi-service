@@ -2,71 +2,52 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container-fluid">
-<!--PAGE CONTENT-->
+  <!--PAGE CONTENT-->
   <div *ngIf="ifPersonExist" class='row'>
-<!--PERSON COLUMN-->
+    <!--PERSON COLUMN-->
     <div id="left" class='col-xs-12 col-md-1'>
-      <div id="first">
-        <img id="avatar" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
-             alt="avatar"/>
-        <div class="text"><b>{{firstName}}  {{lastName}}</b></div>
-        <div class="text">@{{username}}</div>
-        <div class="text">e: {{email}}</div>
-        <div class="text">{{personType}}</div>
-        <button *ngIf="isClient" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
-        <button *ngIf="isDriver" (click)="openRegisterCarForm()">Register a car</button>
-        <button *ngIf="isDriver" (click)="openPassportForm()">Register a passport</button>
+      <div id="first"><img id="avatar"
+                           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
+                           alt="avatar"/>
+        <div id="nameRow">
+          <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
+          <div id="rating" class="text fullName"> 4.7<i class="far fa-star"></i></div></div>
+        <div class="text" id="userName">{{person.credentials.username}}</div>
+        <div class="text"><i class="far fa-envelope"></i> <a id="email "
+                                                             href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
+        </div>
+        <button class="myButton" *ngIf="isClient" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
+        <button class="myButton" *ngIf="isDriver" (click)="openRegisterCarForm()">Register a car</button>
+        <button class="myButton"  *ngIf="isDriver"  (click)="openPassportForm()">Register a passport</button>
 
       </div>
     </div>
-<!--CONTENT COLUMN-->
+    <!--CONTENT COLUMN-->
     <div class='col-xs-12 col-md' id="right">
-<!--      TRIPS CLIENT TABLE-->
+      <!--      TRIPS CLIENT TABLE-->
       <div *ngIf="showTrips" class="second">
-        <div class="table-responsive text-nowrap">
+        <div class="table">
           <table class="table table-hover">
-            <thead>
-            <tr>
-              <th *ngFor="let column of headers">
-                {{column}}
-              </th>
-            </tr>
-            </thead>
             <tbody>
             <tr *ngFor="let row of tripsArray" (click)="clickOnTableRow(row)">
-<!--              <td>{{row.id}}</td>-->
-<!--              <td>{{row.price}}$</td>-->
-<!--              <td>{{row.paymentMethod}}</td>-->
-<!--              <td>{{row.tripRate}}</td>-->
-<!--              <td>{{row.rating}}</td>-->
-<!--              <td>{{row.status}}</td>-->
-<!--              <td>FN:{{row.driver.firstName}}-->
-<!--                <br>LN:{{row.driver.lastName}}-->
-<!--                <br>Rating: {{row.driver.rating}}-->
-<!--                <br>PN:{{row.driver.phoneNumber}}-->
-<!--                <br>Email: {{row.driver.credentials.email}}-->
-<!--              </td>-->
-<!--              <td>{{row.driver.car.color}} {{row.driver.car.model}}-->
-<!--                <br>{{row.driver.car.number}}-->
-<!--              </td>-->
-              <td>City:{{row.startAddress.city}} <br>Street: {{row.startAddress.street}}
-                <br>#: {{row.startAddress.numberHouse}}</td>
-              <td>City:{{row.finishAddress.city}} <br>Street: {{row.finishAddress.street}}
-                <br>#: {{row.finishAddress.numberHouse}}</td>
-<!--              <td>{{row.dateOfCreation}}</td>-->
-<!--              <td>{{row.dateOfCompletion}}</td>-->
+              <td>{{row.dateOfCreation}}</td>
+              <!--              TODO ICons not displayed-->
+              <td><i class="fas fa-map-marker-alt" style="color: red"></i> {{row.startAddress.city}}
+                , {{row.startAddress.street}}, {{row.startAddress.numberHouse}} <br>
+                <i class="fas fa-map-marker-alt" style="color: #1100ff"></i> {{row.finishAddress.city}}
+                , {{row.finishAddress.street}}, {{row.finishAddress.numberHouse}}</td>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
-<!--      SET PASSPORT FORM-->
+      <!--      SET PASSPORT FORM-->
       <div *ngIf="showPassportForm" class="second">
-        <input [(ngModel)]="passport.series" type="text" placeholder="series">
-        <input [(ngModel)]="passport.number" type="text" placeholder="number">
+        <input [(ngModel)]="person.passport.series" type="text" placeholder="series">
+        <input [(ngModel)]="person.passport.number" type="text" placeholder="number">
         <button (click)="setPassport()">SAVE</button>
       </div>
-<!--      SET CAR FORM-->
+      <!--      SET CAR FORM-->
       <div *ngIf="showRegisterCarForm" class="second">
         <div class="child">MODEL:</div>
         <div class="rate">

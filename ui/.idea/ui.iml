@@ -15,5 +15,7 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="animate" level="application" />
     <orderEntry type="library" name="a076d05399" level="application" />
+    <orderEntry type="library" name="all" level="application" />
+    <orderEntry type="library" name="3adac9a8eb" level="application" />
   </component>
 </module>

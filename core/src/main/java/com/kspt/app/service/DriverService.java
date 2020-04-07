@@ -93,6 +93,7 @@ public class DriverService {
                     driver.setAvailable(false);
                     trip.setStatus(Constants.Status.START);
                     tripRepository.save(trip);
+                    trip.getDriver().setRating(Math.round(driver.getRating() * 10.0) / 10.0);
                     sendSseEventsToUI(trip);
                     return new ApiResult("Trip was assign");
 
@@ -106,6 +107,7 @@ public class DriverService {
     }
 
     public ResponseOrMessage<List<Trip>> getFreeTrips() {
+//        TODO round client rating
         List<Trip> list = tripRepository.findByStatus(Constants.Status.CREATE).orElse(null);
         if (list == null) {
             return new ResponseOrMessage<>("No free trips");

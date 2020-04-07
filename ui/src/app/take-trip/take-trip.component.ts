@@ -19,7 +19,7 @@ export interface DialogData {
   styleUrls: ['./take-trip.component.css']
 })
 export class TakeTripComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'price', 'dateOfCreation', 'client', 'startAddress','finishAddress'];
+  displayedColumns: string[] = ['id', 'price', 'dateOfCreation', 'client', 'startAddress', 'finishAddress'];
   dataSource: MatTableDataSource<Trip>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   trip: Trip;
@@ -33,6 +33,18 @@ export class TakeTripComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.driverService.getCurrentTrip(this.storeService.getId()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.reserveTrip(data.body);
+        } else {
+          console.log(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      }
+    );
     if (this.storeService.getId()) {
       this.getFreeTrips();
     } else {
@@ -52,7 +64,9 @@ export class TakeTripComponent implements OnInit {
           this.trips = data.body;
           // tslint:disable-next-line:max-line-length
           const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-          this.trips.forEach(trip => {trip.client.rating = +trip.client.rating.toFixed(1); });
+          this.trips.forEach(trip => {
+            trip.client.rating = +trip.client.rating.toFixed(1);
+          });
           this.trips.forEach(trip => {
             // tslint:disable-next-line:max-line-length
             trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
@@ -61,7 +75,7 @@ export class TakeTripComponent implements OnInit {
           dataSource.sort = this.sort;
           this.dataSource = dataSource;
         } else {
-          // alert(data.message);
+          alert(data.message);
         }
       },
       error => {

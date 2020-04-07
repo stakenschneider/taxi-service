@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <!--PAGE CONTENT-->
-  <div *ngIf="ifPersonExist" class='row'>
+  <div *ngIf="person" class='row'>
     <!--PERSON COLUMN-->
     <div id="left" class='col-xs-12 col-md-1'>
       <div id="first"><img id="avatar"
@@ -16,9 +16,9 @@
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
-        <button class="myButton" *ngIf="isClient || isDriver" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
-        <button class="myButton" *ngIf="isDriver" (click)="openRegisterCarForm()">Register a car</button>
-        <button class="myButton"  *ngIf="isDriver"  (click)="openPassportForm()">Register a passport</button>
+        <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
+        <button class="myButton" *ngIf="person.personType === 'DRIVER'" (click)="openRegisterCarForm()">Register a car</button>
+        <button class="myButton"  *ngIf="person.personType === 'DRIVER'"  (click)="openPassportForm()">Register a passport</button>
 
       </div>
     </div>

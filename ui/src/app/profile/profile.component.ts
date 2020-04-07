@@ -23,11 +23,6 @@ export class ProfileComponent implements OnInit {
   public driver: Driver;
   public tripsArray: Array<Trip>;
 
-  public isClient = false;
-  public isDriver = false;
-  public isAdmin = false;
-  public ifPersonExist = false;
-
   public showTrips: boolean;
   public showPassportForm = false;
   public showRegisterCarForm = false;
@@ -50,35 +45,25 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.storeService.getIsAuth()) {
-      this.dataService.getPersonById(this.storeService.getId(), this.storeService.getPersonType()).subscribe(
-        data => {
-          if (data.message === null) {
-            this.person = data.body;
-            switch (this.person.personType) {
-              case 'CLIENT':
-                this.isClient = true;
-                break;
-              case 'DRIVER':
-                this.isDriver = true;
-                break;
-              case 'ADMIN':
-                this.isAdmin = true;
-                break;
-            }
-
-            this.ifPersonExist = true;
-          } else {
-            this.ifPersonExist = false;
-            alert(data.message);
-          }
-        },
-        error => {
-          alert(error);
-        });
+      this.getPerson();
     } else {
       this.router.navigateByUrl('/sign-in');
     }
 
+  }
+
+  getPerson() {
+    this.dataService.getPersonById(this.storeService.getId(), this.storeService.getPersonType()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.person = data.body;
+        } else {
+          alert(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      });
   }
 
   showHistoryOfTrips() {

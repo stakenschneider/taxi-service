@@ -9,8 +9,8 @@ export interface Trip extends AbstractEntity {
   status: string;
   startAddress: Address;
   finishAddress: Address;
-  dateOfCreation: Date;
-  dateOfCompletion: Date;
+  dateOfCreation: string;
+  dateOfCompletion: string;
   paymentMethod: string;
   rating: number;
   tripRate: string;

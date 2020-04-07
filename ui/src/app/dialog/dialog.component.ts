@@ -42,9 +42,9 @@ export class DialogComponent implements OnInit {
     this.driverService.reserveTrip(this.storeService.getId(), trip.id).subscribe(
       data => {
         if (data.message === null) {
-          // alert(data.message);
+          console.log(data.message);
         } else {
-          // alert(data.message);
+          console.log(data.message);
         }
       },
       error => {

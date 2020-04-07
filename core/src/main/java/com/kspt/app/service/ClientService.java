@@ -11,10 +11,7 @@ import com.kspt.app.entities.actor.Client;
 
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.ApiResult;
-import com.kspt.app.models.PassportModel;
-import com.kspt.app.models.ResponseOrMessage;
-import com.kspt.app.models.TripModelRequest;
+import com.kspt.app.models.*;
 import com.kspt.app.repository.AddressRepository;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;
@@ -59,8 +56,10 @@ public class ClientService {
             return new ApiResult("Client doesnt exist");
         }
 
-        if (tripRepository.findByClientIdAndStatus(client.getId(), Status.CREATE).isPresent()
-                || tripRepository.findByClientIdAndStatus(client.getId(), Status.START).isPresent()) {
+        Boolean ifPresentCreate = tripRepository.findByClientIdAndStatus(client.getId(), Status.CREATE).isPresent();
+        Boolean ifPresentStart = tripRepository.findByClientIdAndStatus(client.getId(), Status.START).isPresent();
+
+        if (ifPresentCreate || ifPresentStart) {
             return new ApiResult("U already have active trip, u can't request to car the same time");
         }
 
@@ -80,17 +79,25 @@ public class ClientService {
         return new ApiResult("The trip was created. Wait for a response.");
     }
 
-    public ApiResult setGrade(Long tripId, int grade) {
-        Trip trip = tripRepository.findById(tripId).orElse(null);
-        if (trip == null) return new ApiResult("Trip doesnt exist");
-        if (trip.getStatus() != Status.FINISH) return new ApiResult("Trip not finished");
+    public ApiResult setGrade(SetGradeModel model) {
+        Trip trip = tripRepository.findById(model.getTripId()).orElse(null);
 
-        Driver driver = driverRepository.findById(trip.getDriver().id).orElse(null);
-        if (driver == null) return new ApiResult("Driver not found");
+        if (trip == null) {
+            return new ApiResult("Trip doesnt exist");
+        }
 
-        driver.setRating((driver.getRating() + trip.getRating()) / 2);
+        if (trip.getStatus() != Status.FINISH) {
+            return new ApiResult("Trip not finished");
+        }
 
-        trip.setRating(grade);
+        Driver driver = driverRepository.findById(trip.getDriver().getId()).orElse(null);
+
+        if (driver == null) {
+            return new ApiResult("Driver not found");
+        }
+
+        driver.setRating((driver.getRating() + (double) model.getGrade()) / 2);
+        trip.setRating(model.getGrade());
 
         driverRepository.save(driver);
         tripRepository.save(trip);
@@ -128,9 +135,14 @@ public class ClientService {
     public ResponseOrMessage<List<Trip>> getHistoryOfTrips(Map<String, Long> clientId) {
         if (clientId.containsKey("id")) {
             List<Trip> list = tripRepository.findAllByClientId(clientId.get("id")).orElse(null);
-            if (list == null) return new ResponseOrMessage<>("Trips not found");
-            else return new ResponseOrMessage<>(list);
-        } else return new ResponseOrMessage<>("Wrong parameter");
+            if (list == null) {
+                return new ResponseOrMessage<>("Trips not found");
+            } else {
+                return new ResponseOrMessage<>(list);
+            }
+        } else {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
     }
 
 //    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
@@ -145,12 +157,12 @@ public class ClientService {
 //        return new ResponseOrMessage<>(client);
 //    }
 
-    public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
-        Trip trip = tripRepository.findById(tripId).orElse(null);
-        if (trip == null) return new ApiResult("Trip not found");
-        trip.setPaymentMethod(newPaymentMethod);
-        return new ApiResult("Payment Method was changed");
-    }
+//    public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
+//        Trip trip = tripRepository.findById(tripId).orElse(null);
+//        if (trip == null) return new ApiResult("Trip not found");
+//        trip.setPaymentMethod(newPaymentMethod);
+//        return new ApiResult("Payment Method was changed");
+//    }
 
     public ResponseOrMessage<Trip> getActiveTrip(Map<String, Long> clientId) {
         if (clientId.containsKey("clientId")) {

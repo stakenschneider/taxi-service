@@ -40,11 +40,23 @@ export class TakeTripComponent implements OnInit {
     }
   }
 
+  parseDate(input) {
+    const parts = input.match(/(\d+)/g);
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  }
+
   getFreeTrips() {
     this.driverService.getFreeTrips().subscribe(
       data => {
         if (data.message === null) {
           this.trips = data.body;
+          // tslint:disable-next-line:max-line-length
+          const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          this.trips.forEach(trip => {trip.client.rating = +trip.client.rating.toFixed(1); });
+          this.trips.forEach(trip => {
+            // tslint:disable-next-line:max-line-length
+            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
+          });
           const dataSource = new MatTableDataSource(this.trips);
           dataSource.sort = this.sort;
           this.dataSource = dataSource;

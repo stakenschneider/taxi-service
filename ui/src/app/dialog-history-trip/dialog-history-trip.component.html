@@ -1,14 +1,17 @@
 <div class="modal-content-wrapper">
   <table>
     <tr>
-      <th id="title" colspan="4">Trip №{{data.trip.id}} {{data.trip.rating}}</th>
+      <th id="title" colspan="4">
+Trip №{{data.trip.id}}
+<div style="float:right" >{{data.trip.rating}}<i class="far fa-star"></i></div>
+      </th>
     </tr>
     <tr>
-      <th colspan="2" class="content-title">START <br>
+      <th colspan="2" class="content">START <br>
         <p class="content-fields">{{data.trip.startAddress.city}}, {{data.trip.startAddress.street}}
           , {{data.trip.startAddress.numberHouse}}</p>
       </th>
-      <th colspan="2">END<br>
+      <th colspan="2" class="content">END<br>
         <p class="content-fields">{{data.trip.finishAddress.city}}, {{data.trip.finishAddress.street}}
           , {{data.trip.finishAddress.numberHouse}}</p>
       </th>
@@ -21,8 +24,9 @@
           class="content-fields">{{data.trip.driver.firstName}} {{data.trip.driver.lastName}} {{data.trip.driver.rating}}</p>
         <p class="content-fields">{{data.trip.driver.phoneNumber}}</p>
       </th>
-      <th colspan="2">CAR<br>
-        <p class="content-fields">{{data.trip.driver.car.color}} {{data.trip.driver.car.model}} {{data.trip.driver.car.number}}</p>
+      <th colspan="2" class="content-title">CAR<br>
+        <p
+          class="content-fields">{{data.trip.driver.car.color}} {{data.trip.driver.car.model}} {{data.trip.driver.car.number}}</p>
 
       </th>
     </tr>

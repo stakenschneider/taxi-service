@@ -76,15 +76,18 @@ export class ProfileComponent implements OnInit {
       } else if (this.person.personType === 'DRIVER') {
         this.showHistoryOfTripsForDriver();
       }
-      const month =
-        ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      this.tripsArray.forEach(trip => {
-        trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() +
-          ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
-      });
       this.showTrips = true;
       this.tripsHistoryTitle = 'Hide history of trips';
     }
+  }
+
+  formatDate() {
+    const month =
+      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    this.tripsArray.forEach(trip => {
+      trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() +
+        ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
+    });
   }
 
   showHistoryOfTripsForClient() {
@@ -92,6 +95,7 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.tripsArray = data.body;
+          this.formatDate();
         } else {
           alert(data.message);
         }
@@ -106,6 +110,7 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.tripsArray = data.body;
+          this.formatDate();
         } else {
           alert(data.message);
         }

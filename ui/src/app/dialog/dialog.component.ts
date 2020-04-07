@@ -35,6 +35,7 @@ export class DialogComponent implements OnInit {
 
   startTrip(trip: Trip) {
     if (this.buttonLabel === 'End trip') {
+      this.endTrip(trip.id);
       this.closeModal();
     }
 
@@ -46,6 +47,20 @@ export class DialogComponent implements OnInit {
           console.log(data.message);
         } else {
           console.log(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      });
+  }
+
+  endTrip(id: number) {
+    this.driverService.endTrip(4.3, id).subscribe(
+      data => {
+        if (data.message === null) {
+          // alert(data.message);
+        } else {
+          // alert(data.message);
         }
       },
       error => {

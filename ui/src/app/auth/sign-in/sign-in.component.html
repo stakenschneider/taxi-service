@@ -1,7 +1,6 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
 <div class="container">
   <div class="col-md-6 mx-auto text-center">
@@ -11,34 +10,60 @@
       </h1>
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-4 mx-auto">
       <div *ngIf="flag" class="alert" id="login_error">
         <span>Invalid email address or password.<br><a href="/fp">Send password</a> to my email.</span>
       </div>
-      <div class="myform form ">
-        <form action="" method="post" name="login">
-          <div class="form-group">
-            <input [(ngModel)]="email" type="email" name="email"  class="form-control my-input" id="email" placeholder="Email or UserName">
+
+      <div class="form">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                 placeholder="mail@example.com">
+          <mat-hint>Errors appear instantly!</mat-hint>
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="text-center ">
+          <button (click)="signIn()" class=" btn btn-block send-button tx-tfm">Sign In</button>
+        </div>
+        <div class="text-center ">
+          <button (click)="signInAsClient()" class=" btn btn-block send-button tx-tfm">Sign In as Client</button>
+        </div>
+        <div class="text-center ">
+          <button (click)="signInAsDriver()" class=" btn btn-block send-button tx-tfm">Sign In as Driver</button>
+        </div>
+        <div class="col-md-12 ">
+          <div class="login-or">
+            <hr class="hr-or">
+            <span class="span-or">or</span>
           </div>
-          <div class="form-group">
-            <input [(ngModel)]="password"  type="password" name="password"  class="form-control my-input" id="password" placeholder="Password">
-          </div>
-          <div class="text-center ">
-            <button (click)="signIn()" type="submit" class=" btn btn-block send-button tx-tfm">Sign In</button>
-          </div>
-          <div class="col-md-12 ">
-            <div class="login-or">
-              <hr class="hr-or">
-              <span class="span-or">or</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <button (click)="createAccount()" type="submit" class=" btn btn-block send-button tx-tfm">Create Account</button>
-          </div>
-          <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a href="#" class="ps-hero__content__link">Terms of Use</a> and <a href="#">Privacy Policy</a>.
-          </p>
-        </form>
+        </div>
+        <div class="form-group">
+          <button (click)="createAccount()" class=" btn btn-block send-button tx-tfm">Create Account</button>
+        </div>
+        <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a href="#"
+                                                                                                       class="ps-hero__content__link">Terms of Use</a>
+          and <a href="#">Privacy Policy</a>.
+        </p>
+        <!--        </form>-->
       </div>
     </div>
   </div>

@@ -186,4 +186,12 @@ export class RequestCarComponent implements OnInit {
       }
     );
   }
+
+  setRate(value: string) {
+    this.rateTitle = value;
+  }
+
+  setPM(value: any) {
+    this.rateTitle = value;
+  }
 }

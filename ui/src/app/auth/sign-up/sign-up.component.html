@@ -1,7 +1,6 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <div class="container">
   <div class="col-md-6 mx-auto text-center">
     <div class="header-title">
@@ -10,6 +9,7 @@
       </h1>
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-4 mx-auto">
 
@@ -18,8 +18,8 @@
         <span>что то не так</span>
       </div>
 
-      <div class="myform form ">
-        <form action="" method="post" name="login">
+      <div class="form">
+<!--        <form action="" method="post" name="login">-->
           <div class="form-group">
             <input [(ngModel)]="this.firstName" type="text" name="name" class="form-control my-input" id="first_name" placeholder="First name" required>
           </div>
@@ -55,7 +55,7 @@
           <div class="form-group">
             <button (click)="signIn()" type="submit" class=" btn btn-block send-button tx-tfm">Sign In</button>
           </div>
-        </form>
+<!--        </form>-->
       </div>
     </div>
   </div>

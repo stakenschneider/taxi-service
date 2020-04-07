@@ -1,8 +1,5 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 <!--BACKGROUND MAP-->
 <!--TODO afterr added conteiner fluid dont work map-->
@@ -44,17 +41,17 @@
           </div>
           <div class="child">RATE:</div>
           <div class="rate">
-            <select [attr.disabled]="disabled ? '' : null" class=" can-disable" [(ngModel)]="rateTitle"
-                    [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let title of rate" [ngValue]="title">{{title}}</option>
-            </select>
+            <mat-button-toggle-group [attr.disabled]="disabled ? '' : null" class="can-disable" [(ngModel)]="rateTitle"
+                                     [ngModelOptions]="{standalone: true}" name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle (change)="setRate($event.value)" value="{{title}}" *ngFor="let title of rate" >{{title}}</mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
           <div class="child">PAYMENT METHOD:</div>
           <div class=" can-disable">
-            <select [attr.disabled]="disabled ? '' : null" [(ngModel)]="paymentMethodsTitle"
-                    [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let title of paymentMethods" [ngValue]="title">{{title}}</option>
-            </select>
+            <mat-button-toggle-group [attr.disabled]="disabled ? '' : null" class="can-disable" [(ngModel)]="paymentMethodsTitle"
+                                     [ngModelOptions]="{standalone: true}" name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle (change)="setPM($event.value)" value="{{title}}" *ngFor="let title of paymentMethods" >{{title}}</mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
           <div class="bttn child">
             <button *ngIf="bttnRequestOrDeny" (click)="requestCar()" type="submit">Request Car</button>
@@ -71,15 +68,16 @@
       <div *ngIf="statusFrameShow" class="request-form">
         <form method="post">
           <div>{{statusFrameTitle}}</div>
+          <mat-progress-bar *ngIf="!contentStatusFrame" mode="indeterminate"></mat-progress-bar>
           <div *ngIf="contentStatusFrame">
-          <div class="child">Name: {{trip.driver.firstName}}</div>
-          <div class="child">Last name: {{trip.driver.lastName}}</div>
-          <div class="child">phoneNumber: {{trip.driver.phoneNumber}}</div>
-          <div class="child">Rating: {{trip.driver.rating}}</div>
-          <div class="child">Color: {{trip.driver.car.color}}</div>
-          <div class="child">Model: {{trip.driver.car.model}}</div>
-          <div class="child">Number: {{trip.driver.car.number}}</div>
-          <div class="child">Price: {{trip.price}}$</div>
+            <div class="child">Name: {{trip.driver.firstName}}</div>
+            <div class="child">Last name: {{trip.driver.lastName}}</div>
+            <div class="child">phoneNumber: {{trip.driver.phoneNumber}}</div>
+            <div class="child">Rating: {{trip.driver.rating}}</div>
+            <div class="child">Color: {{trip.driver.car.color}}</div>
+            <div class="child">Model: {{trip.driver.car.model}}</div>
+            <div class="child">Number: {{trip.driver.car.number}}</div>
+            <div class="child">Price: {{trip.price}}$</div>
           </div>
         </form>
       </div>
@@ -94,11 +92,21 @@
           <div class="child">
             <div class="row">
               <div class="rating">
-                <input [(ngModel)]="starRating" type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rock">5 stars</label>
-                <input [(ngModel)]="starRating" type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
-                <input [(ngModel)]="starRating" type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-                <input [(ngModel)]="starRating" type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-                <input [(ngModel)]="starRating" type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                <input [(ngModel)]="starRating" type="radio" id="star5" name="rating" value="5"/><label for="star5"
+                                                                                                        title="Rock">5
+                stars</label>
+                <input [(ngModel)]="starRating" type="radio" id="star4" name="rating" value="4"/><label for="star4"
+                                                                                                        title="Pretty good">4
+                stars</label>
+                <input [(ngModel)]="starRating" type="radio" id="star3" name="rating" value="3"/><label for="star3"
+                                                                                                        title="Meh">3
+                stars</label>
+                <input [(ngModel)]="starRating" type="radio" id="star2" name="rating" value="2"/><label for="star2"
+                                                                                                        title="Kinda bad">2
+                stars</label>
+                <input [(ngModel)]="starRating" type="radio" id="star1" name="rating" value="1"/><label for="star1"
+                                                                                                        title="Sucks big time">1
+                star</label>
               </div>
             </div>
           </div>

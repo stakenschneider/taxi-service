@@ -27,6 +27,11 @@ import { DialogComponent } from './dialog/dialog.component';
 import { DialogHistoryTripComponent } from './dialog-history-trip/dialog-history-trip.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -70,7 +75,12 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatFormFieldModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressBarModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatInputModule
   ],
   providers: [
     DriverService,

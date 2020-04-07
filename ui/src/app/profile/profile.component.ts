@@ -24,8 +24,6 @@ export class ProfileComponent implements OnInit {
   public tripsArray: Array<Trip>;
 
   public showTrips: boolean;
-  public showPassportForm = false;
-  public showRegisterCarForm = false;
 
   public carColors: Array<string>;
   public carModels: Array<string>;
@@ -34,6 +32,7 @@ export class ProfileComponent implements OnInit {
   public colorTitle: string;
   public modelTitle: string;
   public tripsHistoryTitle = 'Show trips';
+  panelOpenState = false;
 
   constructor(private router: Router, private driverService: DriverService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
@@ -50,6 +49,15 @@ export class ProfileComponent implements OnInit {
       this.router.navigateByUrl('/sign-in');
     }
 
+    this.dataService.getCarColorList().subscribe(
+      data => {
+        this.carColors = data;
+      });
+
+    this.dataService.getCarModelList().subscribe(
+      data => {
+        this.carModels = data;
+      });
   }
 
   getPerson() {
@@ -126,25 +134,11 @@ export class ProfileComponent implements OnInit {
     return new Date(parts[0], parts[1] - 1, parts[2]);
   }
 
-  openRegisterCarForm() {
-    this.dataService.getCarColorList().subscribe(
-      data => {
-        this.carColors = data;
-      });
-
-    this.dataService.getCarModelList().subscribe(
-      data => {
-        this.carModels = data;
-      });
-    this.showRegisterCarForm = true;
-  }
-
   setCar() {
     if (this.colorTitle && this.modelTitle && this.carNumber) {
       this.driverService.setCar(this.storeService.getId(), this.carNumber, this.modelTitle, this.colorTitle).subscribe(
         data => {
           alert(data.message);
-          this.showRegisterCarForm = false;
         }, error => alert(error)
       );
     } else {
@@ -152,16 +146,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  openPassportForm() {
-    this.showPassportForm = !this.showPassportForm;
-  }
-
   setPassport() {
     if (this.person.passport.series && this.person.passport.number) {
       this.driverService.setPassport(this.storeService.getId(), this.person.passport.series, this.person.passport.number).subscribe(
         data => {
           alert(data.message);
-          this.showPassportForm = false;
         }, error => alert(error)
       );
     } else {

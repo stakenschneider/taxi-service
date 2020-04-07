@@ -141,4 +141,28 @@ public class DriverService {
         sendSseEventsToUI(trip);
         return new ApiResult("Trip is over");
     }
+
+    public ResponseOrMessage<List<Trip>> getHistory(Map<String, Long> driverId) {
+        if (driverId.containsKey("id")) {
+            List<Trip> list = tripRepository.findAllByDriverId(driverId.get("id")).orElse(null);
+            if (list == null) {
+                return new ResponseOrMessage<>("Trips not found");
+            } else {
+                return new ResponseOrMessage<>(list);
+            }
+        } else {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
+    }
+
+    public ResponseOrMessage<Trip> getCurrentTrip(Map<String, Long> driverId) {
+        if (driverId.containsKey("id")) {
+            Trip trip = tripRepository.findByDriverIdAndStatus(driverId.get("id"), Constants.Status.START).orElse(null);
+
+            if (trip == null) {
+                return new ResponseOrMessage<>("Driver does not have active trips");
+            } else return new ResponseOrMessage<>(trip);
+
+        } else return new ResponseOrMessage<>("Wrong parameter");
+    }
 }

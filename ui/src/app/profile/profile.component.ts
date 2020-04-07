@@ -8,7 +8,6 @@ import {DriverService} from '../../services/driver.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogHistoryTripComponent} from '../dialog-history-trip/dialog-history-trip.component';
 import {Person} from '../../models/actor/person.model';
-import {Client} from '../../models/actor/client.model';
 
 export interface DataHistoryTrip {
   trip: Trip;
@@ -87,33 +86,54 @@ export class ProfileComponent implements OnInit {
       this.showTrips = !this.showTrips;
       this.tripsHistoryTitle = 'Show trips';
     } else {
-      this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
-        data => {
-          if (data.message === null) {
-            this.tripsHistoryTitle = 'Hide history of trips';
-            this.tripsArray = data.body;
-            // tslint:disable-next-line:max-line-length
-            const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-            this.tripsArray.forEach(trip => {
-              // tslint:disable-next-line:max-line-length
-              trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
-            });
-            this.showTrips = true;
-          } else {
-            alert(data.message);
-          }
-        },
-        error => {
-          alert(error);
-        });
+      if (this.person.personType === 'CLIENT') {
+        this.showHistoryOfTripsForClient();
+      } else if (this.person.personType === 'DRIVER') {
+        this.showHistoryOfTripsForDriver();
+      }
+      const month =
+        ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      this.tripsArray.forEach(trip => {
+        trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() +
+          ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
+      });
+      this.showTrips = true;
+      this.tripsHistoryTitle = 'Hide history of trips';
     }
   }
 
+  showHistoryOfTripsForClient() {
+    this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.tripsArray = data.body;
+        } else {
+          alert(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      });
+  }
+
+  showHistoryOfTripsForDriver() {
+    this.driverService.getHistory(this.storeService.getId()).subscribe(
+      data => {
+        if (data.message === null) {
+          this.tripsArray = data.body;
+        } else {
+          alert(data.message);
+        }
+      },
+      error => {
+        alert(error);
+      });
+  }
+
+
   parseDate(input) {
     const parts = input.match(/(\d+)/g);
-    // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-    return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
+    return new Date(parts[0], parts[1] - 1, parts[2]);
   }
 
   openRegisterCarForm() {

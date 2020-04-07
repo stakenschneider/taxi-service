@@ -12,7 +12,9 @@ export class DialogHistoryTripComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogHistoryTripComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DataHistoryTrip) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  //  TODO display data depending on the type of person
+  }
 
   closeModal() {
     this.dialogRef.close();

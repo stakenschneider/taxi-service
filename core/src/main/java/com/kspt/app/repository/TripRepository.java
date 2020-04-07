@@ -13,7 +13,8 @@ import java.util.Optional;
 @Repository
 public interface TripRepository extends JPARepository<Trip> {
     Optional<List<Trip>> findByStatus(Status status);
-    Optional<Trip> findByDriverId(Long id);
     Optional<List<Trip>> findAllByClientId(Long id);
+    Optional<List<Trip>> findAllByDriverId(Long id);
     Optional<Trip> findByClientIdAndStatus(Long clientId, Status status);
+    Optional<Trip> findByDriverIdAndStatus(Long driverId, Status status);
 }

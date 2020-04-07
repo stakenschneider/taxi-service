@@ -27,6 +27,11 @@ public class ClientController {
 //        return service.setPassport(passport);
 //    }
 
+//    @PostMapping("{tripId}/changePaymentMethod")
+//    public ApiResult changePaymentMethod(@PathVariable Long tripId, @RequestBody PaymentMethod newPaymentMethod) {
+//        return service.changePaymentMethod( tripId,newPaymentMethod);
+//    }
+
     @PostMapping("/getActiveTrip")
     public ResponseOrMessage<Trip> getActiveTrip(@RequestBody Map<String,Long> clientId) {
         return service.getActiveTrip(clientId);
@@ -42,18 +47,13 @@ public class ClientController {
         return service.requestCar(model);
     }
 
-    @PostMapping("/setGrade")
-    public ApiResult setGrade(@RequestBody SetGradeModel model) {
-        return service.setGrade(model);
-    }
-
-//    @PostMapping("{tripId}/changePaymentMethod")
-//    public ApiResult changePaymentMethod(@PathVariable Long tripId, @RequestBody PaymentMethod newPaymentMethod) {
-//        return service.changePaymentMethod( tripId,newPaymentMethod);
-//    }
-
     @PostMapping("/denyTrip")
     public ApiResult denyTrip(@RequestBody Map<String,Long> clientId) {
         return service.denyTrip(clientId);
+    }
+
+    @PostMapping("/setGrade")
+    public ApiResult setGrade(@RequestBody SetGradeModel model) {
+        return service.setGrade(model);
     }
 }

@@ -19,7 +19,9 @@ export function createEnv() {
     getFreeTrips: baseUrl + 'getFreeTrips',
     takeTrip: baseUrl + 'takeTrip',
     endTrip: baseUrl + 'endTrip',
-    setGrade: baseUrl + 'setGrade'
+    setGrade: baseUrl + 'setGrade',
+    getCurrentTrip: baseUrl + 'getCurrentTrip',
+    getHistory: baseUrl + 'getHistory'
   };
 }
 

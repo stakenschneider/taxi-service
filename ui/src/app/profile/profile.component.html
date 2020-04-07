@@ -16,7 +16,7 @@
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
-        <button class="myButton" *ngIf="isClient" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
+        <button class="myButton" *ngIf="isClient || isDriver" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
         <button class="myButton" *ngIf="isDriver" (click)="openRegisterCarForm()">Register a car</button>
         <button class="myButton"  *ngIf="isDriver"  (click)="openPassportForm()">Register a passport</button>
 

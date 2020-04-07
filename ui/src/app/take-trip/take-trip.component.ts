@@ -24,6 +24,7 @@ export class TakeTripComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   trip: Trip;
   trips: Trip[];
+  public message: string;
 
   constructor(private router: Router, private driverService: DriverService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
@@ -33,6 +34,16 @@ export class TakeTripComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ifExistTripWithStatusStart();
+
+    if (this.storeService.getId()) {
+      this.getFreeTrips();
+    } else {
+      this.router.navigateByUrl('/sign-in');
+    }
+  }
+
+  ifExistTripWithStatusStart() {
     this.driverService.getCurrentTrip(this.storeService.getId()).subscribe(
       data => {
         if (data.message === null) {
@@ -45,11 +56,6 @@ export class TakeTripComponent implements OnInit {
         alert(error);
       }
     );
-    if (this.storeService.getId()) {
-      this.getFreeTrips();
-    } else {
-      this.router.navigateByUrl('/sign-in');
-    }
   }
 
   parseDate(input) {
@@ -75,27 +81,12 @@ export class TakeTripComponent implements OnInit {
           dataSource.sort = this.sort;
           this.dataSource = dataSource;
         } else {
-          alert(data.message);
+          this.message = data.message;
         }
       },
       error => {
         alert(error);
       });
-  }
-
-  endTrip(id: number) {
-    this.driverService.endTrip(4.3, id).subscribe(
-      data => {
-        if (data.message === null) {
-          // alert(data.message);
-        } else {
-          // alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
-      });
-    this.getFreeTrips();
   }
 
   reserveTrip(trip: Trip) {
@@ -108,7 +99,7 @@ export class TakeTripComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       result => {
-        this.endTrip(trip.id);
+        this.getFreeTrips();
       });
   }
 }

@@ -21,11 +21,12 @@ export class DialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private router: Router, private driverService: DriverService,
     private dataService: DataService, private storeService: StoreService) {}
 
-  // If the user clicks the cancel button a.k.a. the go back button, then\
-  // just close the modal
   buttonLabel = 'Start trip';
 
   ngOnInit() {
+    if (this.data.trip.status === 'START') {
+      this.buttonLabel = 'End trip';
+    }
   }
 
   closeModal() {

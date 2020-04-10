@@ -8,6 +8,7 @@ import {DriverService} from '../../services/driver.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogHistoryTripComponent} from '../dialog-history-trip/dialog-history-trip.component';
 import {Person} from '../../models/actor/person.model';
+import {AdminService} from '../../services/admin.service';
 
 export interface DataHistoryTrip {
   trip: Trip;
@@ -21,23 +22,27 @@ export interface DataHistoryTrip {
 export class ProfileComponent implements OnInit {
   public person: Person;
   public driver: Driver;
+
   public tripsArray: Array<Trip>;
-
-  public showTrips: boolean;
-
   public carColors: Array<string>;
   public carModels: Array<string>;
-  public carNumber: string;
 
+  public carNumber: string;
   public colorTitle: string;
   public modelTitle: string;
-  public tripsHistoryTitle = 'Show trips';
-  panelOpenState = false;
 
-  constructor(private router: Router, private driverService: DriverService,
+  public showTrips = false;
+  public panelOpenState = false;
+
+  public tripsHistoryTitle = 'Show trips';
+  public allTripsTitle = 'Show list of trips';
+  public allDriversTitle = 'Show list of drivers';
+  public allClientTitle = 'Show list of clients';
+
+  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
     this.dataService = dataService;
-    this.showTrips = false;
+    this.adminService = adminService;
     this.storeService = storeService;
     this.driverService = driverService;
   }

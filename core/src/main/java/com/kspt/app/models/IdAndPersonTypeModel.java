@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
-public class SignInModel {
+public class IdAndPersonTypeModel {
     Long personId;
     PersonType personType;
 }

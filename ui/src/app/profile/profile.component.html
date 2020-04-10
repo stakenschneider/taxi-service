@@ -73,7 +73,6 @@
               {{person.personType === 'DRIVER' ? 'ok' : 'empty'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div class="second">
             <div class="child">MODEL:</div>
             <div class="rate">
               <select class=" can-disable" [(ngModel)]="modelTitle" [ngModelOptions]="{standalone: true}">
@@ -88,7 +87,6 @@
             </div>
             <input [(ngModel)]="carNumber" type="text" placeholder="number">
             <button (click)="setCar()">SAVE</button>
-          </div>
         </mat-expansion-panel>
       </div>
     </div>

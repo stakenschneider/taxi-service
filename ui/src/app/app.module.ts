@@ -23,8 +23,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { DialogComponent } from './dialog/dialog.component';
-import { DialogHistoryTripComponent } from './dialog-history-trip/dialog-history-trip.component';
+import {DialogComponent} from './dialog/dialog.component';
+import {DialogHistoryTripComponent} from './dialog-history-trip/dialog-history-trip.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -32,8 +32,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
+import {AdminService} from '../services/admin.service';
+import {AdminComponent} from './admin/admin.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
-// определение маршрутов
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
   {path: 'sign-in', component: SignInComponent},
@@ -43,6 +45,7 @@ const appRoutes: Routes = [
   {path: 'request-car', component: RequestCarComponent},
   {path: 'take-trip', component: TakeTripComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'admin', component: AdminComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
@@ -61,7 +64,8 @@ const appRoutes: Routes = [
     RequestCarComponent,
     TakeTripComponent,
     DialogComponent,
-    DialogHistoryTripComponent
+    DialogHistoryTripComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -80,9 +84,11 @@ const appRoutes: Routes = [
     MatButtonToggleModule,
     MatExpansionModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [
+    AdminService,
     DriverService,
     AuthService,
     DataService,

@@ -6,7 +6,7 @@ import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.RegistrationModel;
 import com.kspt.app.models.ResponseOrMessage;
-import com.kspt.app.models.SignInModel;
+import com.kspt.app.models.IdAndPersonTypeModel;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.CredentialsRepository;
 import com.kspt.app.repository.DriverRepository;
@@ -113,7 +113,7 @@ public class PersonService {
         return true;
     }
 
-    public ResponseOrMessage<Person> getPersonById(SignInModel model) {
+    public ResponseOrMessage<Person> getPersonById(IdAndPersonTypeModel model) {
         Long personId = model.getPersonId();
         Person person;
         switch (model.getPersonType()) {

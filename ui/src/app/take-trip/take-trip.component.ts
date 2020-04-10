@@ -75,7 +75,7 @@ export class TakeTripComponent implements OnInit {
           });
           this.trips.forEach(trip => {
             // tslint:disable-next-line:max-line-length
-            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
+            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDate() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
           });
           const dataSource = new MatTableDataSource(this.trips);
           dataSource.sort = this.sort;

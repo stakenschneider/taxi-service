@@ -4,7 +4,6 @@
 <div class="container-fluid">
     <div class="table-responsive text-nowrap">
       <div *ngIf="!trips" style="align-content: center; ">{{message}}</div>
-
       <table *ngIf="trips" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table table-hover">
 
         <ng-container matColumnDef="id">

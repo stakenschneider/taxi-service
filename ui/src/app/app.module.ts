@@ -35,6 +35,8 @@ import {MatInputModule} from '@angular/material/input';
 import {AdminService} from '../services/admin.service';
 import {AdminComponent} from './admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { TripTableComponent } from './trip-table/trip-table.component';
+import { PersonTableComponent } from './person-table/person-table.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -65,7 +67,9 @@ const appRoutes: Routes = [
     TakeTripComponent,
     DialogComponent,
     DialogHistoryTripComponent,
-    AdminComponent
+    AdminComponent,
+    TripTableComponent,
+    PersonTableComponent
   ],
   imports: [
     BrowserModule,

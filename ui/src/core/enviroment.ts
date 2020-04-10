@@ -21,7 +21,11 @@ export function createEnv() {
     endTrip: baseUrl + 'endTrip',
     setGrade: baseUrl + 'setGrade',
     getCurrentTrip: baseUrl + 'getCurrentTrip',
-    getHistory: baseUrl + 'getHistory'
+    getHistory: baseUrl + 'getHistory',
+    getAllTrips: baseUrl + 'getAllTrips',
+    getAllClients: baseUrl + 'getAllClients',
+    getAllDrivers: baseUrl + 'getAllDrivers',
+    deletePerson: baseUrl + 'deletePerson'
   };
 }
 

@@ -35,9 +35,6 @@ export class ProfileComponent implements OnInit {
   public panelOpenState = false;
 
   public tripsHistoryTitle = 'Show trips';
-  public allTripsTitle = 'Show list of trips';
-  public allDriversTitle = 'Show list of drivers';
-  public allClientTitle = 'Show list of clients';
 
   constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
@@ -98,7 +95,7 @@ export class ProfileComponent implements OnInit {
     const month =
       ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.tripsArray.forEach(trip => {
-      trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDay() +
+      trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getDate() +
         ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
     });
   }

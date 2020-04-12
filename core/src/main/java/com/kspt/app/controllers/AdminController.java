@@ -32,7 +32,7 @@ public class AdminController {
         return service.getAllTrips();
     }
 
-    @GetMapping("/getAllClients/{id}")
+    @GetMapping("/getAllClients")
     public ResponseOrMessage<List<Client>> getAllClients() {
         return service.getAllClients();
     }

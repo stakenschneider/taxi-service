@@ -7,6 +7,7 @@ import {DriverService} from '../../services/driver.service';
 import {AdminService} from '../../services/admin.service';
 import {DataService} from '../../services/data.service';
 import {StoreService} from '../../services/store.service';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-trip-table',
@@ -20,10 +21,11 @@ export class TripTableComponent implements OnInit {
 
   tripDataSource: MatTableDataSource<Trip>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
-              private dataService: DataService, private storeService: StoreService) {
+  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService) {
   }
+
   ngOnInit(): void {
     this.showAllTrips();
   }
@@ -53,7 +55,9 @@ export class TripTableComponent implements OnInit {
 
         const dataSource = new MatTableDataSource(this.tripsArray);
         dataSource.sort = this.sort;
+        dataSource.paginator = this.paginator;
         this.tripDataSource = dataSource;
+        this.tripDataSource.paginator = this.paginator;
       }, error => alert(error)
     );
   }

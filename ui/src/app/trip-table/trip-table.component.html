@@ -1,8 +1,10 @@
- <mat-form-field>
+  <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
   </mat-form-field>
-  <table mat-table [dataSource]="tripDataSource" matSort class="mat-elevation-z8 table-hover">
+  <div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="tripDataSource" matSort class="table-hover">
 
     <!-- Id Column -->
     <ng-container matColumnDef="id">
@@ -79,3 +81,6 @@
     <tr mat-header-row *matHeaderRowDef="tripsColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: tripsColumns;"></tr>
   </table>
+
+ <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -74,4 +74,8 @@ export class TopBarComponent implements OnInit, OnDestroy {
   takeTrip() {
     return this.router.navigateByUrl('/take-trip');
   }
+
+  allData() {
+    return this.router.navigateByUrl('/admin');
+  }
 }

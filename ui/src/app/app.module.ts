@@ -37,6 +37,7 @@ import {AdminComponent} from './admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { TripTableComponent } from './trip-table/trip-table.component';
 import { PersonTableComponent } from './person-table/person-table.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -89,7 +90,8 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatIconModule,
     MatInputModule,
-    MatTabsModule
+    MatTabsModule,
+    MatPaginatorModule
   ],
   providers: [
     AdminService,

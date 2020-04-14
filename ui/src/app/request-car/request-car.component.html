@@ -39,24 +39,26 @@
                    type="number" class="number-house can-disable"
                    placeholder="#">
           </div>
+<!-- TODO fix bug. When activ trip exist one of mat toggle group was selected-->
           <div class="child">RATE:</div>
-          <div class="rate">
-            <mat-button-toggle-group [attr.disabled]="disabled ? '' : null" class="can-disable" [(ngModel)]="rateTitle"
-                                     [ngModelOptions]="{standalone: true}" name="fontStyle" aria-label="Font Style">
-              <mat-button-toggle (change)="setRate($event.value)" value="{{title}}" *ngFor="let title of rate" >{{title}}</mat-button-toggle>
+          <mat-button-toggle-group [(ngModel)]="rateTitle"
+                                     name="fontStyle" aria-label="Font Style">
+              <mat-button-toggle [disabled]="disabled"
+                                 (change)="setRate($event.value)"
+                                 value="{{titleRate}}"
+                                 *ngFor="let titleRate of rate" >{{titleRate}}</mat-button-toggle>
             </mat-button-toggle-group>
-          </div>
           <div class="child">PAYMENT METHOD:</div>
-          <div class=" can-disable">
-            <mat-button-toggle-group [attr.disabled]="disabled ? '' : null" class="can-disable" [(ngModel)]="paymentMethodsTitle"
-                                     [ngModelOptions]="{standalone: true}" name="fontStyle" aria-label="Font Style">
-              <mat-button-toggle (change)="setPM($event.value)" value="{{title}}" *ngFor="let title of paymentMethods" >{{title}}</mat-button-toggle>
-            </mat-button-toggle-group>
-          </div>
+          <mat-button-toggle-group [(ngModel)]="paymentMethodsTitle"
+                                   name="fontStyle" aria-label="Font Style">
+            <mat-button-toggle [disabled]="disabled"
+                               (change)="setPM($event.value)"
+                               value="{{title}}"
+                               *ngFor="let title of paymentMethods" >{{title}}</mat-button-toggle>
+          </mat-button-toggle-group>
           <div class="bttn child">
             <button *ngIf="bttnRequestOrDeny" (click)="requestCar()" type="submit">Request Car</button>
-            <button [attr.disabled]="disabled ? '' : null" *ngIf="!bttnRequestOrDeny" (click)="denyTrip()"
-                    type="submit">Deny Trip
+            <button *ngIf="!bttnRequestOrDeny" [attr.disabled]="trip" (click)="denyTrip()" type="submit">Deny Trip
             </button>
           </div>
         </form>

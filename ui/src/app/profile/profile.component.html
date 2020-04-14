@@ -11,13 +11,14 @@
                            alt="avatar"/>
         <div id="nameRow">
           <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
-          <div id="rating" class="text fullName"> 4.7<i class="far fa-star"></i></div>
+          <div id="rating" class="text fullName"> {{person.rating}}<i class="far fa-star"></i></div>
         </div>
         <div class="text" id="userName">{{person.credentials.username}}</div>
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
-        <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')" (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
+        <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')"
+                (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
 
       </div>
     </div>
@@ -30,7 +31,6 @@
             <tbody>
             <tr *ngFor="let row of tripsArray" (click)="clickOnTableRow(row)">
               <td>{{row.dateOfCreation}}</td>
-              <!--              TODO ICons not displayed-->
               <td><i class="fas fa-map-marker-alt" style="color: red"></i> {{row.startAddress.city}}
                 , {{row.startAddress.street}}, {{row.startAddress.numberHouse}} <br>
                 <i class="fas fa-map-marker-alt" style="color: #1100ff"></i> {{row.finishAddress.city}}
@@ -53,10 +53,16 @@
               {{person.passport ? 'ok' : 'empty'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>
-            <input [(ngModel)]="person.passport.series" type="text" placeholder="series">
-            <input [(ngModel)]="person.passport.number" type="text" placeholder="number">
+          <p *ngIf="!person.passport">
+            <input [(ngModel)]="passportSeries" type="text" placeholder="series">
+            <input [(ngModel)]="passportNumber" type="text" placeholder="number">
             <button (click)="setPassport()">SAVE</button>
+          </p>
+
+          <p *ngIf="person.passport">
+            <input disabled type="text" placeholder="{{person.passport.series}}">
+            <input disabled type="text" placeholder="{{person.passport.number}}">
+            <button (click)="setPassport()">change</button>
           </p>
         </mat-expansion-panel>
       </div>
@@ -69,10 +75,18 @@
               Car panel
             </mat-panel-title>
             <mat-panel-description>
-<!--              TODO get car-->
-              {{person.personType === 'DRIVER' ? 'ok' : 'empty'}}
+              {{person.car ? 'ok' : 'empty'}}
             </mat-panel-description>
           </mat-expansion-panel-header>
+
+          <div *ngIf="person.car">
+            <div class="child">{{person.car.color}} {{person.car.model}} {{person.car.number}}</div>
+            <button (click)="changeCar()">Change car</button>
+
+          </div>
+
+
+          <div *ngIf="!person.car">
             <div class="child">MODEL:</div>
             <div class="rate">
               <select class=" can-disable" [(ngModel)]="modelTitle" [ngModelOptions]="{standalone: true}">
@@ -81,12 +95,14 @@
             </div>
             <div class="child">COLOR:</div>
             <div class="rate">
-              <select class=" can-disable" [(ngModel)]="colorTitle" [ngModelOptions]="{standalone: true}">
+              <select [(ngModel)]="colorTitle" [ngModelOptions]="{standalone: true}">
                 <option *ngFor="let title of carColors" [ngValue]="title">{{title}}</option>
               </select>
             </div>
             <input [(ngModel)]="carNumber" type="text" placeholder="number">
             <button (click)="setCar()">SAVE</button>
+          </div>
+
         </mat-expansion-panel>
       </div>
     </div>

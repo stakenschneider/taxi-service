@@ -4,6 +4,7 @@
   <li><a *ngIf="isAuthenticated" (click)="profile()">profile</a></li>
   <li><a *ngIf="isClient" (click)="requestCar()">request car</a></li>
   <li><a *ngIf="isDriver" (click)="takeTrip()">Take trip</a></li>
+  <li><a *ngIf="isAdmin" (click)="allData()">All Data</a></li>
 
 
   <li *ngIf="isAuthenticated" class="dropdown" style="float:right">

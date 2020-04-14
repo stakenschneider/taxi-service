@@ -2,6 +2,24 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import * as bcrypt from 'bcryptjs';
+import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators, FormBuilder} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+export class MyErrorStateMatcherForPassword implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+    return (invalidCtrl || invalidParent);
+  }
+}
 
 @Component({
   selector: 'app-sign-up',
@@ -11,65 +29,60 @@ import * as bcrypt from 'bcryptjs';
 export class SignUpComponent implements OnInit {
   public email: string;
   public password: string;
-  public passwordRepeat: string;
   public firstName: string;
   public lastName: string;
-  public flag: boolean;
   checkBoxValue: boolean;
+  hide = true;
+  hide2 = true;
   personType: string;
+  myForm: FormGroup;
 
-  constructor(private router: Router, private authService: AuthService) {
-    this.flag = false;
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+  matcherForPassword = new MyErrorStateMatcherForPassword();
+
+  errorMessage: string;
+
+  constructor(private router: Router, private authService: AuthService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    // var selector = document.getElementById('phone');
-    //
-    // var im = new Inputmask('+7(999)-999-99-99');
-    // im.mask(selector);
+    this.myForm = this.formBuilder.group({
+      password: ['', Validators.compose([Validators.required, Validators.minLength(7)])],
+      confirmPassword: ['']
+    }, {validator: this.checkPasswords});
+  }
+
+  checkPasswords(group: FormGroup) {
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
+    return pass === confirmPass ? null : {notSame: true};
   }
 
   signUp() {
-    if (this.password !== this.passwordRepeat) {
-      //todo пароль не совпалает
-      this.flag = true;
+    const salt = bcrypt.genSaltSync(10);
+    if (this.checkBoxValue) {
+      this.personType = 'DRIVER';
     } else {
-      if (!this.isEmail(this.email)) {
-        //todo эмейл не корректный
-        this.flag = true;
-      } else {
-        if (this.password.length < 7) {
-          //  todo пароль маленький
-          this.flag = true;
-        } else {
-          const salt = bcrypt.genSaltSync(10);
-          if (this.checkBoxValue) {
-            this.personType = 'DRIVER';
-          } else {
-            this.personType = 'CLIENT';
-          }
-          this.authService.signUp(this.email, bcrypt.hashSync(this.password, salt),
-            this.firstName, this.lastName, this.personType).subscribe(
-            data => {
-              if (data.body) {
-                this.router.navigateByUrl('/sign-in');
-              } else {
-                alert(data.message);
-              }
-            }, error => alert(error)
-          );
-        }
-      }
+      this.personType = 'CLIENT';
     }
+    this.authService.signUp(this.email, bcrypt.hashSync(this.password, salt),
+      this.firstName, this.lastName, this.personType).subscribe(
+      data => {
+        if (data.body) {
+          this.router.navigateByUrl('/sign-in');
+        } else {
+          alert(data.message);
+        }
+      }, error => alert(error)
+    );
   }
-
 
   signIn() {
     return this.router.navigateByUrl('/sign-in');
-  }
-
-  isEmail(search: string): boolean {
-    // tslint:disable-next-line:max-line-length
-    return new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(search);
   }
 }

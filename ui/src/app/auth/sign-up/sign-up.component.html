@@ -13,49 +13,78 @@
   <div class="row">
     <div class="col-md-4 mx-auto">
 
-      <div *ngIf="flag" class="alert" id="login_error">
-<!--        TODO-->
-        <span>что то не так</span>
+      <div *ngIf="errorMessage" class="alert" id="login_error">
+        <span style="color: #840000">{{errorMessage}}</span>
       </div>
 
       <div class="form">
-<!--        <form action="" method="post" name="login">-->
-          <div class="form-group">
-            <input [(ngModel)]="this.firstName" type="text" name="name" class="form-control my-input" id="first_name" placeholder="First name" required>
-          </div>
-          <div class="form-group">
-            <input [(ngModel)]="this.lastName" type="text" name="name" class="form-control my-input" id="last_name" placeholder="Last name" required>
-          </div>
-          <div class="form-group">
-            <input [(ngModel)]="this.email" type="text" name="name" class="form-control my-input" id="email" placeholder="Email" required>
-          </div>
-          <div class="form-group">
-            <input [(ngModel)]="this.password" type="password" name="password" class="form-control my-input" id="password" placeholder="Password" required>
-          </div>
-          <div class="form-group">
-            <input [(ngModel)]="this.passwordRepeat" type="password" name="password_repeat" class="form-control my-input" id="password_repeat" placeholder="Enter password" required>
-          </div>
-          <div  class="form-group"><input [(ngModel)]="checkBoxValue" type="checkbox" name="a" value="2010"> I want to be a driver</div>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput [(ngModel)]="firstName" placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput [(ngModel)]="lastName" placeholder="Last Name">
+        </mat-form-field>
 
-          <!--          <div class="form-group">-->
-<!--            <input type="tel" name="phone" id="phone" class="form-control my-input" placeholder="Phone">-->
-<!--          </div>-->
-<!--          <div class="form-group">-->
-<!--            <input type="text" name="name" class="form-control my-input" id="passport" placeholder="Passport">-->
-<!--          </div>-->
-          <div class="text-center ">
-            <button (click)="signUp()" type="submit" class=" btn btn-block send-button tx-tfm">Save</button>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email"
+                 [formControl]="emailFormControl"
+                 [errorStateMatcher]="matcher"
+                 placeholder="mail@example.com">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is required
+          </mat-error>
+        </mat-form-field>
+        <div [formGroup]="myForm">
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Create your password" formControlName="password" required
+                   [type]="hide2 ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide2">
+              <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="myForm.hasError('minlength', 'password') && !myForm.hasError('required', 'password')">
+            At least 7 characters
+          </mat-error>
+            <mat-error *ngIf="myForm.hasError('required', 'password')">
+              Please enter your password
+            </mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <input matInput placeholder="Confirm password" formControlName="confirmPassword"
+                   [errorStateMatcher]="matcherForPassword"
+                   [type]="hide ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="myForm.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group"><input [(ngModel)]="checkBoxValue" type="checkbox" name="a" value="2010"> I want to be a
+          driver
+        </div>
+        <div class="text-center ">
+          <button (click)="signUp()" type="submit" class=" btn btn-block send-button tx-tfm">Save</button>
+        </div>
+        <div class="col-md-12 ">
+          <div class="login-or">
+            <hr class="hr-or">
+            <span class="span-or">or</span>
           </div>
-          <div class="col-md-12 ">
-            <div class="login-or">
-              <hr class="hr-or">
-              <span class="span-or">or</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <button (click)="signIn()" type="submit" class=" btn btn-block send-button tx-tfm">Sign In</button>
-          </div>
-<!--        </form>-->
+        </div>
+        <div class="form-group">
+          <button (click)="signIn()" type="submit" class=" btn btn-block send-button tx-tfm">Sign In</button>
+        </div>
       </div>
     </div>
   </div>

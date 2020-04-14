@@ -20,7 +20,7 @@ export interface DataHistoryTrip {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public person: Person;
+  public person: any;
   public driver: Driver;
 
   public tripsArray: Array<Trip>;
@@ -30,6 +30,9 @@ export class ProfileComponent implements OnInit {
   public carNumber: string;
   public colorTitle: string;
   public modelTitle: string;
+
+  public passportSeries: string;
+  public passportNumber: string;
 
   public showTrips = false;
   public panelOpenState = false;
@@ -67,6 +70,7 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.person = data.body;
+          this.person.rating = +this.person.rating.toFixed(1);
         } else {
           alert(data.message);
         }
@@ -143,18 +147,20 @@ export class ProfileComponent implements OnInit {
           alert(data.message);
         }, error => alert(error)
       );
+      //  TODO after this must be disabled inputs
     } else {
       alert('All fields required');
     }
   }
 
   setPassport() {
-    if (this.person.passport.series && this.person.passport.number) {
-      this.driverService.setPassport(this.storeService.getId(), this.person.passport.series, this.person.passport.number).subscribe(
+    if (this.passportSeries && this.passportNumber) {
+      this.driverService.setPassport(this.storeService.getId(), this.passportSeries, this.passportNumber).subscribe(
         data => {
           alert(data.message);
         }, error => alert(error)
       );
+    //  TODO after this must be disabled inputs
     } else {
       alert('All fields required');
     }
@@ -169,6 +175,10 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       result => {
       });
+  }
+
+  changeCar() {
+
   }
 }
 

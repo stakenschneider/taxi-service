@@ -41,6 +41,7 @@ export class DialogComponent implements OnInit {
 
     this.buttonLabel = 'End trip';
 
+    // TODO if trip was deny show a message or reload data
     this.driverService.reserveTrip(this.storeService.getId(), trip.id).subscribe(
       data => {
         if (data.message === null) {

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {ClientService} from '../../services/client.service';
 import {Address} from '../../models/address.model';
-import {Driver} from '../../models/actor/driver.model';
 import {StoreService} from '../../services/store.service';
 import {Router} from '@angular/router';
 import {Trip} from '../../models/trip.model';
@@ -59,8 +58,8 @@ export class RequestCarComponent implements OnInit {
     if (this.storeService.getId()) {
       this.getActiveTrips();
       this.addEventListener();
-      this.getPM();
       this.getRate();
+      this.getPM();
     } else {
       this.router.navigateByUrl('/sign-in');
     }
@@ -84,17 +83,15 @@ export class RequestCarComponent implements OnInit {
 
   addEventListener() {
     this.source.addEventListener('message', message => {
-      this.trip = JSON.parse(message.data) as Trip;
-      this.statusFrameTitle = 'The driver is already coming to you!';
-      this.contentStatusFrame = true;
-
-      if (this.lol !== 0) {
+      if (this.trip) {
         this.endFrameTitle = 'Trip is over';
         this.endFrameShow = true;
         this.disabled = true;
-      } else {
-        this.lol++;
       }
+
+      this.trip = JSON.parse(message.data) as Trip;
+      this.statusFrameTitle = 'The driver is already coming to you!';
+      this.contentStatusFrame = true;
     });
   }
 
@@ -191,7 +188,7 @@ export class RequestCarComponent implements OnInit {
     this.rateTitle = value;
   }
 
-  setPM(value: any) {
-    this.rateTitle = value;
+  setPM(value: string) {
+    this.paymentMethodsTitle = value;
   }
 }

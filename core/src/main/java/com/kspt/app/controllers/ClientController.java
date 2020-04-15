@@ -22,6 +22,7 @@ public class ClientController {
     @Autowired
     private ClientService service;
 
+//    TODO implement or delete
 //    @PostMapping("/setPassport")
 //    public ResponseOrMessage<Person> setPassport(@RequestBody PassportModel passport) {
 //        return service.setPassport(passport);

@@ -24,11 +24,9 @@ public final class Credentials extends AbstractEntity {
     private String username;
 
     public Credentials(@NotNull final String email,
-                       @NotNull final String password,
-                       @NotNull final String username) {
+                       @NotNull final String password) {
         this.email = email;
         this.password = password;
-        this.username = username;
-
+        this.username = email.split("@")[0];
     }
 }

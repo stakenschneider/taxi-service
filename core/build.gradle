@@ -20,6 +20,9 @@ repositories {
 }
 
 dependencies {
+    // generate data for table
+    implementation 'com.github.javafaker:javafaker:1.0.2'
+
     // spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

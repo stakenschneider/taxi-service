@@ -6,6 +6,7 @@ import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.models.*;
 import com.kspt.app.service.AdminService;
+import com.kspt.app.service.Generator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,10 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private AdminService service;
+
+
+    @Autowired
+    private Generator generator;
 
     @DeleteMapping("/deletePerson/{personId}/{personType}")
     public ApiResult deletePerson(@PathVariable Long personId, @PathVariable PersonType personType) {
@@ -40,5 +45,12 @@ public class AdminController {
     @GetMapping("/getAllDrivers")
     public ResponseOrMessage<List<Driver>> getAllDrivers() {
         return service.getAllDrivers();
+    }
+
+    @GetMapping("/generate/{count}")
+    public void generate(@PathVariable int count) {
+         generator.generateFakeDataForClient(count);
+         generator.generateFakeDataForDriver(count);
+         generator.generateFakeDataForTrip(count);
     }
 }

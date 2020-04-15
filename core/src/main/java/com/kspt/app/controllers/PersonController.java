@@ -29,6 +29,6 @@ public class PersonController {
         return service.signIn(emailOrUserName);
     }
 
-    @PostMapping("/sign-out")
-    public boolean signOut() { return service.signOut();}
+//    @PostMapping("/sign-out")
+//    public boolean signOut() { return service.signOut();}
 }

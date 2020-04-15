@@ -38,8 +38,7 @@ public class PersonService {
 
     public ResponseOrMessage<Boolean> signUp(RegistrationModel model) {
         final Credentials credentials = new Credentials(model.getEmail(),
-                model.getPassword(),
-                model.getEmail().split("@")[0]);
+                model.getPassword());
         try {
             switch (model.getPersonType()) {
                 case CLIENT:
@@ -58,43 +57,7 @@ public class PersonService {
         } catch (Exception e) {
             return new ResponseOrMessage<>("Login already exist");
         }
-
     }
-
-
-//    public ResponseOrMessage<Person> signUp(RegistrationModel model) {
-//        final Credentials credentials = new Credentials(model.getLogin(), model.getPassword());
-//        try {
-//            switch (model.getPersonType()) {
-//                case CLIENT: {
-//                    Client client = new Client(model.getFirstName(), model.getSecondName(),
-//                            model.getPhoneNumber());
-//                    client.setCredentials(credentials);
-//                    clientRepository.save(client);
-//                    return new ResponseOrMessage(client);
-//                }
-//
-//                case DRIVER: {
-//                    Driver driver = new Driver(model.getFirstName(), model.getSecondName(),
-//                            model.getPhoneNumber());
-//                    driver.setCredentials(credentials);
-//                    driverRepository.save(driver);
-//                    return new ResponseOrMessage(driver);
-//                }
-//                case ADMIN: {
-//                    Admin admin = new Admin(model.getFirstName(), model.getSecondName(),
-//                            model.getPhoneNumber());
-//                    admin.setCredentials(credentials);
-//                    adminRepository.save(admin);
-//                    return new ResponseOrMessage(admin);
-//                }
-//                default:
-//                    return null;
-//            }
-//        } catch (Exception e) {
-//            return new ResponseOrMessage("Login already exist");
-//        }
-//    }
 
     public ResponseOrMessage<Person> signIn(Map<String, String> emailOrUserName) {
         if (emailOrUserName.containsKey("emailOrUserName")) {
@@ -102,16 +65,25 @@ public class PersonService {
                     .orElseGet(() -> credentialsRepository.findByUsername(emailOrUserName.get("emailOrUserName")).orElse(null));
             //TODO Polymorphic Queries
             if (credentials != null) {
-                return new ResponseOrMessage<>(clientRepository.findByCredentials(credentials).orElseGet(
+                Person person = clientRepository.findByCredentials(credentials).orElseGet(
                         () -> adminRepository.findByCredentials(credentials).orElseGet(
-                                () -> driverRepository.findByCredentials(credentials).orElse(null))));
+                                () -> driverRepository.findByCredentials(credentials).orElse(null)));
+                if (person == null){
+                    return new ResponseOrMessage<>("Person not found");
+                }
+
+                if (person.isDeleted()){
+                    return new ResponseOrMessage<>("Person was deleted");
+                }
+                return new ResponseOrMessage<>(person);
             } else return new ResponseOrMessage<>("Incorrect username");
         } else return new ResponseOrMessage<>("Wrong parameter");
     }
 
-    public Boolean signOut() {
-        return true;
-    }
+//    TODO implement or delete
+//    public Boolean signOut() {
+//        return true;
+//    }
 
     public ResponseOrMessage<Person> getPersonById(IdAndPersonTypeModel model) {
         Long personId = model.getPersonId();
@@ -127,7 +99,15 @@ public class PersonService {
                 person = adminRepository.findById(personId).orElse(null);
                 break;
             default:
-                return new ResponseOrMessage<>("Person not found");
+                return new ResponseOrMessage<>("Wrong with role parameter");
+        }
+
+        if (person == null){
+            return new ResponseOrMessage<>("Person not found");
+        }
+
+        if (person.isDeleted()) {
+            return new ResponseOrMessage<>("Person was deleted");
         }
         return new ResponseOrMessage<>(person);
     }

@@ -23,46 +23,50 @@ public class AdminService {
     DriverRepository driverRepository;
     ClientRepository clientRepository;
 
-    public AdminService(TripRepository tripRepository,ClientRepository clientRepository, DriverRepository driverRepository) {
+    public AdminService(TripRepository tripRepository, ClientRepository clientRepository, DriverRepository driverRepository) {
         this.tripRepository = tripRepository;
         this.clientRepository = clientRepository;
         this.driverRepository = driverRepository;
     }
 
     public ApiResult deletePerson(Long personId, PersonType personType) {
-        switch (personType){
+        switch (personType) {
             case DRIVER:
-                if (!driverRepository.findById(personId).isPresent()) {
+                Driver driver = driverRepository.findById(personId).orElse(null);
+                if (driver == null) {
                     return new ApiResult("Driver not found");
                 }
-                driverRepository.deleteById(personId);
+                driver.setDeleted(true);
+                driverRepository.save(driver);
                 return new ApiResult("Driver was deleted");
 
-                case CLIENT:
-                    if (!clientRepository.findById(personId).isPresent()) {
-                        return new ApiResult("Client not found");
-                    }
-                    clientRepository.deleteById(personId);
-                    return new ApiResult("Client was deleted");
+            case CLIENT:
+                Client client = clientRepository.findById(personId).orElse(null);
+                if (client == null) {
+                    return new ApiResult("Client not found");
+                }
+                client.setDeleted(true);
+                clientRepository.save(client);
+                return new ApiResult("Client was deleted");
 
-            default: return new ApiResult("Wrong parameter");
+            default:
+                return new ApiResult("Wrong parameter");
         }
-
     }
 
-    public ResponseOrMessage<List<Trip>> getAllTrips(){
+    public ResponseOrMessage<List<Trip>> getAllTrips() {
         List<Trip> list = tripRepository.findAll();
         if (list.isEmpty()) return new ResponseOrMessage<>("Trips not found");
         return new ResponseOrMessage<>(list);
     }
 
-    public ResponseOrMessage<List<Client>> getAllClients(){
+    public ResponseOrMessage<List<Client>> getAllClients() {
         List<Client> list = clientRepository.findAll();
         if (list.isEmpty()) return new ResponseOrMessage<>("Clients not found");
         return new ResponseOrMessage<>(list);
     }
 
-    public ResponseOrMessage<List<Driver>> getAllDrivers(){
+    public ResponseOrMessage<List<Driver>> getAllDrivers() {
         List<Driver> list = driverRepository.findAll();
         if (list.isEmpty()) return new ResponseOrMessage<>("Drivers not found");
         return new ResponseOrMessage<>(list);

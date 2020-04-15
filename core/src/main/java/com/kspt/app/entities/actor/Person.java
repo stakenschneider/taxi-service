@@ -29,15 +29,18 @@ public abstract class Person extends AbstractEntity {
     @Column(name = "phone_number")
     protected String phoneNumber;
 
-    @Column(name = "personType")
+    @Column(name = "person_type")
     @Enumerated(EnumType.STRING)
     protected PersonType personType;
+
+    @Column(name = "deleted", nullable = false)
+    protected boolean deleted;
 
     @JoinColumn(name = "credentials_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     protected Credentials credentials;
 
-    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "passport_id")
     private Passport passport;
 }

@@ -5,7 +5,6 @@ import * as bcrypt from 'bcryptjs';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators, FormBuilder} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
-
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -28,13 +27,11 @@ export class MyErrorStateMatcherForPassword implements ErrorStateMatcher {
 })
 export class SignUpComponent implements OnInit {
   public email: string;
-  public password: string;
   public firstName: string;
   public lastName: string;
   checkBoxValue: boolean;
   hide = true;
   hide2 = true;
-  personType: string;
   myForm: FormGroup;
 
   emailFormControl = new FormControl('', [
@@ -65,13 +62,10 @@ export class SignUpComponent implements OnInit {
 
   signUp() {
     const salt = bcrypt.genSaltSync(10);
-    if (this.checkBoxValue) {
-      this.personType = 'DRIVER';
-    } else {
-      this.personType = 'CLIENT';
-    }
-    this.authService.signUp(this.email, bcrypt.hashSync(this.password, salt),
-      this.firstName, this.lastName, this.personType).subscribe(
+    const personType = this.checkBoxValue ? 'DRIVER' : 'CLIENT';
+    const pa = this.myForm.get('password').value;
+    this.authService.signUp(this.email, bcrypt.hashSync(pa, salt),
+      this.firstName, this.lastName, personType).subscribe(
       data => {
         if (data.body) {
           this.router.navigateByUrl('/sign-in');

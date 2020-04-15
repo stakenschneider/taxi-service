@@ -74,10 +74,18 @@ export class PersonTableComponent implements OnInit {
   deletePerson(person: any) {
     switch (this.roleName) {
       case 'driver':
+        this.adminService.deletePerson(person.id, person.personType);
         this.driversArray.splice(this.driversArray.indexOf(person), 1);
         this.dataSource = new MatTableDataSource(this.driversArray);
         break;
       case 'client':
+        this.adminService.deletePerson(person.id, person.personType).subscribe(
+          data => {
+            alert(data.message);
+          }, error => {
+            alert(error);
+          }
+        );
         this.clientsArray.splice(this.clientsArray.indexOf(person), 1);
         this.dataSource = new MatTableDataSource(this.clientsArray);
         break;

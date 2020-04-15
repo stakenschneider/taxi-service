@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DialogData} from '../take-trip/take-trip.component';
+import {DialogData} from '../pages/take-trip/take-trip.component';
 import {Router} from '@angular/router';
 import {DriverService} from '../../services/driver.service';
 import {DataService} from '../../services/data.service';

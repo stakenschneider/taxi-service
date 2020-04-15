@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {DataService} from '../../services/data.service';
-import {Trip} from '../../models/trip.model';
-import {Driver} from '../../models/actor/driver.model';
-import {StoreService} from '../../services/store.service';
-import {DriverService} from '../../services/driver.service';
+import {DataService} from '../../../services/data.service';
+import {Trip} from '../../../models/trip.model';
+import {Driver} from '../../../models/actor/driver.model';
+import {StoreService} from '../../../services/store.service';
+import {DriverService} from '../../../services/driver.service';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogHistoryTripComponent} from '../dialog-history-trip/dialog-history-trip.component';
-import {Person} from '../../models/actor/person.model';
-import {AdminService} from '../../services/admin.service';
+import {DialogHistoryTripComponent} from '../../dialog-history-trip/dialog-history-trip.component';
+import {Person} from '../../../models/actor/person.model';
+import {AdminService} from '../../../services/admin.service';
 
 export interface DataHistoryTrip {
   trip: Trip;
@@ -160,7 +160,7 @@ export class ProfileComponent implements OnInit {
           alert(data.message);
         }, error => alert(error)
       );
-    //  TODO after this must be disabled inputs
+      //  TODO after this must be disabled inputs
     } else {
       alert('All fields required');
     }
@@ -179,6 +179,17 @@ export class ProfileComponent implements OnInit {
 
   changeCar() {
 
+  }
+
+  generate() {
+    this.adminService.generate(100).subscribe(
+      data => {
+        alert(data);
+      },
+      error => {
+        alert(error);
+      }
+    );
   }
 }
 

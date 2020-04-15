@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../services/auth.service';
+import {AuthService} from '../../../../services/auth.service';
 import * as bcrypt from 'bcryptjs';
-import {StoreService} from '../../../services/store.service';
+import {StoreService} from '../../../../services/store.service';
 
 @Component({
   selector: 'app-sign-in',

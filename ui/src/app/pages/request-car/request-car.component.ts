@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from '../../services/data.service';
-import {ClientService} from '../../services/client.service';
-import {Address} from '../../models/address.model';
-import {StoreService} from '../../services/store.service';
+import {DataService} from '../../../services/data.service';
+import {ClientService} from '../../../services/client.service';
+import {Address} from '../../../models/address.model';
+import {StoreService} from '../../../services/store.service';
 import {Router} from '@angular/router';
-import {Trip} from '../../models/trip.model';
+import {Trip} from '../../../models/trip.model';
 
 declare let EventSource: any;
 

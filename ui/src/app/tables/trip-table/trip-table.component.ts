@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Trip} from '../../models/trip.model';
+import {Trip} from '../../../models/trip.model';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
-import {DriverService} from '../../services/driver.service';
-import {AdminService} from '../../services/admin.service';
-import {DataService} from '../../services/data.service';
-import {StoreService} from '../../services/store.service';
+import {DriverService} from '../../../services/driver.service';
+import {AdminService} from '../../../services/admin.service';
+import {DataService} from '../../../services/data.service';
+import {StoreService} from '../../../services/store.service';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({

@@ -22,46 +22,62 @@
           <mat-label>First Name</mat-label>
           <input matInput [(ngModel)]="firstName" placeholder="First Name">
         </mat-form-field>
+
         <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
+          <mat-label>Last Name</mat-label>
           <input matInput [(ngModel)]="lastName" placeholder="Last Name">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="email"
+          <input matInput
+                 [(ngModel)]="email"
                  [formControl]="emailFormControl"
                  [errorStateMatcher]="matcher"
                  placeholder="mail@example.com">
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+          <mat-error *ngIf="emailFormControl.hasError('email')
+          && !emailFormControl.hasError('required')">
             Please enter a valid email address
           </mat-error>
           <mat-error *ngIf="emailFormControl.hasError('required')">
             Email is required
           </mat-error>
         </mat-form-field>
+
         <div [formGroup]="myForm">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Create your password" formControlName="password" required
+          <mat-form-field style="width:100%" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput
+                   placeholder="Create your password"
+                   formControlName="password"
                    [type]="hide2 ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+            <button mat-icon-button
+                    matSuffix
+                    (click)="hide2 = !hide2"
+                    [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide2">
               <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="myForm.hasError('minlength', 'password') && !myForm.hasError('required', 'password')">
+            <mat-error *ngIf="myForm.hasError('minlength', 'password')
+            && !myForm.hasError('required', 'password')">
             At least 7 characters
           </mat-error>
             <mat-error *ngIf="myForm.hasError('required', 'password')">
               Please enter your password
             </mat-error>
-
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Confirm password" formControlName="confirmPassword"
+          <mat-form-field style="width:100%" appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <input matInput
+                   placeholder="Confirm password"
+                   formControlName="confirmPassword"
                    [errorStateMatcher]="matcherForPassword"
                    [type]="hide ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            <button mat-icon-button
+                    matSuffix
+                    (click)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
@@ -70,21 +86,28 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div class="form-group"><input [(ngModel)]="checkBoxValue" type="checkbox" name="a" value="2010"> I want to be a
-          driver
-        </div>
+
+        <mat-checkbox [(ngModel)]="checkBoxValue"> I want to be a driver</mat-checkbox>
+
         <div class="text-center ">
-          <button (click)="signUp()" type="submit" class=" btn btn-block send-button tx-tfm">Save</button>
+          <button (click)="signUp()"
+                  type="submit"
+                  class=" btn btn-block send-button tx-tfm">
+            Save
+          </button>
         </div>
+
         <div class="col-md-12 ">
           <div class="login-or">
             <hr class="hr-or">
             <span class="span-or">or</span>
           </div>
         </div>
+
         <div class="form-group">
           <button (click)="signIn()" type="submit" class=" btn btn-block send-button tx-tfm">Sign In</button>
         </div>
+
       </div>
     </div>
   </div>

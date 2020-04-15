@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-
 <div class="container">
   <div class="col-md-6 mx-auto text-center">
     <div class="header-title">
@@ -21,15 +20,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput [(ngModel)]="email" [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-                 placeholder="mail@example.com">
+          <input matInput [(ngModel)]="email" placeholder="mail@example.com">
           <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -43,15 +35,6 @@
 
         <div class="text-center ">
           <button (click)="signIn()" class=" btn btn-block send-button tx-tfm">Sign In</button>
-        </div>
-        <div class="text-center ">
-          <button (click)="signInAsClient()" class=" btn btn-block send-button tx-tfm">Sign In as Client</button>
-        </div>
-        <div class="text-center ">
-          <button (click)="signInAsDriver()" class=" btn btn-block send-button tx-tfm">Sign In as Driver</button>
-        </div>
-        <div class="text-center ">
-          <button (click)="signInAsAdmin()" class=" btn btn-block send-button tx-tfm">Sign In as Admin</button>
         </div>
         <div class="col-md-12 ">
           <div class="login-or">
@@ -67,7 +50,6 @@
           and <a href="#">Privacy Policy</a>.
 <!--          TODO add privacy policy and Terms of Use dialogs-->
         </p>
-        <!--        </form>-->
       </div>
     </div>
   </div>

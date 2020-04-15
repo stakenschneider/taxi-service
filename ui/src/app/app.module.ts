@@ -35,9 +35,10 @@ import {MatInputModule} from '@angular/material/input';
 import {AdminService} from '../services/admin.service';
 import {AdminComponent} from './admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import { TripTableComponent } from './trip-table/trip-table.component';
-import { PersonTableComponent } from './person-table/person-table.component';
+import {TripTableComponent} from './trip-table/trip-table.component';
+import {PersonTableComponent} from './person-table/person-table.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
     MatIconModule,
     MatInputModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
   providers: [
     AdminService,

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {DataHistoryTrip} from '../profile/profile.component';
+import {DataHistoryTrip} from '../pages/profile/profile.component';
 
 @Component({
   selector: 'app-dialog-history-trip',

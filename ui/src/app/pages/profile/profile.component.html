@@ -19,7 +19,8 @@
         </div>
         <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
-
+        <button class="myButton" *ngIf="(person.personType === 'ADMIN')"
+                (click)="generate()">GENERATE!</button>
       </div>
     </div>
     <!--CONTENT COLUMN-->

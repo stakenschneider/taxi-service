@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {Trip} from '../../models/trip.model';
+import {Trip} from '../../../models/trip.model';
 import {Router} from '@angular/router';
-import {DriverService} from '../../services/driver.service';
-import {DataService} from '../../services/data.service';
-import {StoreService} from '../../services/store.service';
+import {DriverService} from '../../../services/driver.service';
+import {DataService} from '../../../services/data.service';
+import {StoreService} from '../../../services/store.service';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogComponent} from '../dialog/dialog.component';
+import {DialogComponent} from '../../dialog/dialog.component';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 

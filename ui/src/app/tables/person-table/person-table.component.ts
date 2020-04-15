@@ -1,12 +1,11 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
-import {DriverService} from '../../services/driver.service';
-import {AdminService} from '../../services/admin.service';
-import {Driver} from '../../models/actor/driver.model';
-import {Client} from '../../models/actor/client.model';
-import {Person} from '../../models/actor/person.model';
-import {element} from 'protractor';
+import {DriverService} from '../../../services/driver.service';
+import {AdminService} from '../../../services/admin.service';
+import {Driver} from '../../../models/actor/driver.model';
+import {Client} from '../../../models/actor/client.model';
+import {Person} from '../../../models/actor/person.model';
 
 @Component({
   selector: 'app-person-table',
@@ -17,7 +16,7 @@ export class PersonTableComponent implements OnInit {
   @Input() roleName: string;
   driversArray: Driver[];
   clientsArray: Client[];
-  columns: string[] = ['id', 'firstName', 'lastName', 'rating', 'email', 'phoneNumber', 'edit'];
+  columns: string[] = ['id', 'firstName', 'lastName', 'rating', 'email', 'phoneNumber', 'deleted', 'edit'];
 
   dataSource: MatTableDataSource<Person>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -107,5 +106,9 @@ export class PersonTableComponent implements OnInit {
 
   changeValue(id: number, property: string, event: any) {
     this.editField = event.target.textContent;
+  }
+
+  restorePerson(element: any) {
+    
   }
 }

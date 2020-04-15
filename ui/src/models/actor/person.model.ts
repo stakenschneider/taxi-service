@@ -9,4 +9,5 @@ export interface Person extends AbstractEntity {
   credentials: Credentials;
   passport: Passport;
   personType: string;
+  deleted: boolean;
 }

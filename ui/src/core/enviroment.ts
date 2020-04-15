@@ -25,6 +25,7 @@ export function createEnv() {
     getAllTrips: baseUrl + 'getAllTrips',
     getAllClients: baseUrl + 'getAllClients',
     getAllDrivers: baseUrl + 'getAllDrivers',
+    generate: baseUrl + 'generate',
     deletePerson: baseUrl + 'deletePerson'
   };
 }

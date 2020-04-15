@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../services/auth.service';
+import {AuthService} from '../../../../services/auth.service';
 import * as bcrypt from 'bcryptjs';
 import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators, FormBuilder} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';

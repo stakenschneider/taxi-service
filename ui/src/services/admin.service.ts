@@ -34,4 +34,9 @@ export class AdminService {
     const url = environment.deletePerson + '/' + personId + '/' + personType;
     return this.http.delete<ApiResult>(url, {});
   }
+
+  generate(count: number) {
+    const url = environment.generate + '/' + count;
+    return this.http.get<void>(url, {});
+  }
 }

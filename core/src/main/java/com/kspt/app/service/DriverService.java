@@ -1,6 +1,6 @@
 package com.kspt.app.service;
 
-import com.kspt.app.configuration.Constants;
+import com.kspt.app.configuration.Constants.Status;
 import com.kspt.app.configuration.SSEController;
 import com.kspt.app.entities.Car;
 import com.kspt.app.entities.Passport;
@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Masha on 12.03.2020
@@ -91,7 +88,7 @@ public class DriverService {
                 case CREATE:
                     trip.setDriver(driver);
                     driver.setAvailable(false);
-                    trip.setStatus(Constants.Status.START);
+                    trip.setStatus(Status.START);
                     tripRepository.save(trip);
                     trip.getDriver().setRating(Math.round(driver.getRating() * 10.0) / 10.0);
                     sendSseEventsToUI(trip);
@@ -106,9 +103,27 @@ public class DriverService {
         } else return new ApiResult("Wrong parameter");
     }
 
-    public ResponseOrMessage<List<Trip>> getFreeTrips() {
-//        TODO round client rating
-        List<Trip> list = tripRepository.findByStatus(Constants.Status.CREATE).orElse(null);
+    public ResponseOrMessage<List<Trip>> getFreeTrips(Long driverId) {
+        if (driverId<0) {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
+
+        Driver driver = driverRepository.findById(driverId).orElse(null);
+        if (driver == null) {
+            return new ResponseOrMessage<>("Driver not found");
+        }
+
+        Car car = driver.getCar();
+        if (car == null) {
+            return new ResponseOrMessage<>("You must register car before book a trip");
+        }
+
+        Passport passport = driver.getPassport();
+        if (passport == null) {
+            return new ResponseOrMessage<>("You must register passport before book a trip");
+        }
+
+        List<Trip> list = tripRepository.findAllByStatusAndTripRate(Status.CREATE, car.getCarRate()).orElse(null);
         if (list == null) {
             return new ResponseOrMessage<>("No free trips");
         }
@@ -132,7 +147,7 @@ public class DriverService {
         client.setRating((client.getRating() + model.getGrade()) / 2);
 
         driver.setAvailable(true);
-        trip.setStatus(Constants.Status.FINISH);
+        trip.setStatus(Status.FINISH);
 
         trip.setDateOfCompletion(new Date());
         clientRepository.save(client);
@@ -157,7 +172,7 @@ public class DriverService {
 
     public ResponseOrMessage<Trip> getCurrentTrip(Map<String, Long> driverId) {
         if (driverId.containsKey("id")) {
-            Trip trip = tripRepository.findByDriverIdAndStatus(driverId.get("id"), Constants.Status.START).orElse(null);
+            Trip trip = tripRepository.findByDriverIdAndStatus(driverId.get("id"), Status.START).orElse(null);
 
             if (trip == null) {
                 return new ResponseOrMessage<>("Driver does not have active trips");

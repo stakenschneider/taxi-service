@@ -33,8 +33,8 @@ export class DriverService {
     return this.http.post<ResponseOrMessage<Array<Trip>>>(url, {id});
   }
 
-  getFreeTrips() {
-    const url = environment.getFreeTrips;
+  getFreeTrips(driverId: number) {
+    const url = environment.getFreeTrips + '/' + driverId;
     return this.http.get<ResponseOrMessage<Array<Trip>>>(url, {});
   }
 

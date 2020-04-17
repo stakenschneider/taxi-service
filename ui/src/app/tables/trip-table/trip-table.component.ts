@@ -5,8 +5,6 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {DriverService} from '../../../services/driver.service';
 import {AdminService} from '../../../services/admin.service';
-import {DataService} from '../../../services/data.service';
-import {StoreService} from '../../../services/store.service';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
@@ -23,8 +21,7 @@ export class TripTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService) {
-  }
+  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.showAllTrips();

@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from '../../dialog/dialog.component';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {SnackBarComponent} from '../../snack-bar/snack-bar.component';
 
 export interface DialogData {
   trip: Trip;
@@ -24,9 +26,11 @@ export class TakeTripComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   trip: Trip;
   trips: Trip[];
-  public message: string;
+  public durationInSecondsForSnackBar = 5;
 
-  constructor(private router: Router, private driverService: DriverService,
+  // tslint:disable-next-line:variable-name
+  constructor(private _snackBar: MatSnackBar,
+              private router: Router, private driverService: DriverService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
     this.dataService = dataService;
     this.storeService = storeService;
@@ -64,24 +68,22 @@ export class TakeTripComponent implements OnInit {
   }
 
   getFreeTrips() {
-    this.driverService.getFreeTrips().subscribe(
+    this.driverService.getFreeTrips(this.storeService.getId()).subscribe(
       data => {
         if (data.message === null) {
           this.trips = data.body;
-          // tslint:disable-next-line:max-line-length
-          const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          const month = ['January', 'February', 'March', 'April',
+            'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           this.trips.forEach(trip => {
             trip.client.rating = +trip.client.rating.toFixed(1);
-          });
-          this.trips.forEach(trip => {
-            // tslint:disable-next-line:max-line-length
-            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDate() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
+            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDate()
+              + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
           });
           const dataSource = new MatTableDataSource(this.trips);
           dataSource.sort = this.sort;
           this.dataSource = dataSource;
         } else {
-          this.message = data.message;
+          this.openSnackBar(data.message);
         }
       },
       error => {
@@ -101,5 +103,12 @@ export class TakeTripComponent implements OnInit {
       result => {
         this.getFreeTrips();
       });
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      duration: this.durationInSecondsForSnackBar * 1000,
+      data: message
+    });
   }
 }

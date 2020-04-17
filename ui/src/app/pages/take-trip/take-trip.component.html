@@ -3,7 +3,6 @@
 
 <div class="container-fluid">
     <div class="table-responsive text-nowrap">
-      <div *ngIf="!trips" style="align-content: center; ">{{message}}</div>
       <table *ngIf="trips" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table table-hover">
 
         <ng-container matColumnDef="id">
@@ -16,13 +15,11 @@
           <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.price}}$</td>
         </ng-container>
 
-<!--         TODO date to normal format-->
         <ng-container matColumnDef="dateOfCreation">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Creation </th>
           <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.dateOfCreation}} </td>
         </ng-container>
 
-<!--        TODO math round-->
         <ng-container matColumnDef="client">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Client rating </th>
           <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.client.rating}} </td>

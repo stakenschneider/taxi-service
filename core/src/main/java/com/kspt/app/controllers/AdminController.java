@@ -29,7 +29,7 @@ public class AdminController {
 
     @DeleteMapping("/deletePerson/{personId}/{personType}")
     public ApiResult deletePerson(@PathVariable Long personId, @PathVariable PersonType personType) {
-        return service.deletePerson(personId,personType);
+        return service.deletePerson(personId, personType);
     }
 
     @GetMapping("/getAllTrips")
@@ -48,9 +48,9 @@ public class AdminController {
     }
 
     @GetMapping("/generate/{count}")
-    public void generate(@PathVariable int count) {
-         generator.generateFakeDataForClient(count);
-         generator.generateFakeDataForDriver(count);
-         generator.generateFakeDataForTrip(count);
+    public ApiResult generate(@PathVariable int count) {
+        return new ApiResult(generator.generateFakeDataForClient(count) +
+                generator.generateFakeDataForDriver(count) +
+                generator.generateFakeDataForTrip(count));
     }
 }

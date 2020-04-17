@@ -1,31 +1,4 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  background-color: #3a3a3a;
-}
-
-/* Overwrite the styles of the mat-dialog-container element globally, but only for those
-that have an id of `modal-component` */
-/* https://stackoverflow.com/a/48689004/9263761 */
-mat-dialog-container#modal-component {
-  border-radius: 11px;
-}
-
 table {
   width: auto;
-}
-
-th.mat-sort-header-sorted {
-  color: black;
-}
-
-div.container-fluid {
-  padding: 30px;
+  margin: 30px;
 }

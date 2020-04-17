@@ -37,9 +37,9 @@ public class DriverController {
         return service.getHistory(driverId);
     }
 
-    @GetMapping("/getFreeTrips")
-    public ResponseOrMessage<List<Trip>> getFreeTrips() {
-        return service.getFreeTrips();
+    @GetMapping("/getFreeTrips/{driverId}")
+    public ResponseOrMessage<List<Trip>> getFreeTrips(@PathVariable Long driverId) {
+        return service.getFreeTrips(driverId);
     }
 
     @PostMapping("/takeTrip")

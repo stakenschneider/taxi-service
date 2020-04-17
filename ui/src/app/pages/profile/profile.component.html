@@ -11,7 +11,8 @@
                            alt="avatar"/>
         <div id="nameRow">
           <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
-          <div id="rating" class="text fullName"> {{person.rating}}<i class="far fa-star"></i></div>
+          <div *ngIf="person.personType !== 'ADMIN'" id="rating" class="text fullName"> {{person.rating}}<i
+            class="far fa-star"></i></div>
         </div>
         <div class="text" id="userName">{{person.credentials.username}}</div>
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
@@ -20,7 +21,8 @@
         <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
         <button class="myButton" *ngIf="(person.personType === 'ADMIN')"
-                (click)="generate()">GENERATE!</button>
+                (click)="generate()">GENERATE!
+        </button>
       </div>
     </div>
     <!--CONTENT COLUMN-->
@@ -106,8 +108,10 @@
 
         </mat-expansion-panel>
       </div>
+      <!--      ADMIN MESSAGE FORM-->
+      <div *ngIf="person.personType === 'ADMIN'" class="second">
+        <div style="color: #840000;" class="fullName">{{adminMessage}}</div>
+      </div>
     </div>
   </div>
 </div>
-
-

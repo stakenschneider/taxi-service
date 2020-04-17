@@ -37,6 +37,6 @@ export class AdminService {
 
   generate(count: number) {
     const url = environment.generate + '/' + count;
-    return this.http.get<void>(url, {});
+    return this.http.get<ApiResult>(url, {});
   }
 }

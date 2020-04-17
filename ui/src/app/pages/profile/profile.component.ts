@@ -7,7 +7,6 @@ import {StoreService} from '../../../services/store.service';
 import {DriverService} from '../../../services/driver.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogHistoryTripComponent} from '../../dialog-history-trip/dialog-history-trip.component';
-import {Person} from '../../../models/actor/person.model';
 import {AdminService} from '../../../services/admin.service';
 
 export interface DataHistoryTrip {
@@ -38,6 +37,7 @@ export class ProfileComponent implements OnInit {
   public panelOpenState = false;
 
   public tripsHistoryTitle = 'Show trips';
+  adminMessage = '';
 
   constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
@@ -70,7 +70,9 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.person = data.body;
-          this.person.rating = +this.person.rating.toFixed(1);
+          if (this.person.rating) {
+            this.person.rating = +this.person.rating.toFixed(1);
+          }
         } else {
           alert(data.message);
         }
@@ -182,9 +184,9 @@ export class ProfileComponent implements OnInit {
   }
 
   generate() {
-    this.adminService.generate(100).subscribe(
+    this.adminService.generate(20).subscribe(
       data => {
-        alert(data);
+        alert(data.message);
       },
       error => {
         alert(error);

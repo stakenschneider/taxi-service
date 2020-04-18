@@ -1,7 +1,11 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.Trip;
-import com.kspt.app.models.*;
+import com.kspt.app.models.info.CarModel;
+import com.kspt.app.models.info.PassportModel;
+import com.kspt.app.models.response.ApiResult;
+import com.kspt.app.models.response.ResponseOrMessage;
+import com.kspt.app.models.trip.SetGradeModel;
 import com.kspt.app.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +52,7 @@ public class DriverController {
     }
 
     @PostMapping("/endTrip")
-    public ApiResult endTrip(@RequestBody EndTripModel model) {
+    public ApiResult endTrip(@RequestBody SetGradeModel model) {
         return service.endTrip(model);
     }
 }

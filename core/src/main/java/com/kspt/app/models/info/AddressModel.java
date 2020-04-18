@@ -1,4 +1,4 @@
-package com.kspt.app.models;
+package com.kspt.app.models.info;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

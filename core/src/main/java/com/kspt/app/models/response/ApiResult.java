@@ -1,4 +1,4 @@
-package com.kspt.app.models;
+package com.kspt.app.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from '../../../services/data.service';
 import {ClientService} from '../../../services/client.service';
-import {Address} from '../../../models/address.model';
+import {Address} from '../../../models/info/address.model';
 import {StoreService} from '../../../services/store.service';
 import {Router} from '@angular/router';
 import {Trip} from '../../../models/trip.model';
@@ -38,9 +38,6 @@ export class RequestCarComponent implements OnInit {
 
   statusFrameTitle: string;
   endFrameTitle: string;
-  grade: number;
-  // TODO hardcode
-  lol = 0;
   starRating: any;
   contentStatusFrame = false;
 
@@ -51,10 +48,6 @@ export class RequestCarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO add method GET to backend and call it here
-    // that method must show exist activ trip on this client
-    // if client was activ trips must create a component with this context
-    // TODO AND add to backend a verification which can check: 'have a person activ trip or no?'
     if (this.storeService.getId()) {
       this.getActiveTrips();
       this.addEventListener();

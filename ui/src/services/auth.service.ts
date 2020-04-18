@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
 import {Person} from '../models/actor/person.model';
-import {ResponseOrMessage} from '../models/response.or.message.model';
+import {ResponseOrMessage} from '../models/response/response.or.message.model';
 
 @Injectable()
 export class AuthService {

@@ -1,6 +1,6 @@
-import {AbstractEntity} from '../abstract.entity.model';
-import {Credentials} from '../credentials.model';
-import {Passport} from '../passport.model';
+import {AbstractEntity} from '../response/abstract.entity.model';
+import {Credentials} from '../info/credentials.model';
+import {Passport} from '../info/passport.model';
 
 export interface Person extends AbstractEntity {
   firstName: string;

@@ -1,6 +1,6 @@
-import {AbstractEntity} from './abstract.entity.model';
+import {AbstractEntity} from './response/abstract.entity.model';
 import {Client} from './actor/client.model';
-import {Address} from './address.model';
+import {Address} from './info/address.model';
 import {Driver} from './actor/driver.model';
 
 export interface Trip extends AbstractEntity {

@@ -5,8 +5,8 @@ import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.configuration.Constants.Color;
 import com.kspt.app.configuration.Constants.CarModels;
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.ResponseOrMessage;
-import com.kspt.app.models.IdAndPersonTypeModel;
+import com.kspt.app.models.response.ResponseOrMessage;
+import com.kspt.app.models.person.IdAndPersonTypeModel;
 import com.kspt.app.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,6 @@ public class DataController {
         return Rate.values();
     }
 
-//    TODO input parameter signinmodel rename
     @PostMapping("/getPersonById")
     public ResponseOrMessage<Person> getPersonById(@RequestBody IdAndPersonTypeModel model) {
         return personService.getPersonById(model);

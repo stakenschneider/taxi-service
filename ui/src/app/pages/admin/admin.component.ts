@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {GetData} from '../../../models/table/get.data.model';
 
 @Component({
   selector: 'app-admin',
@@ -6,9 +7,16 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  getData: any = {};
+  parameters: Map<string, any> = new Map<string, any>();
+
 
   constructor() {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getData.dataName = 'tripTable';
+    this.parameters.set('for', 'ADMIN');
+    this.getData.parameters = this.parameters;
+  }
 }

@@ -62,11 +62,6 @@ export class TakeTripComponent implements OnInit {
     );
   }
 
-  parseDate(input) {
-    const parts = input.match(/(\d+)/g);
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-  }
-
   getFreeTrips() {
     this.driverService.getFreeTrips(this.storeService.getId()).subscribe(
       data => {
@@ -76,8 +71,6 @@ export class TakeTripComponent implements OnInit {
             'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           this.trips.forEach(trip => {
             trip.client.rating = +trip.client.rating.toFixed(1);
-            trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDate()
-              + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
           });
           const dataSource = new MatTableDataSource(this.trips);
           dataSource.sort = this.sort;
@@ -92,15 +85,14 @@ export class TakeTripComponent implements OnInit {
   }
 
   reserveTrip(trip: Trip) {
-
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {trip},
       disableClose: true
     });
 
-
     dialogRef.afterClosed().subscribe(
       result => {
+        console.log(result.toString());
         this.getFreeTrips();
       });
   }

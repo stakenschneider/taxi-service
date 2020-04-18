@@ -33,7 +33,7 @@
           <table class="table table-hover">
             <tbody>
             <tr *ngFor="let row of tripsArray" (click)="clickOnTableRow(row)">
-              <td>{{row.dateOfCreation}}</td>
+              <td>{{row.dateOfCreation | date}}</td>
               <td><i class="fas fa-map-marker-alt" style="color: red"></i> {{row.startAddress.city}}
                 , {{row.startAddress.street}}, {{row.startAddress.numberHouse}} <br>
                 <i class="fas fa-map-marker-alt" style="color: #1100ff"></i> {{row.finishAddress.city}}
@@ -63,7 +63,7 @@
           </p>
 
           <p *ngIf="person.passport">
-            <input disabled type="text" placeholder="{{person.passport.series}}">
+            <input disabled type="text" placeholder="{{person.passport.series }}">
             <input disabled type="text" placeholder="{{person.passport.number}}">
             <button (click)="setPassport()">change</button>
           </p>

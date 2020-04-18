@@ -17,7 +17,7 @@
 
         <ng-container matColumnDef="dateOfCreation">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Creation </th>
-          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.dateOfCreation}} </td>
+          <td (click)="reserveTrip(element)" mat-cell *matCellDef="let element"> {{element.dateOfCreation | date}} </td>
         </ng-container>
 
         <ng-container matColumnDef="client">

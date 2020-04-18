@@ -21,15 +21,11 @@ export class TripTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService) {}
+  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService) {
+  }
 
   ngOnInit(): void {
     this.showAllTrips();
-  }
-
-  parseDate(input) {
-    const parts = input.match(/(\d+)/g);
-    return new Date(parts[0], parts[1] - 1, parts[2]);
   }
 
   showAllTrips() {
@@ -40,14 +36,9 @@ export class TripTableComponent implements OnInit {
         const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.tripsArray.forEach(trip => {
           trip.client.rating = +trip.client.rating.toFixed(1);
-          if (trip.driver) { trip.driver.rating = +trip.driver.rating.toFixed(1); }
-        });
-        this.tripsArray.forEach(trip => {
-          // tslint:disable-next-line:max-line-length
-          trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getUTCDate() + ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
-          // tslint:disable-next-line:max-line-length
-          if (trip.dateOfCompletion) { trip.dateOfCompletion = this.parseDate(trip.dateOfCompletion).getUTCDate() + ' ' + month[this.parseDate(trip.dateOfCompletion).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCompletion).getUTCFullYear(); }
-
+          if (trip.driver) {
+            trip.driver.rating = +trip.driver.rating.toFixed(1);
+          }
         });
 
         const dataSource = new MatTableDataSource(this.tripsArray);

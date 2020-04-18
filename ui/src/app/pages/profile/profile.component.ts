@@ -97,21 +97,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  formatDate() {
-    const month =
-      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    this.tripsArray.forEach(trip => {
-      trip.dateOfCreation = this.parseDate(trip.dateOfCreation).getDate() +
-        ' ' + month[this.parseDate(trip.dateOfCreation).getUTCMonth()] + ' ' + this.parseDate(trip.dateOfCreation).getUTCFullYear();
-    });
-  }
-
   showHistoryOfTripsForClient() {
     this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
       data => {
         if (data.message === null) {
           this.tripsArray = data.body;
-          this.formatDate();
         } else {
           alert(data.message);
         }
@@ -126,7 +116,6 @@ export class ProfileComponent implements OnInit {
       data => {
         if (data.message === null) {
           this.tripsArray = data.body;
-          this.formatDate();
         } else {
           alert(data.message);
         }
@@ -134,12 +123,6 @@ export class ProfileComponent implements OnInit {
       error => {
         alert(error);
       });
-  }
-
-
-  parseDate(input) {
-    const parts = input.match(/(\d+)/g);
-    return new Date(parts[0], parts[1] - 1, parts[2]);
   }
 
   setCar() {
@@ -176,11 +159,12 @@ export class ProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
       result => {
+        console.log(result.toString());
       });
   }
 
+  // TODO IMPLEMENT OR DELETE
   changeCar() {
-
   }
 
   generate() {

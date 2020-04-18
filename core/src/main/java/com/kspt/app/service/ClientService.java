@@ -1,17 +1,17 @@
 package com.kspt.app.service;
 
-import com.kspt.app.configuration.Constants.PaymentMethod;
 import com.kspt.app.configuration.Constants.Rate;
 import com.kspt.app.configuration.Constants.Status;
 
 import com.kspt.app.entities.Address;
-import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 
 import com.kspt.app.entities.actor.Driver;
-import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.*;
+import com.kspt.app.models.response.ApiResult;
+import com.kspt.app.models.response.ResponseOrMessage;
+import com.kspt.app.models.trip.SetGradeModel;
+import com.kspt.app.models.trip.TripModelRequest;
 import com.kspt.app.repository.AddressRepository;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;

@@ -1,4 +1,4 @@
-package com.kspt.app.models;
+package com.kspt.app.models.person;
 
 import com.kspt.app.configuration.Constants.PersonType;
 import lombok.Data;

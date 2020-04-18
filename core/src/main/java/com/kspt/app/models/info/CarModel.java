@@ -1,4 +1,4 @@
-package com.kspt.app.models;
+package com.kspt.app.models.info;
 
 import com.kspt.app.configuration.Constants.CarModels;
 import com.kspt.app.configuration.Constants.Color;

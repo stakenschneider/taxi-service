@@ -39,8 +39,9 @@ import {TripTableComponent} from './tables/trip-table/trip-table.component';
 import {PersonTableComponent} from './tables/person-table/person-table.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import {SnackBarComponent} from './snack-bar/snack-bar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {GridDataService} from '../services/grid.data.service';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -105,7 +106,8 @@ const appRoutes: Routes = [
     AuthService,
     DataService,
     StoreService,
-    ClientService],
+    ClientService,
+    GridDataService],
   exports: [RouterModule],
   bootstrap: [AppComponent]
 })

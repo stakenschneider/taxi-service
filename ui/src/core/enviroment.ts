@@ -26,7 +26,8 @@ export function createEnv() {
     getAllClients: baseUrl + 'getAllClients',
     getAllDrivers: baseUrl + 'getAllDrivers',
     generate: baseUrl + 'generate',
-    deletePerson: baseUrl + 'deletePerson'
+    deletePerson: baseUrl + 'deletePerson',
+    getGridData: baseUrl + 'getGridData'
   };
 }
 

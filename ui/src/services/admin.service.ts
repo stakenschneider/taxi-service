@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {ResponseOrMessage} from '../models/response.or.message.model';
+import {ResponseOrMessage} from '../models/response/response.or.message.model';
 import {Trip} from '../models/trip.model';
 import {Client} from '../models/actor/client.model';
 import {Driver} from '../models/actor/driver.model';
-import {ApiResult} from '../models/api.result.model';
+import {ApiResult} from '../models/response/api.result.model';
 
 @Injectable()
 export class AdminService {

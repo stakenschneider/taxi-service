@@ -1,8 +1,8 @@
 package com.kspt.app.controllers;
 
 import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.RegistrationModel;
-import com.kspt.app.models.ResponseOrMessage;
+import com.kspt.app.models.person.RegistrationModel;
+import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

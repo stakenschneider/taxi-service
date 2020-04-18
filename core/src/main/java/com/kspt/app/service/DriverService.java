@@ -7,8 +7,11 @@ import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
-import com.kspt.app.entities.actor.Person;
-import com.kspt.app.models.*;
+import com.kspt.app.models.info.CarModel;
+import com.kspt.app.models.info.PassportModel;
+import com.kspt.app.models.response.ApiResult;
+import com.kspt.app.models.response.ResponseOrMessage;
+import com.kspt.app.models.trip.SetGradeModel;
 import com.kspt.app.repository.CarRepository;
 import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;
@@ -130,7 +133,7 @@ public class DriverService {
         return new ResponseOrMessage<>(list);
     }
 
-    public ApiResult endTrip(EndTripModel model) {
+    public ApiResult endTrip(SetGradeModel model) {
 //        todo
         Trip trip = tripRepository.findById(model.getTripId()).orElse(null);
 

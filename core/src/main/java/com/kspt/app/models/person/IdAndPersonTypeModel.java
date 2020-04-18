@@ -1,5 +1,6 @@
-package com.kspt.app.models;
+package com.kspt.app.models.person;
 
+import com.kspt.app.configuration.Constants.PersonType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
-public class EndTripModel {
-    Long tripId;
-    Double grade;
+public class IdAndPersonTypeModel {
+    Long personId;
+    PersonType personType;
 }

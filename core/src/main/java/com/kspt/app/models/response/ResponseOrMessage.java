@@ -1,5 +1,6 @@
-package com.kspt.app.models;
+package com.kspt.app.models.response;
 
+import com.kspt.app.models.response.ApiResult;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper=false)
-public class ResponseOrMessage <T> extends ApiResult{
+public class ResponseOrMessage <T> extends ApiResult {
     T body;
 
     public ResponseOrMessage(T body) {

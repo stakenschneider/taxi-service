@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../core/enviroment';
-import {ApiResult} from '../models/api.result.model';
-import {ResponseOrMessage} from '../models/response.or.message.model';
+import {ApiResult} from '../models/response/api.result.model';
+import {ResponseOrMessage} from '../models/response/response.or.message.model';
 import {Trip} from '../models/trip.model';
 
 @Injectable()

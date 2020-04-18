@@ -1,5 +1,6 @@
 package com.kspt.app.controllers;
 
+import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GetDataModel;
 import com.kspt.app.models.table.GridDataModel;
 import com.kspt.app.service.GetDataService;
@@ -17,7 +18,7 @@ public class GridController {
     private GetDataService getDataService;
 
     @PostMapping("/getGridData")
-    public GridDataModel getData(@RequestBody GetDataModel model) {
+    public ResponseOrMessage<GridDataModel> getData(@RequestBody GetDataModel model) {
         return getDataService.getData(model);
     }
 }

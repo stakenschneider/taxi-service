@@ -108,7 +108,5 @@ export class PersonTableComponent implements OnInit {
     this.editField = event.target.textContent;
   }
 
-  restorePerson(element: any) {
-    
-  }
+  restorePerson(element: any) {}
 }

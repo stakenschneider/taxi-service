@@ -42,6 +42,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SnackBarComponent} from './snack-bar/snack-bar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {GridDataService} from '../services/grid.data.service';
+import { CommonTableComponent } from './common-table/common-table.component';
+import {CdkTableModule} from '@angular/cdk/table';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -75,31 +77,33 @@ const appRoutes: Routes = [
     AdminComponent,
     TripTableComponent,
     PersonTableComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    CommonTableComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatSortModule,
-    MatTableModule,
-    MatProgressBarModule,
-    MatButtonToggleModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatInputModule,
-    MatTabsModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(appRoutes),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatSortModule,
+        MatTableModule,
+        MatProgressBarModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatInputModule,
+        MatTabsModule,
+        MatPaginatorModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
+        CdkTableModule
+    ],
   providers: [
     AdminService,
     DriverService,

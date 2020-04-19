@@ -36,15 +36,15 @@ public class DriverController {
         return service.getCurrentTrip(driverId);
     }
 
-    @PostMapping("/getHistory")
-    public ResponseOrMessage<List<Trip>> getHistory(@RequestBody Map<String,Long> driverId) {
-        return service.getHistory(driverId);
-    }
-
-    @GetMapping("/getFreeTrips/{driverId}")
-    public ResponseOrMessage<List<Trip>> getFreeTrips(@PathVariable Long driverId) {
-        return service.getFreeTrips(driverId);
-    }
+//    @PostMapping("/getHistory")
+//    public ResponseOrMessage<List<Trip>> getHistory(@RequestBody Map<String,Long> driverId) {
+//        return service.getHistory(driverId);
+//    }
+//
+//    @GetMapping("/getFreeTrips/{driverId}")
+//    public ResponseOrMessage<List<Trip>> getFreeTrips(@PathVariable Long driverId) {
+//        return service.getFreeTrips(driverId);
+//    }
 
     @PostMapping("/takeTrip")
     public ApiResult takeTrip(@RequestBody Map<String,Long> id) {

@@ -25,10 +25,13 @@ public class PersonController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseOrMessage<Person> signIn(@RequestBody Map<String,String> emailOrUserName) {
+    public ResponseOrMessage<Person> signIn(@RequestBody Map<String, String> emailOrUserName) {
         return service.signIn(emailOrUserName);
     }
 
+    // TODO implement or delete
 //    @PostMapping("/sign-out")
-//    public boolean signOut() { return service.signOut();}
+//    public boolean signOut() {
+//        return service.signOut();
+//    }
 }

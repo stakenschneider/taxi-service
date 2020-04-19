@@ -1,17 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DataService} from '../../../services/data.service';
-import {Trip} from '../../../models/trip.model';
 import {Driver} from '../../../models/actor/driver.model';
 import {StoreService} from '../../../services/store.service';
 import {DriverService} from '../../../services/driver.service';
-import {MatDialog} from '@angular/material/dialog';
-import {DialogHistoryTripComponent} from '../../dialog-history-trip/dialog-history-trip.component';
 import {AdminService} from '../../../services/admin.service';
-
-export interface DataHistoryTrip {
-  trip: Trip;
-}
 
 @Component({
   selector: 'app-profile',
@@ -25,10 +18,9 @@ export class ProfileComponent implements OnInit {
   public person: any;
   public driver: Driver;
 
-  public tripsArray: Array<Trip>;
   public carColors: Array<string>;
   public carModels: Array<string>;
-
+  // TODO this is must be in formGrop
   public carNumber: string;
   public colorTitle: string;
   public modelTitle: string;
@@ -40,10 +32,9 @@ export class ProfileComponent implements OnInit {
   public panelOpenState = false;
 
   public tripsHistoryTitle = 'Show trips';
-  adminMessage = '';
 
   constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
-              private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
+              private dataService: DataService, private storeService: StoreService) {
     this.dataService = dataService;
     this.adminService = adminService;
     this.storeService = storeService;
@@ -57,6 +48,7 @@ export class ProfileComponent implements OnInit {
       this.router.navigateByUrl('/sign-in');
     }
 
+    // TODO load when open or when person is DRIVER
     this.dataService.getCarColorList().subscribe(
       data => {
         this.carColors = data;
@@ -105,17 +97,6 @@ export class ProfileComponent implements OnInit {
     this.parametersForTrips.set('for', 'CLIENT');
     this.parametersForTrips.set('personId', this.storeService.getId());
     this.getDataForTrips.parameters = this.parametersForTrips;
-    // this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
-    //   data => {
-    //     if (data.message === null) {
-    //       this.tripsArray = data.body;
-    //     } else {
-    //       alert(data.message);
-    //     }
-    //   },
-    //   error => {
-    //     alert(error);
-    //   });
   }
 
   showHistoryOfTripsForDriver() {
@@ -124,17 +105,6 @@ export class ProfileComponent implements OnInit {
     this.parametersForTrips.set('part', 'history');
     this.parametersForTrips.set('personId', this.storeService.getId());
     this.getDataForTrips.parameters = this.parametersForTrips;
-    // this.driverService.getHistory(this.storeService.getId()).subscribe(
-    //   data => {
-    //     if (data.message === null) {
-    //       this.tripsArray = data.body;
-    //     } else {
-    //       alert(data.message);
-    //     }
-    //   },
-    //   error => {
-    //     alert(error);
-    //   });
   }
 
   setCar() {
@@ -163,22 +133,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  clickOnTableRow(trip: Trip) {
-
-    const dialogRef = this.dialog.open(DialogHistoryTripComponent, {
-      data: {trip}
-    });
-
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log(result.toString());
-      });
-  }
-
-  // TODO IMPLEMENT OR DELETE
-  changeCar() {
-  }
-
   generate() {
     this.adminService.generate(20).subscribe(
       data => {
@@ -189,6 +143,21 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+
+  // clickOnTableRow(trip: Trip) {
+  //
+  //   const dialogRef = this.dialog.open(DialogHistoryTripComponent, {
+  //     data: {trip}
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe(
+  //     result => {
+  //       console.log(result.toString());
+  //     });
+  // }
+
+  // TODO IMPLEMENT OR DELETE
+  changeCar() {}
 }
 
 

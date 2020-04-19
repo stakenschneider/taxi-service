@@ -18,11 +18,9 @@ public class GetDataService {
     private ApplicationContext _applicationContext;
 
     public ResponseOrMessage<GridDataModel> getData(GetDataModel model){
-//        IDataProvider iDataProvider = _applicationContext.getBean(model.dataName, IDataProvider.class);
         IDataProvider iDataProvider =
                 BeanFactoryAnnotationUtils.qualifiedBeanOfType(_applicationContext.getAutowireCapableBeanFactory(),
                         IDataProvider.class, model.dataName);
         return iDataProvider.getData(model.parameters);
-//        return iDataProvider.getData(model.parameters);
     }
 }

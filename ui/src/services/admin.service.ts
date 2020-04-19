@@ -15,21 +15,6 @@ export class AdminService {
     this.http = http;
   }
 
-  getAllTrips() {
-    const url = environment.getAllTrips;
-    return this.http.get<ResponseOrMessage<Array<Trip>>>(url, {});
-  }
-
-  getAllClients() {
-    const url = environment.getAllClients;
-    return this.http.get<ResponseOrMessage<Array<Client>>>(url, {});
-  }
-
-  getAllDrivers() {
-    const url = environment.getAllDrivers;
-    return this.http.get<ResponseOrMessage<Array<Driver>>>(url, {});
-  }
-
   deletePerson(personId: number, personType: string) {
     const url = environment.deletePerson + '/' + personId + '/' + personType;
     return this.http.delete<ApiResult>(url, {});

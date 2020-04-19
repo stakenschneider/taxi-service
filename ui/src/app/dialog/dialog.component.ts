@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-// import {DialogData} from '../pages/take-trip/take-trip.component';
 import {Router} from '@angular/router';
 import {DriverService} from '../../services/driver.service';
 import {DataService} from '../../services/data.service';
 import {StoreService} from '../../services/store.service';
-import {Trip} from '../../models/trip.model';
+import {DialogData} from '../pages/take-trip/take-trip.component';
+import {openSnackBar} from '../open.snack.bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dialog',
@@ -15,20 +15,19 @@ import {Trip} from '../../models/trip.model';
 })
 
 export class DialogComponent implements OnInit {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: number, private router: Router, private driverService: DriverService,
-    private dataService: DataService, private storeService: StoreService) {
+  // tslint:disable-next-line:variable-name
+  constructor(private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<DialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData, private router: Router, private driverService: DriverService,
+              private dataService: DataService, private storeService: StoreService) {
   }
 
   buttonLabel = 'Start trip';
 
   ngOnInit() {
-    //  TODO get trip for trip id
-    // if (this.data.trip.status === 'START') {
-    //   this.buttonLabel = 'End trip';
-    // }
+    if (this.data.trip.status === 'START') {
+      this.buttonLabel = 'End trip';
+    }
   }
 
   closeModal() {
@@ -45,10 +44,8 @@ export class DialogComponent implements OnInit {
     // TODO if trip was deny show a message or reload data
     this.driverService.reserveTrip(this.storeService.getId(), tripId).subscribe(
       data => {
-        if (data.message === null) {
-          console.log(data.message);
-        } else {
-          console.log(data.message);
+        if (data.message !== null) {
+          openSnackBar(this._snackBar, data.message, 5);
         }
       },
       error => {
@@ -57,12 +54,11 @@ export class DialogComponent implements OnInit {
   }
 
   endTrip(id: number) {
+    // TODO think about how to create field grade
     this.driverService.endTrip(4.3, id).subscribe(
       data => {
-        if (data.message === null) {
-          // alert(data.message);
-        } else {
-          // alert(data.message);
+        if (data.message !== null) {
+          openSnackBar(this._snackBar, data.message, 5);
         }
       },
       error => {

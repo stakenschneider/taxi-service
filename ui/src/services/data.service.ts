@@ -4,6 +4,7 @@ import {environment} from '../core/enviroment';
 import {Person} from '../models/actor/person.model';
 import {ResponseOrMessage} from '../models/response/response.or.message.model';
 import {Trip} from '../models/trip.model';
+import {ApiResult} from '../models/response/api.result.model';
 
 @Injectable()
 export class DataService {
@@ -38,8 +39,8 @@ export class DataService {
     return this.http.post<ResponseOrMessage<Person>>(url, {personId, personType});
   }
 
-  getHistoryOfTips(id: number) {
-    const url = environment.getHistoryOfTips;
-    return this.http.post<ResponseOrMessage<Array<Trip>>>(url, {id});
+  getTripById(tripId: number) {
+    const url = environment.getTripById + '/' + tripId;
+    return this.http.get<ResponseOrMessage<Trip>>(url, {});
   }
 }

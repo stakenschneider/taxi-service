@@ -28,16 +28,6 @@ export class DriverService {
     return this.http.post<ResponseOrMessage<Trip>>(url, {id});
   }
 
-  getHistory(id: number) {
-    const url = environment.getHistory;
-    return this.http.post<ResponseOrMessage<Array<Trip>>>(url, {id});
-  }
-
-  getFreeTrips(driverId: number) {
-    const url = environment.getFreeTrips + '/' + driverId;
-    return this.http.get<ResponseOrMessage<Array<Trip>>>(url, {});
-  }
-
   reserveTrip(driverId: number, tripId: number) {
     const url = environment.takeTrip;
     return this.http.post<ApiResult>(url, {driverId, tripId});

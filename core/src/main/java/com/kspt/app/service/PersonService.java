@@ -80,11 +80,6 @@ public class PersonService {
         } else return new ResponseOrMessage<>("Wrong parameter");
     }
 
-//    TODO implement or delete
-//    public Boolean signOut() {
-//        return true;
-//    }
-
     public ResponseOrMessage<Person> getPersonById(IdAndPersonTypeModel model) {
         Long personId = model.getPersonId();
         Person person;

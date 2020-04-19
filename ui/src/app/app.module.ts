@@ -24,7 +24,6 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DialogComponent} from './dialog/dialog.component';
-import {DialogHistoryTripComponent} from './dialog-history-trip/dialog-history-trip.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -35,8 +34,6 @@ import {MatInputModule} from '@angular/material/input';
 import {AdminService} from '../services/admin.service';
 import {AdminComponent} from './pages/admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
-// import {TripTableComponent} from './tables/trip-table/trip-table.component';
-// import {PersonTableComponent} from './tables/person-table/person-table.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SnackBarComponent} from './snack-bar/snack-bar.component';
@@ -59,7 +56,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  entryComponents: [DialogComponent, DialogHistoryTripComponent],
+  entryComponents: [DialogComponent],
   declarations: [
     AppComponent,
     ProfileComponent,
@@ -73,7 +70,6 @@ const appRoutes: Routes = [
     RequestCarComponent,
     TakeTripComponent,
     DialogComponent,
-    DialogHistoryTripComponent,
     AdminComponent,
     SnackBarComponent,
     CommonTableComponent

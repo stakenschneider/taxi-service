@@ -106,32 +106,32 @@ public class DriverService {
         } else return new ApiResult("Wrong parameter");
     }
 
-    public ResponseOrMessage<List<Trip>> getFreeTrips(Long driverId) {
-        if (driverId<0) {
-            return new ResponseOrMessage<>("Wrong parameter");
-        }
-
-        Driver driver = driverRepository.findById(driverId).orElse(null);
-        if (driver == null) {
-            return new ResponseOrMessage<>("Driver not found");
-        }
-
-        Car car = driver.getCar();
-        if (car == null) {
-            return new ResponseOrMessage<>("You must register car before book a trip");
-        }
-
-        Passport passport = driver.getPassport();
-        if (passport == null) {
-            return new ResponseOrMessage<>("You must register passport before book a trip");
-        }
-
-        List<Trip> list = tripRepository.findAllByStatusAndTripRate(Status.CREATE, car.getCarRate()).orElse(null);
-        if (list == null) {
-            return new ResponseOrMessage<>("No free trips");
-        }
-        return new ResponseOrMessage<>(list);
-    }
+//    public ResponseOrMessage<List<Trip>> getFreeTrips(Long driverId) {
+//        if (driverId<0) {
+//            return new ResponseOrMessage<>("Wrong parameter");
+//        }
+//
+//        Driver driver = driverRepository.findById(driverId).orElse(null);
+//        if (driver == null) {
+//            return new ResponseOrMessage<>("Driver not found");
+//        }
+//
+//        Car car = driver.getCar();
+//        if (car == null) {
+//            return new ResponseOrMessage<>("You must register car before book a trip");
+//        }
+//
+//        Passport passport = driver.getPassport();
+//        if (passport == null) {
+//            return new ResponseOrMessage<>("You must register passport before book a trip");
+//        }
+//
+//        List<Trip> list = tripRepository.findAllByStatusAndTripRate(Status.CREATE, car.getCarRate()).orElse(null);
+//        if (list == null) {
+//            return new ResponseOrMessage<>("No free trips");
+//        }
+//        return new ResponseOrMessage<>(list);
+//    }
 
     public ApiResult endTrip(SetGradeModel model) {
 //        todo
@@ -160,18 +160,18 @@ public class DriverService {
         return new ApiResult("Trip is over");
     }
 
-    public ResponseOrMessage<List<Trip>> getHistory(Map<String, Long> driverId) {
-        if (driverId.containsKey("id")) {
-            List<Trip> list = tripRepository.findAllByDriverId(driverId.get("id")).orElse(null);
-            if (list == null) {
-                return new ResponseOrMessage<>("Trips not found");
-            } else {
-                return new ResponseOrMessage<>(list);
-            }
-        } else {
-            return new ResponseOrMessage<>("Wrong parameter");
-        }
-    }
+//    public ResponseOrMessage<List<Trip>> getHistory(Map<String, Long> driverId) {
+//        if (driverId.containsKey("id")) {
+//            List<Trip> list = tripRepository.findAllByDriverId(driverId.get("id")).orElse(null);
+//            if (list == null) {
+//                return new ResponseOrMessage<>("Trips not found");
+//            } else {
+//                return new ResponseOrMessage<>(list);
+//            }
+//        } else {
+//            return new ResponseOrMessage<>("Wrong parameter");
+//        }
+//    }
 
     public ResponseOrMessage<Trip> getCurrentTrip(Map<String, Long> driverId) {
         if (driverId.containsKey("id")) {

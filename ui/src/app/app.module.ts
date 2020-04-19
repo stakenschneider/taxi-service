@@ -35,8 +35,8 @@ import {MatInputModule} from '@angular/material/input';
 import {AdminService} from '../services/admin.service';
 import {AdminComponent} from './pages/admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
-import {TripTableComponent} from './tables/trip-table/trip-table.component';
-import {PersonTableComponent} from './tables/person-table/person-table.component';
+// import {TripTableComponent} from './tables/trip-table/trip-table.component';
+// import {PersonTableComponent} from './tables/person-table/person-table.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SnackBarComponent} from './snack-bar/snack-bar.component';
@@ -75,8 +75,6 @@ const appRoutes: Routes = [
     DialogComponent,
     DialogHistoryTripComponent,
     AdminComponent,
-    TripTableComponent,
-    PersonTableComponent,
     SnackBarComponent,
     CommonTableComponent
   ],

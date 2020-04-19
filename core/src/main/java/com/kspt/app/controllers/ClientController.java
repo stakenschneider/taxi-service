@@ -38,10 +38,10 @@ public class ClientController {
         return service.getActiveTrip(clientId);
     }
 
-    @PostMapping("/getHistoryOfTrips")
-    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
-        return service.getHistoryOfTrips(clientId);
-    }
+//    @PostMapping("/getHistoryOfTrips")
+//    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
+//        return service.getHistoryOfTrips(clientId);
+//    }
 
     @PostMapping("/requestCar")
     public ApiResult requestCar(@RequestBody TripModelRequest model) {

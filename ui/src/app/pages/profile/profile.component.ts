@@ -19,6 +19,9 @@ export interface DataHistoryTrip {
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  getDataForTrips: any = {};
+  parametersForTrips: Map<string, any> = new Map<string, any>();
+
   public person: any;
   public driver: Driver;
 
@@ -98,31 +101,40 @@ export class ProfileComponent implements OnInit {
   }
 
   showHistoryOfTripsForClient() {
-    this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
-      data => {
-        if (data.message === null) {
-          this.tripsArray = data.body;
-        } else {
-          alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
-      });
+    this.getDataForTrips.dataName = 'tripTable';
+    this.parametersForTrips.set('for', 'CLIENT');
+    this.parametersForTrips.set('personId', this.storeService.getId());
+    this.getDataForTrips.parameters = this.parametersForTrips;
+    // this.dataService.getHistoryOfTips(this.storeService.getId()).subscribe(
+    //   data => {
+    //     if (data.message === null) {
+    //       this.tripsArray = data.body;
+    //     } else {
+    //       alert(data.message);
+    //     }
+    //   },
+    //   error => {
+    //     alert(error);
+    //   });
   }
 
   showHistoryOfTripsForDriver() {
-    this.driverService.getHistory(this.storeService.getId()).subscribe(
-      data => {
-        if (data.message === null) {
-          this.tripsArray = data.body;
-        } else {
-          alert(data.message);
-        }
-      },
-      error => {
-        alert(error);
-      });
+    this.getDataForTrips.dataName = 'tripTable';
+    this.parametersForTrips.set('for', 'DRIVER');
+    this.parametersForTrips.set('part', 'history');
+    this.parametersForTrips.set('personId', this.storeService.getId());
+    this.getDataForTrips.parameters = this.parametersForTrips;
+    // this.driverService.getHistory(this.storeService.getId()).subscribe(
+    //   data => {
+    //     if (data.message === null) {
+    //       this.tripsArray = data.body;
+    //     } else {
+    //       alert(data.message);
+    //     }
+    //   },
+    //   error => {
+    //     alert(error);
+    //   });
   }
 
   setCar() {

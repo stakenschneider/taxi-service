@@ -1,6 +1,9 @@
 package com.kspt.app.providers;
 
+import com.kspt.app.configuration.Constants;
 import com.kspt.app.entities.Address;
+import com.kspt.app.entities.Car;
+import com.kspt.app.entities.Passport;
 import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
@@ -46,7 +49,7 @@ public class TripDataProvider implements IDataProvider {
                 return getDataForDriver(parameters);
 
             case "CLIENT":
-                return getDataForClient();
+                return getDataForClient(parameters);
 
             default:
                 return new ResponseOrMessage<>("Wrong parameter \"for\"");
@@ -74,7 +77,7 @@ public class TripDataProvider implements IDataProvider {
             row.add(trip.getId());
             row.add(trip.getTripRate());
             row.add(trip.getPaymentMethod());
-            row.add(trip.getPrice());
+            row.add(trip.getPrice()+"$");
             row.add(trip.getStatus());
             row.add(trip.getRating());
             row.add(trip.getDateOfCreation());
@@ -110,27 +113,149 @@ public class TripDataProvider implements IDataProvider {
         return new ResponseOrMessage<>(dataModel);
     }
 
+    public ResponseOrMessage<GridDataModel> getDataForClient(Map<String, Object> parameters) {
+
+        if (!parameters.containsKey("personId")) {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
+
+        List<Trip> trips = tripRepository.findAllByClientId(Long.parseLong((String)  parameters.get("personId"))).orElse(null);
+        if (trips == null) {
+            return new ResponseOrMessage<>("Trips not found");
+        }
+
+        GridDataModel dataModel = new GridDataModel();
+        MetaDataModel metaDataModel = new MetaDataModel();
+        String[] columns = {"No.", "date of creation", "Start Address", "Finish Address"};
+        metaDataModel.setColumns(columns);
+        int countOfTrips = trips.size();
+        metaDataModel.setTotalCount(countOfTrips);
+
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        trips.forEach(trip -> {
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(trip.getId());
+            row.add(trip.getDateOfCreation());
+            Address startAddress = trip.getStartAddress();
+            row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
+            Address finishAddress = trip.getFinishAddress();
+            row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
+            data.add(row);
+        });
+
+        dataModel.setData(data);
+        dataModel.setMetaData(metaDataModel);
+        return new ResponseOrMessage<>(dataModel);
+    }
+
     public ResponseOrMessage<GridDataModel> getDataForDriver(Map<String, Object> parameters) {
         if (!parameters.containsKey("part")) {
             return new ResponseOrMessage<>("Wrong parameter \"part\"");
         }
         switch ((String) parameters.get("part")) {
             case "history":
-                return null;
+                return getDataForDriverHistory(parameters);
             case "free":
-                return null;
+                return getDataForDriverFreeTrips(parameters);
             default:
-                break;
+                return new ResponseOrMessage<>("Wrong parameter DRIVER -> \"part\"");
         }
-        return null;
     }
 
-    public ResponseOrMessage<GridDataModel> getDataForClient() {
-        //                              <td>{{row.dateOfCreation | date}}</td>
-//              <td><i class="fas fa-map-marker-alt" style="color: red"></i> {{row.startAddress.city}}
-//                , {{row.startAddress.street}}, {{row.startAddress.numberHouse}} <br>
-//                <i class="fas fa-map-marker-alt" style="color: #1100ff"></i> {{row.finishAddress.city}}
-//                , {{row.finishAddress.street}}, {{row.finishAddress.numberHouse}}</td>
-        return null;
+    private ResponseOrMessage<GridDataModel> getDataForDriverFreeTrips(Map<String, Object> parameters) {
+        if (!parameters.containsKey("personId")) {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
+
+        Driver driver = driverRepository.findById((long) (int) parameters.get("personId")).orElse(null);
+        if (driver == null) {
+            return new ResponseOrMessage<>("Driver not found");
+        }
+
+        Car car = driver.getCar();
+        if (car == null) {
+            return new ResponseOrMessage<>("You must register car before book a trip");
+        }
+
+        Passport passport = driver.getPassport();
+        if (passport == null) {
+            return new ResponseOrMessage<>("You must register passport before book a trip");
+        }
+
+        List<Trip> trips = tripRepository.findAllByStatusAndTripRate(Constants.Status.CREATE, car.getCarRate()).orElse(null);
+        if (trips == null) {
+            return new ResponseOrMessage<>("Trips not found");
+        }
+
+        GridDataModel dataModel = new GridDataModel();
+        MetaDataModel metaDataModel = new MetaDataModel();
+        String[] columns = {"No.", "Price", "Payment Method", "Start Address", "Finish Address", "Client Rating"};
+        metaDataModel.setColumns(columns);
+        int countOfTrips = trips.size();
+        metaDataModel.setTotalCount(countOfTrips);
+
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        trips.forEach(trip -> {
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(trip.getId());
+            row.add(trip.getPrice()+"$");
+            row.add(trip.getPaymentMethod());
+            Address startAddress = trip.getStartAddress();
+            row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
+            Address finishAddress = trip.getFinishAddress();
+            row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
+            row.add(trip.getClient().getRating());
+            data.add(row);
+        });
+
+        dataModel.setData(data);
+        dataModel.setMetaData(metaDataModel);
+        return new ResponseOrMessage<>(dataModel);
+    }
+
+    private ResponseOrMessage<GridDataModel> getDataForDriverHistory(Map<String, Object> parameters) {
+        if (!parameters.containsKey("personId")) {
+            return new ResponseOrMessage<>("Wrong parameter");
+        }
+
+
+        Driver driver = driverRepository.findById((long) (int) parameters.get("personId")).orElse(null);
+        if (driver == null) {
+            return new ResponseOrMessage<>("Driver not found");
+        }
+
+        List<Trip> trips = tripRepository.findAllByDriverId(driver.getId()).orElse(null);
+        if (trips == null) {
+            return new ResponseOrMessage<>("Trips not found");
+        }
+
+        GridDataModel dataModel = new GridDataModel();
+        MetaDataModel metaDataModel = new MetaDataModel();
+
+        String[] columns = {"No.", "Rating", "Price", "Start Address", "Finish Address", "Client name", "Date of Creation", "Date of Completion"};
+        metaDataModel.setColumns(columns);
+        int countOfTrips = trips.size();
+        metaDataModel.setTotalCount(countOfTrips);
+
+        ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        trips.forEach(trip -> {
+            ArrayList<Object> row = new ArrayList<>();
+            row.add(trip.getId());
+            row.add(trip.getRating());
+            row.add(trip.getPrice()+"$");
+            Address startAddress = trip.getStartAddress();
+            row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
+            Address finishAddress = trip.getFinishAddress();
+            row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
+            Client client = trip.getClient();
+            row.add(client.getFirstName() + " " + client.getLastName() + " " + client.getRating());
+            row.add(trip.getDateOfCreation());
+            row.add(trip.getDateOfCompletion());
+            data.add(row);
+        });
+
+        dataModel.setData(data);
+        dataModel.setMetaData(metaDataModel);
+        return new ResponseOrMessage<>(dataModel);
     }
 }

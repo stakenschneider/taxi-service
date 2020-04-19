@@ -30,17 +30,8 @@
       <!--      TRIPS CLIENT TABLE-->
       <div *ngIf="showTrips" class="second">
         <div class="table">
-          <table class="table table-hover">
-            <tbody>
-            <tr *ngFor="let row of tripsArray" (click)="clickOnTableRow(row)">
-              <td>{{row.dateOfCreation | date}}</td>
-              <td><i class="fas fa-map-marker-alt" style="color: red"></i> {{row.startAddress.city}}
-                , {{row.startAddress.street}}, {{row.startAddress.numberHouse}} <br>
-                <i class="fas fa-map-marker-alt" style="color: #1100ff"></i> {{row.finishAddress.city}}
-                , {{row.finishAddress.street}}, {{row.finishAddress.numberHouse}}</td>
-            </tr>
-            </tbody>
-          </table>
+<!--          TODO think about what do on click-->
+          <app-common-table [getData]="getDataForTrips"></app-common-table>
         </div>
       </div>
       <!--      SET PASSPORT FORM-->
@@ -107,10 +98,6 @@
           </div>
 
         </mat-expansion-panel>
-      </div>
-      <!--      ADMIN MESSAGE FORM-->
-      <div *ngIf="person.personType === 'ADMIN'" class="second">
-        <div style="color: #840000;" class="fullName">{{adminMessage}}</div>
       </div>
     </div>
   </div>

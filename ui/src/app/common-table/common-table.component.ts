@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {GetData} from '../../models/table/get.data.model';
 import {GridDataService} from '../../services/grid.data.service';
 import {MatTableDataSource} from '@angular/material/table';
@@ -14,6 +14,7 @@ import {MatPaginator} from '@angular/material/paginator';
 })
 export class CommonTableComponent implements OnInit {
   @Input() getData: GetData;
+  @Output() cellClickEvent: EventEmitter<any> = new EventEmitter<any>();
   columns: string[];
   rows: any[][];
   editField: string;
@@ -46,6 +47,10 @@ export class CommonTableComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tripDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  onCellClick(e: any, row: any) {
+    this.cellClickEvent.emit({row, mouseEvent: e});
   }
 
   changeValue(id: number, property: string, event: any) {

@@ -8,7 +8,6 @@ export function createEnv() {
     getRate: baseUrl + 'getRate',
     getPersonById: baseUrl + 'getPersonById',
     signOut: baseUrl + 'sign-out',
-    getHistoryOfTips: baseUrl + 'getHistoryOfTrips',
     requestCar: baseUrl + 'requestCar',
     denyTrip: baseUrl + 'denyTrip',
     getCarColor: baseUrl + 'getCarColor',
@@ -16,18 +15,14 @@ export function createEnv() {
     setPassport: baseUrl + 'setPassport',
     getCarModels: baseUrl + 'getCarModels',
     getActiveTrip: baseUrl + 'getActiveTrip',
-    getFreeTrips: baseUrl + 'getFreeTrips',
     takeTrip: baseUrl + 'takeTrip',
     endTrip: baseUrl + 'endTrip',
     setGrade: baseUrl + 'setGrade',
     getCurrentTrip: baseUrl + 'getCurrentTrip',
-    getHistory: baseUrl + 'getHistory',
-    getAllTrips: baseUrl + 'getAllTrips',
-    getAllClients: baseUrl + 'getAllClients',
-    getAllDrivers: baseUrl + 'getAllDrivers',
     generate: baseUrl + 'generate',
     deletePerson: baseUrl + 'deletePerson',
-    getGridData: baseUrl + 'getGridData'
+    getGridData: baseUrl + 'getGridData',
+    getTripById: baseUrl + 'getTripById'
   };
 }
 

@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,26 +20,10 @@ public class ClientController {
     @Autowired
     private ClientService service;
 
-//    TODO implement or delete
-//    @PostMapping("/setPassport")
-//    public ResponseOrMessage<Person> setPassport(@RequestBody PassportModel passport) {
-//        return service.setPassport(passport);
-//    }
-
-//    @PostMapping("{tripId}/changePaymentMethod")
-//    public ApiResult changePaymentMethod(@PathVariable Long tripId, @RequestBody PaymentMethod newPaymentMethod) {
-//        return service.changePaymentMethod( tripId,newPaymentMethod);
-//    }
-
     @PostMapping("/getActiveTrip")
     public ResponseOrMessage<Trip> getActiveTrip(@RequestBody Map<String,Long> clientId) {
         return service.getActiveTrip(clientId);
     }
-
-//    @PostMapping("/getHistoryOfTrips")
-//    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(@RequestBody Map<String,Long> clientId) {
-//        return service.getHistoryOfTrips(clientId);
-//    }
 
     @PostMapping("/requestCar")
     public ApiResult requestCar(@RequestBody TripModelRequest model) {

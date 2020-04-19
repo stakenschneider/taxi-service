@@ -19,7 +19,6 @@ import com.kspt.app.repository.TripRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -131,38 +130,6 @@ public class ClientService {
                 return 0.0;
         }
     }
-
-    public ResponseOrMessage<List<Trip>> getHistoryOfTrips(Map<String, Long> clientId) {
-        if (clientId.containsKey("id")) {
-            List<Trip> list = tripRepository.findAllByClientId(clientId.get("id")).orElse(null);
-            if (list == null) {
-                return new ResponseOrMessage<>("Trips not found");
-            } else {
-                return new ResponseOrMessage<>(list);
-            }
-        } else {
-            return new ResponseOrMessage<>("Wrong parameter");
-        }
-    }
-
-//    public ResponseOrMessage<Person> setPassport(Long id, PassportModel model) {
-//        final Passport passport = new Passport(model.getSeries(), model.getNumber());
-//        Client client = clientRepository.findById(id).orElse(null);
-//        if (client != null) {
-//            if (client.getPassport() == null) {
-//                client.setPassport(passport);
-//                clientRepository.save(client);
-//            } else return new ResponseOrMessage<>("Passport already exist");
-//        } else return new ResponseOrMessage<>("Client not found");
-//        return new ResponseOrMessage<>(client);
-//    }
-
-//    public ApiResult changePaymentMethod(Long tripId, PaymentMethod newPaymentMethod) {
-//        Trip trip = tripRepository.findById(tripId).orElse(null);
-//        if (trip == null) return new ApiResult("Trip not found");
-//        trip.setPaymentMethod(newPaymentMethod);
-//        return new ApiResult("Payment Method was changed");
-//    }
 
     public ResponseOrMessage<Trip> getActiveTrip(Map<String, Long> clientId) {
         if (clientId.containsKey("clientId")) {

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Trip} from '../../../models/trip.model';
 import {Router} from '@angular/router';
 import {DriverService} from '../../../services/driver.service';
@@ -6,12 +6,12 @@ import {DataService} from '../../../services/data.service';
 import {StoreService} from '../../../services/store.service';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from '../../dialog/dialog.component';
+import {openSnackBar} from '../../open.snack.bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {SnackBarComponent} from '../../snack-bar/snack-bar.component';
 
-// export interface DialogData {
-//   tripId: number;
-// }
+export interface DialogData {
+  trip: Trip;
+}
 
 @Component({
   selector: 'app-take-trip',
@@ -22,11 +22,8 @@ export class TakeTripComponent implements OnInit {
   getDataForTrips: any = {};
   parametersForTrips: Map<string, any> = new Map<string, any>();
 
-  public durationInSecondsForSnackBar = 5;
-
   // tslint:disable-next-line:variable-name
-  constructor(private _snackBar: MatSnackBar,
-              private router: Router, private driverService: DriverService,
+  constructor(private _snackBar: MatSnackBar, private router: Router, private driverService: DriverService,
               private dataService: DataService, private storeService: StoreService, public dialog: MatDialog) {
     this.dataService = dataService;
     this.storeService = storeService;
@@ -53,7 +50,7 @@ export class TakeTripComponent implements OnInit {
         if (data.message === null) {
           this.reserveTrip(data.body.id);
         } else {
-          console.log(data.message);
+          openSnackBar(this._snackBar, data.message, 5);
         }
       },
       error => {
@@ -64,25 +61,28 @@ export class TakeTripComponent implements OnInit {
 
   // TODO reserve must work
   reserveTrip(tripId: number) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: {tripId},
-      disableClose: true
-    });
+    this.dataService.getTripById(tripId).subscribe(data => {
+      if (data.message) {
+        openSnackBar(this._snackBar, data.message, 5);
+      }
 
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log(result);
+      const trip: Trip = data.body;
+      const dialogRef = this.dialog.open(DialogComponent, {
+        data: {trip},
+        disableClose: true
       });
+
+      dialogRef.afterClosed().subscribe(
+        result => {
+          openSnackBar(this._snackBar, result, 5);
+
+        });
+    }, error => {
+      alert(error);
+    });
   }
 
   onCellClick(e: any) {
     this.reserveTrip(e.row[0]);
-  }
-
-  openSnackBar(message: string) {
-    this._snackBar.openFromComponent(SnackBarComponent, {
-      duration: this.durationInSecondsForSnackBar * 1000,
-      data: message
-    });
   }
 }

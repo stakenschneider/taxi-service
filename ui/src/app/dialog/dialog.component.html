@@ -1,20 +1,20 @@
 <div id="modal-content-wrapper">
   <header id="modal-header">
-    <h1 id="modal-title">Trip No.{{data}}</h1>
+    <h1 id="modal-title">Trip No.{{data.trip.id}}</h1>
   </header>
   <section id="modal-body">
-<!--    <p>Start Address: {{data.trip.startAddress.city}} {{data.trip.startAddress.street}} {{data.trip.startAddress.numberHouse}}</p>-->
-<!--    <p>End Address: {{data.trip.finishAddress.city}} {{data.trip.finishAddress.street}} {{data.trip.finishAddress.numberHouse}}</p>-->
-<!--    <p>Payment Method: {{data.trip.paymentMethod}}</p>-->
-<!--    <p>tripRate: {{data.trip.tripRate}}</p>-->
-<!--    <p>Price: {{data.trip.price}}</p>-->
-<!--    <p>Payment: {{data.trip.client.firstName}} {{data.trip.client.lastName}}</p>-->
-<!--    <p>Rating: {{data.trip.client.rating}}</p>-->
-<!--    <p>Phone Number: {{data.trip.client.phoneNumber}}</p>-->
-<!--    <p>Email: {{data.trip.client.credentials.email}}</p>-->
+    <p>Start Address: {{data.trip.startAddress.city}} {{data.trip.startAddress.street}} {{data.trip.startAddress.numberHouse}}</p>
+    <p>End Address: {{data.trip.finishAddress.city}} {{data.trip.finishAddress.street}} {{data.trip.finishAddress.numberHouse}}</p>
+    <p>Payment Method: {{data.trip.paymentMethod}}</p>
+    <p>tripRate: {{data.trip.tripRate}}</p>
+    <p>Price: {{data.trip.price}}</p>
+    <p>Payment: {{data.trip.client.firstName}} {{data.trip.client.lastName}}</p>
+    <p>Rating: {{data.trip.client.rating}}</p>
+    <p>Phone Number: {{data.trip.client.phoneNumber}}</p>
+    <p>Email: {{data.trip.client.credentials.email}}</p>
   </section>
   <footer id="modal-footer">
-    <button mat-raised-button id="modal-action-button" (click)="startTrip(data)">{{buttonLabel}}</button>
+    <button mat-raised-button id="modal-action-button" (click)="startTrip(data.trip.id)">{{buttonLabel}}</button>
     <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Close</button>
   </footer>
 </div>

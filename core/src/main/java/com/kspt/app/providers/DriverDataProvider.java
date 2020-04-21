@@ -1,6 +1,5 @@
 package com.kspt.app.providers;
 
-import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GridDataModel;
@@ -21,6 +20,9 @@ import java.util.Map;
 public class DriverDataProvider implements IDataProvider {
     DriverRepository driverRepository;
 
+    public DriverDataProvider(DriverRepository driverRepository) {
+        this.driverRepository = driverRepository;
+    }
 
     @Override
     public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters) {
@@ -47,7 +49,7 @@ public class DriverDataProvider implements IDataProvider {
             row.add(driver.getPhoneNumber());
             row.add(driver.getRating());
             row.add(driver.isDeleted());
-            row.add(driver.getPassport());
+            row.add("series "+driver.getPassport().getSeries()+" number "+driver.getPassport().getNumber());
             row.add(driver.getCar().getColor()+" "+driver.getCar().getModel()+" "+driver.getCar().getNumber());
             data.add(row);
         });

@@ -24,11 +24,7 @@ export class AdminComponent implements OnInit {
     this.getDataForTrips.parameters = this.parametersForTrips;
 
     this.getDataForClient.dataName = 'clientTable';
-    this.parametersForClient.set('for', 'CLIENT');
-    this.getDataForClient.parameters = this.parametersForClient;
 
     this.getDataForDriver.dataName = 'driverTable';
-    this.parametersForDriver.set('for', 'DRIVER');
-    this.getDataForDriver.parameters = this.parametersForDriver;
   }
 }

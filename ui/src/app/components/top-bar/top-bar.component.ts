@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {StoreService} from '../../services/store.service';
+import {StoreService} from '../../../services/store.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -85,5 +85,9 @@ export class TopBarComponent implements OnInit, OnDestroy {
 
   signUp() {
     return this.router.navigateByUrl('/sign-up');
+  }
+
+  notification() {
+    return this.router.navigateByUrl('/notification');
   }
 }

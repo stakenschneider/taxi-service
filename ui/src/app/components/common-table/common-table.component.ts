@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {GetData} from '../../models/table/get.data.model';
-import {GridDataService} from '../../services/grid.data.service';
+import {GetData} from '../../../models/table/get.data.model';
+import {GridDataService} from '../../../services/grid.data.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';

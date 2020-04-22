@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../../services/auth.service';
 import * as bcrypt from 'bcryptjs';
 import {StoreService} from '../../../../services/store.service';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,7 +16,12 @@ export class SignInComponent implements OnInit {
   public flag: boolean;
   hide = true;
 
-  constructor(private router: Router, private authService: AuthService, private storeService: StoreService) {
+  constructor(public dialog: MatDialog,
+              private router: Router, private authService: AuthService, private storeService: StoreService) {
+  }
+
+  openDialog() {
+    this.dialog.open(DialogContentComponent);
   }
 
   ngOnInit(): void {
@@ -46,3 +52,9 @@ export class SignInComponent implements OnInit {
     return this.router.navigateByUrl('/sign-up');
   }
 }
+
+@Component({
+  selector: 'app-dialog-content',
+  templateUrl: 'dialog-content.html',
+})
+export class DialogContentComponent {}

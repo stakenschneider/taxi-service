@@ -6,9 +6,9 @@ import {ProfileComponent} from './pages/profile/profile.component';
 import {Routes, RouterModule} from '@angular/router';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
-import {TopBarComponent} from './top-bar/top-bar.component';
+import {TopBarComponent} from './components/top-bar/top-bar.component';
 import {HomeComponent} from './pages/home/home.component';
-import {SignInComponent} from './pages/auth/sign-in/sign-in.component';
+import {DialogContentComponent, SignInComponent} from './pages/auth/sign-in/sign-in.component';
 import {SignUpComponent} from './pages/auth/sign-up/sign-up.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
@@ -23,7 +23,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DialogComponent} from './dialog/dialog.component';
+import {DialogComponent} from './components/dialog/dialog.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -36,10 +36,10 @@ import {AdminComponent} from './pages/admin/admin.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {SnackBarComponent} from './snack-bar/snack-bar.component';
+import {SnackBarComponent} from './components/snack-bar/snack-bar.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {GridDataService} from '../services/grid.data.service';
-import {CommonTableComponent} from './common-table/common-table.component';
+import {CommonTableComponent} from './components/common-table/common-table.component';
 import {CdkTableModule} from '@angular/cdk/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
@@ -59,7 +59,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  entryComponents: [DialogComponent],
+  entryComponents: [DialogComponent, DialogContentComponent],
   declarations: [
     AppComponent,
     ProfileComponent,
@@ -73,6 +73,7 @@ const appRoutes: Routes = [
     RequestCarComponent,
     TakeTripComponent,
     DialogComponent,
+    DialogContentComponent,
     AdminComponent,
     SnackBarComponent,
     CommonTableComponent],

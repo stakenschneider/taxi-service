@@ -125,7 +125,7 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("Wrong parameter");
         }
 
-        List<Trip> trips = tripRepository.findAllByClientId(Long.parseLong((String)  parameters.get("personId"))).orElse(null);
+        List<Trip> trips = tripRepository.findAllByClientId((long) (int)  parameters.get("personId")).orElse(null);
         if (trips == null) {
             return new ResponseOrMessage<>("Trips not found");
         }

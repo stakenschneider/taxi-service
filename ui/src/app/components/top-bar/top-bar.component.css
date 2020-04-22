@@ -28,6 +28,12 @@ background-color: #24292e;
   font-size: 32px;
 }
 
+.bell {
+  padding-right: 16px;
+  color: white;
+  font-size: 16px;
+}
+
 span {
   height: 100%;
   text-align: center;
@@ -39,7 +45,7 @@ span:hover:not(.filler) {
   color: #cac7c7;
 }
 
-.icon:hover{
+.icon, .bell:hover{
   color: #cac7c7;
 }
 

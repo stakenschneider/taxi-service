@@ -42,10 +42,9 @@
         <div class="form-group">
           <button (click)="createAccount()" class=" btn btn-block send-button tx-tfm">Create Account</button>
         </div>
-        <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a href="#"
-                                                                                                       class="ps-hero__content__link">Terms of Use</a>
-          and <a href="#">Privacy Policy</a>.
-<!--          TODO add privacy policy and Terms of Use dialogs-->
+        <p class="small mt-3">By signing up, you are indicating that you have read and agree to the
+          <a href="" (click)="openDialog()">Terms of Use</a>
+          and <a href="" (click)="openDialog()">Privacy Policy</a>.
         </p>
       </div>
     </div>

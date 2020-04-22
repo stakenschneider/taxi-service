@@ -1,4 +1,4 @@
-import {SnackBarComponent} from './snack-bar/snack-bar.component';
+import {SnackBarComponent} from './components/snack-bar/snack-bar.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const openSnackBar = (snackBar: MatSnackBar, message: string, durationSecond: number) => {

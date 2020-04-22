@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
-import {DriverService} from '../../services/driver.service';
-import {DataService} from '../../services/data.service';
-import {StoreService} from '../../services/store.service';
-import {DialogData} from '../pages/take-trip/take-trip.component';
-import {openSnackBar} from '../open.snack.bar';
+import {DriverService} from '../../../services/driver.service';
+import {DataService} from '../../../services/data.service';
+import {StoreService} from '../../../services/store.service';
+import {DialogData} from '../../pages/take-trip/take-trip.component';
+import {openSnackBar} from '../../open.snack.bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
@@ -15,7 +15,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 
 export class DialogComponent implements OnInit {
-  // tslint:disable-next-line:variable-name
   constructor(private _snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<DialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData, private router: Router, private driverService: DriverService,

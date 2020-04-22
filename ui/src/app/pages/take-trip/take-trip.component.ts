@@ -5,7 +5,7 @@ import {DriverService} from '../../../services/driver.service';
 import {DataService} from '../../../services/data.service';
 import {StoreService} from '../../../services/store.service';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogComponent} from '../../dialog/dialog.component';
+import {DialogComponent} from '../../components/dialog/dialog.component';
 import {openSnackBar} from '../../open.snack.bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -50,7 +50,7 @@ export class TakeTripComponent implements OnInit {
         if (data.message === null) {
           this.reserveTrip(data.body.id);
         } else {
-          openSnackBar(this._snackBar, data.message, 5);
+          console.log( data.message);
         }
       },
       error => {
@@ -59,11 +59,10 @@ export class TakeTripComponent implements OnInit {
     );
   }
 
-  // TODO reserve must work
   reserveTrip(tripId: number) {
     this.dataService.getTripById(tripId).subscribe(data => {
       if (data.message) {
-        openSnackBar(this._snackBar, data.message, 5);
+        console.log( data.message);
       }
 
       const trip: Trip = data.body;

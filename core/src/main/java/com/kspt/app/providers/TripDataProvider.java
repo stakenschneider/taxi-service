@@ -16,9 +16,8 @@ import com.kspt.app.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by Masha on 18.04.2020
@@ -80,8 +79,15 @@ public class TripDataProvider implements IDataProvider {
             row.add(trip.getPrice()+"$");
             row.add(trip.getStatus());
             row.add(trip.getRating());
-            row.add(trip.getDateOfCreation());
-            row.add(trip.getDateOfCompletion());
+            row.add(formatDate(trip.getDateOfCreation()));
+            Date finishDate = trip.getDateOfCompletion();
+            if (finishDate==null)
+            {
+                row.add("-");
+            }else
+            {
+                row.add(formatDate(finishDate));
+            }
             Client client = trip.getClient();
             if (client != null) {
                 row.add(client.getFirstName() + " " + client.getLastName());
@@ -135,7 +141,7 @@ public class TripDataProvider implements IDataProvider {
         trips.forEach(trip -> {
             ArrayList<Object> row = new ArrayList<>();
             row.add(trip.getId());
-            row.add(trip.getDateOfCreation());
+            row.add(formatDate(trip.getDateOfCreation()));
             Address startAddress = trip.getStartAddress();
             row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
             Address finishAddress = trip.getFinishAddress();
@@ -218,7 +224,6 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("Wrong parameter");
         }
 
-
         Driver driver = driverRepository.findById((long) (int) parameters.get("personId")).orElse(null);
         if (driver == null) {
             return new ResponseOrMessage<>("Driver not found");
@@ -249,13 +254,26 @@ public class TripDataProvider implements IDataProvider {
             row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
             Client client = trip.getClient();
             row.add(client.getFirstName() + " " + client.getLastName() + " " + client.getRating());
-            row.add(trip.getDateOfCreation());
-            row.add(trip.getDateOfCompletion());
+            row.add(formatDate(trip.getDateOfCreation()));
+            Date finishDate = trip.getDateOfCompletion();
+            if (finishDate==null)
+            {
+                row.add("-");
+            }else
+            {
+                row.add(formatDate(finishDate));
+            }
             data.add(row);
         });
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);
+    }
+
+    public String formatDate(Date date){
+        SimpleDateFormat dateFormat = null;
+        dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH);
+        return dateFormat.format(date);
     }
 }

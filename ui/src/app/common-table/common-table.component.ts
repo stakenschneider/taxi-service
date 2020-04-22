@@ -2,9 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {GetData} from '../../models/table/get.data.model';
 import {GridDataService} from '../../services/grid.data.service';
 import {MatTableDataSource} from '@angular/material/table';
-import {Person} from '../../models/actor/person.model';
 import {MatSort} from '@angular/material/sort';
-import {Trip} from '../../models/trip.model';
 import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
@@ -31,6 +29,11 @@ export class CommonTableComponent implements OnInit {
         alert(data.message);
       } else {
         this.rows = data.body.data;
+        // this.rows.forEach(row => {
+        //   row.forEach(cell => {
+        //     cell.replace('|enter|', '\n');
+        //   });
+        // });
         this.columns = data.body.metaData.columns;
 
         const dataSource = new MatTableDataSource(this.rows);

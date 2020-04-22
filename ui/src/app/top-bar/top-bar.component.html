@@ -1,25 +1,28 @@
-<!--TODO topbar was fixed-->
-<ul>
-  <li><a (click)="home()">Home</a></li>
-  <li><a *ngIf="isAuthenticated" (click)="profile()">profile</a></li>
-  <li><a *ngIf="isClient" (click)="requestCar()">request car</a></li>
-  <li><a *ngIf="isDriver" (click)="takeTrip()">Take trip</a></li>
-  <li><a *ngIf="isAdmin" (click)="allData()">All Data</a></li>
+<mat-toolbar xmlns="http://www.w3.org/1999/html">
+  <div class="icon"><i class="fas fa-taxi"></i></div>
 
+  <span *ngIf="isAuthenticated" (click)="profile()">Profile</span>
+  <span *ngIf="isClient" (click)="requestCar()">Request Car</span>
+  <span *ngIf="isDriver" (click)="takeTrip()">Take Trip</span>
+  <span *ngIf="isAdmin" (click)="allData()">All Data</span>
 
-  <li *ngIf="isAuthenticated" class="dropdown" style="float:right">
-    <a class="dropbtn">
-      <img class="image"
-           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="masha">
-    </a>
+  <span class="filler"></span>
 
-    <div class="dropdown-content">
-      <a (click)="settings()">Settings</a>
-      <a (click)="logOut()">Sign Out</a>
-    </div>
-  </li>
+  <button *ngIf="isAuthenticated" class="menu-butt" [matMenuTriggerFor]="beforeMenu">
+    <img class="image" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
+         alt="masha">
+  </button>
+  <mat-menu #beforeMenu="matMenu" xPosition="before">
+    <mat-list>
+      <div class="dropdown-content" (click)="profile()">Profile</div>
+      <div class="dropdown-content" (click)="settings()">Settings</div>
+      <mat-divider></mat-divider>
+      <div class="dropdown-content" (click)="logOut()">Sign out</div>
+    </mat-list>
+  </mat-menu>
 
-  <li *ngIf="!isAuthenticated" style="float:right">
-    <a class="active" href="/sign-in">SignIn</a></li>
-</ul>
+  <span *ngIf="!isAuthenticated" (click)="signIn()">Sign in</span>
+  <span *ngIf="!isAuthenticated" (click)="signUp()">Sign up</span>
+
+</mat-toolbar>
 

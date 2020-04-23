@@ -84,6 +84,8 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true
+//    TODO _private_variable
+//    "disable-next-line": false
   },
   "rulesDirectory": [
     "codelyzer"

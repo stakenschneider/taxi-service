@@ -36,7 +36,7 @@ public class DriverDataProvider implements IDataProvider {
         String[] columns = {"No.", "First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted", "Passport", "Car"};
         metaDataModel.setColumns(columns);
         int countOfDrivers = drivers.size();
-        metaDataModel.setTotalCount(countOfDrivers);
+        metaDataModel.setTotalCount((long) countOfDrivers);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         drivers.forEach(driver -> {

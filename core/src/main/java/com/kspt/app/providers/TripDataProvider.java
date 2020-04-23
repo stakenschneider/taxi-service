@@ -63,6 +63,15 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("Wrong parameter \"page\" or \"size\"or \"sortBy\"");
         }
 
+        GridDataModel dataModel = new GridDataModel();
+        MetaDataModel metaDataModel = new MetaDataModel();
+
+        String[] columns = {"No.", "Rate", "Payment Method", "Price", "Status", "Rating",
+                "date Of Creation", "date Of Completion",
+                "client full name", "driver full name", "full start address", "full finish address"};
+        metaDataModel.setColumns(columns);
+        metaDataModel.setTotalCount(tripRepository.count());
+
         Page<Trip> page = tripRepository.findAll(PageRequest.of(Integer.parseInt((String) parameters.get("page")),
                 Integer.parseInt((String) parameters.get("size")),
                 Sort.by((String) parameters.get("sortBy"))));
@@ -72,15 +81,6 @@ public class TripDataProvider implements IDataProvider {
         if (trips.isEmpty()) {
             return new ResponseOrMessage<>("Trips not found");
         }
-        GridDataModel dataModel = new GridDataModel();
-        MetaDataModel metaDataModel = new MetaDataModel();
-
-        String[] columns = {"No.", "Rate", "Payment Method", "Price", "Status", "Rating",
-                "date Of Creation", "date Of Completion",
-                "client full name", "driver full name", "full start address", "full finish address"};
-        metaDataModel.setColumns(columns);
-        int countOfTrips = trips.size();
-        metaDataModel.setTotalCount(countOfTrips);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -145,7 +145,7 @@ public class TripDataProvider implements IDataProvider {
         String[] columns = {"No.", "date of creation", "Start Address", "Finish Address"};
         metaDataModel.setColumns(columns);
         int countOfTrips = trips.size();
-        metaDataModel.setTotalCount(countOfTrips);
+        metaDataModel.setTotalCount((long) countOfTrips);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -208,7 +208,7 @@ public class TripDataProvider implements IDataProvider {
         String[] columns = {"No.", "Price", "Payment Method", "Start Address", "Finish Address", "Client Rating"};
         metaDataModel.setColumns(columns);
         int countOfTrips = trips.size();
-        metaDataModel.setTotalCount(countOfTrips);
+        metaDataModel.setTotalCount((long) countOfTrips);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -250,7 +250,7 @@ public class TripDataProvider implements IDataProvider {
         String[] columns = {"No.", "Rating", "Price", "Start Address", "Finish Address", "Client name", "Date of Creation", "Date of Completion"};
         metaDataModel.setColumns(columns);
         int countOfTrips = trips.size();
-        metaDataModel.setTotalCount(countOfTrips);
+        metaDataModel.setTotalCount((long) countOfTrips);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {

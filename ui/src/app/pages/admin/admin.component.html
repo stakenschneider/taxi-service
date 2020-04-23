@@ -1,19 +1,23 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="Trips">
     <div class="content">
-<app-common-table [getData]="getDataForTrips"></app-common-table>
+      <app-common-table [getData]="getDataForTrips"
+                        [uiGridData]="uiGridDataForTrips"
+                        (paginatorEvent)="onPaginatorClick($event)"></app-common-table>
     </div>
   </mat-tab>
 
   <mat-tab label="Clients">
     <div class="content">
-      <app-common-table [getData]="getDataForClient"></app-common-table>
+      <app-common-table [getData]="getDataForClient"
+                        [uiGridData]="uiGridDataForClient"></app-common-table>
     </div>
   </mat-tab>
 
   <mat-tab label="Drivers">
     <div class="content">
-      <app-common-table [getData]="getDataForDriver"></app-common-table>
+      <app-common-table [getData]="getDataForDriver"
+                        [uiGridData]="uiGridDataForDriver"></app-common-table>
     </div>
   </mat-tab>
 </mat-tab-group>

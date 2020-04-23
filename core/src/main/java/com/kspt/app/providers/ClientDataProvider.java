@@ -36,7 +36,7 @@ public class ClientDataProvider implements IDataProvider {
         String[] columns = {"No.", "First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted"};
         metaDataModel.setColumns(columns);
         int countOfClients = clients.size();
-        metaDataModel.setTotalCount(countOfClients);
+        metaDataModel.setTotalCount((long) countOfClients);
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         clients.forEach(client -> {

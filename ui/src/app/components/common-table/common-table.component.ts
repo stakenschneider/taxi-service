@@ -4,6 +4,8 @@ import {GridDataService} from '../../../services/grid.data.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {UiGridData} from '../../../models/table/ui.grid.data.model';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-common-table',
@@ -12,13 +14,19 @@ import {MatPaginator} from '@angular/material/paginator';
 })
 export class CommonTableComponent implements OnInit {
   @Input() getData: GetData;
+  @Input() uiGridData: UiGridData;
   @Output() cellClickEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() paginatorEvent: EventEmitter<any> = new EventEmitter<any>();
+
   columns: string[];
   rows: any[][];
   editField: string;
   tripDataSource: MatTableDataSource<any[]>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  pageSize: number;
+  length: number;
+  pageEvent: PageEvent;
 
   constructor(private gridDataService: GridDataService) {
   }
@@ -29,11 +37,6 @@ export class CommonTableComponent implements OnInit {
         alert(data.message);
       } else {
         this.rows = data.body.data;
-        // this.rows.forEach(row => {
-        //   row.forEach(cell => {
-        //     cell.replace('|enter|', '\n');
-        //   });
-        // });
         this.columns = data.body.metaData.columns;
 
         const dataSource = new MatTableDataSource(this.rows);
@@ -41,6 +44,8 @@ export class CommonTableComponent implements OnInit {
         dataSource.paginator = this.paginator;
         this.tripDataSource = dataSource;
         this.tripDataSource.paginator = this.paginator;
+        this.length = data.body.metaData.totalCount;
+        this.pageSize = data.body.data.length;
       }
     }, error => {
       alert(error);
@@ -58,5 +63,9 @@ export class CommonTableComponent implements OnInit {
 
   changeValue(id: number, property: string, event: any) {
     this.editField = event.target.textContent;
+  }
+
+  onPageEvent(event: PageEvent) {
+    this.paginatorEvent.emit(event);
   }
 }

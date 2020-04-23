@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class MetaDataModel {
     public String[] columns;
-    public int totalCount; //for pagination
+    public Long totalCount; //for pagination
 //    TODO add more parameters. think about it
 }

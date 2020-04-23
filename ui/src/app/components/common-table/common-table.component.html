@@ -1,21 +1,30 @@
-<div *ngIf="tripDataSource"><mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
-</mat-form-field>
-<div class="mat-elevation-z8">
+<div *ngIf="tripDataSource">
+  <mat-form-field *ngIf="uiGridData.showFilter">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+  </mat-form-field>
 
-  <mat-table mat-table [dataSource]="tripDataSource" matSort class="table-hover">
-    <ng-container *ngFor="let col of columns; let i = index" [cdkColumnDef]="col">
-      <mat-header-cell mat-sort-header *cdkHeaderCellDef> {{col}} </mat-header-cell>
-      <mat-cell *cdkCellDef="let row"> {{row[i]}} </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <div class="mat-elevation-z8">
+    <mat-table mat-table [dataSource]="tripDataSource" matSort class="table-hover">
+      <ng-container *ngFor="let col of columns; let i = index" [cdkColumnDef]="col">
+        <mat-header-cell mat-sort-header *cdkHeaderCellDef> {{col}} </mat-header-cell>
+        <mat-cell *cdkCellDef="let row"> {{row[i]}} </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
 
-    <mat-row
-      (click)="onCellClick($event, row)"
-      *matRowDef="let row; columns: columns;">
-    </mat-row>
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</div>
+      <mat-row
+        (click)="onCellClick($event, row)"
+        *matRowDef="let row; columns: columns;">
+      </mat-row>
+    </mat-table>
+
+    <mat-paginator *ngIf="uiGridData.showPaginator"
+                   [length]="length"
+                   [pageSize]="pageSize"
+                   (page)="pageEvent = $event"
+                   (click)="onPageEvent(pageEvent)"
+                   [pageSizeOptions]="uiGridData.pageSizeOptions"
+                   showFirstLastButtons ></mat-paginator>
+
+  </div>
 </div>

@@ -14,6 +14,9 @@ import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;
 import com.kspt.app.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +45,7 @@ public class TripDataProvider implements IDataProvider {
         }
         switch ((String) parameters.get("for")) {
             case "ADMIN":
-                return getDataForAdmin();
+                return getDataForAdmin(parameters);
 
             case "DRIVER":
                 return getDataForDriver(parameters);
@@ -55,8 +58,17 @@ public class TripDataProvider implements IDataProvider {
         }
     }
 
-    public ResponseOrMessage<GridDataModel> getDataForAdmin() {
-        List<Trip> trips = tripRepository.findAll();
+    public ResponseOrMessage<GridDataModel> getDataForAdmin(Map<String, Object> parameters) {
+        if (!parameters.containsKey("page") || !parameters.containsKey("size") || !parameters.containsKey("sortBy")) {
+            return new ResponseOrMessage<>("Wrong parameter \"page\" or \"size\"or \"sortBy\"");
+        }
+
+        Page<Trip> page = tripRepository.findAll(PageRequest.of(Integer.parseInt((String) parameters.get("page")),
+                Integer.parseInt((String) parameters.get("size")),
+                Sort.by((String) parameters.get("sortBy"))));
+
+        List<Trip> trips = page.getContent();
+
         if (trips.isEmpty()) {
             return new ResponseOrMessage<>("Trips not found");
         }
@@ -76,16 +88,14 @@ public class TripDataProvider implements IDataProvider {
             row.add(trip.getId());
             row.add(trip.getTripRate());
             row.add(trip.getPaymentMethod());
-            row.add(trip.getPrice()+"$");
+            row.add(trip.getPrice() + "$");
             row.add(trip.getStatus());
             row.add(trip.getRating());
             row.add(formatDate(trip.getDateOfCreation()));
             Date finishDate = trip.getDateOfCompletion();
-            if (finishDate==null)
-            {
+            if (finishDate == null) {
                 row.add("-");
-            }else
-            {
+            } else {
                 row.add(formatDate(finishDate));
             }
             Client client = trip.getClient();
@@ -125,7 +135,7 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("Wrong parameter");
         }
 
-        List<Trip> trips = tripRepository.findAllByClientId((long) (int)  parameters.get("personId")).orElse(null);
+        List<Trip> trips = tripRepository.findAllByClientId((long) (int) parameters.get("personId")).orElse(null);
         if (trips == null) {
             return new ResponseOrMessage<>("Trips not found");
         }
@@ -204,7 +214,7 @@ public class TripDataProvider implements IDataProvider {
         trips.forEach(trip -> {
             ArrayList<Object> row = new ArrayList<>();
             row.add(trip.getId());
-            row.add(trip.getPrice()+"$");
+            row.add(trip.getPrice() + "$");
             row.add(trip.getPaymentMethod());
             Address startAddress = trip.getStartAddress();
             row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
@@ -247,7 +257,7 @@ public class TripDataProvider implements IDataProvider {
             ArrayList<Object> row = new ArrayList<>();
             row.add(trip.getId());
             row.add(trip.getRating());
-            row.add(trip.getPrice()+"$");
+            row.add(trip.getPrice() + "$");
             Address startAddress = trip.getStartAddress();
             row.add(startAddress.getCity() + ", " + startAddress.getStreet() + ", " + startAddress.getNumberHouse());
             Address finishAddress = trip.getFinishAddress();
@@ -256,11 +266,9 @@ public class TripDataProvider implements IDataProvider {
             row.add(client.getFirstName() + " " + client.getLastName() + " " + client.getRating());
             row.add(formatDate(trip.getDateOfCreation()));
             Date finishDate = trip.getDateOfCompletion();
-            if (finishDate==null)
-            {
+            if (finishDate == null) {
                 row.add("-");
-            }else
-            {
+            } else {
                 row.add(formatDate(finishDate));
             }
             data.add(row);
@@ -271,7 +279,7 @@ public class TripDataProvider implements IDataProvider {
         return new ResponseOrMessage<>(dataModel);
     }
 
-    public String formatDate(Date date){
+    public String formatDate(Date date) {
         SimpleDateFormat dateFormat = null;
         dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH);
         return dateFormat.format(date);

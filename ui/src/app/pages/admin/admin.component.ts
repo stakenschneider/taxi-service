@@ -21,6 +21,9 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.getDataForTrips.dataName = 'tripTable';
     this.parametersForTrips.set('for', 'ADMIN');
+    this.parametersForTrips.set('page', '0');
+    this.parametersForTrips.set('size', '20');
+    this.parametersForTrips.set('sortBy', 'id');
     this.getDataForTrips.parameters = this.parametersForTrips;
 
     this.getDataForClient.dataName = 'clientTable';

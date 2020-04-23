@@ -2,6 +2,8 @@ package com.kspt.app.repository;
 
 import com.kspt.app.entities.AbstractEntity;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -23,6 +25,9 @@ public interface JPARepository<T extends AbstractEntity> extends CrudRepository<
     @NotNull
     @Override
     List<T> findAll();
+
+    @NotNull
+    Page<T> findAll(Pageable pageable);
 
     @NotNull
     @Override

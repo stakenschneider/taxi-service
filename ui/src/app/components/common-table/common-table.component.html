@@ -7,7 +7,7 @@
   <div class="mat-elevation-z8">
     <mat-table mat-table [dataSource]="tripDataSource" matSort class="table-responsive">
       <ng-container *ngFor="let col of columns; let i = index" [cdkColumnDef]="col">
-        <mat-header-cell mat-sort-header *cdkHeaderCellDef> {{col}} </mat-header-cell>
+        <mat-header-cell (click)="onHeader($event)" mat-sort-header *cdkHeaderCellDef> {{col}} </mat-header-cell>
 
         <mat-cell *cdkCellDef="let row"> {{row[i]}} </mat-cell>
       </ng-container>

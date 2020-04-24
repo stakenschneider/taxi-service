@@ -6,6 +6,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {UiGridData} from '../../../models/table/ui.grid.data.model';
 import {PageEvent} from '@angular/material/paginator';
+import {openSnackBar} from '../../open.snack.bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-common-table',
@@ -28,11 +30,11 @@ export class CommonTableComponent implements OnInit {
   length: number;
   pageEvent: PageEvent;
 
-  constructor(private gridDataService: GridDataService) {
+  constructor(private _snack: MatSnackBar, private gridDataService: GridDataService) {
   }
 
   ngOnInit(): void {
-    this.getDataFromServer(undefined);
+    this.getDataFromServer(undefined, undefined);
   }
 
   applyFilter(event: Event) {
@@ -49,19 +51,22 @@ export class CommonTableComponent implements OnInit {
   }
 
   onPageEvent(event: PageEvent) {
-    this.getDataFromServer(event);
+    this.getDataFromServer(event, undefined);
   }
 
-  getDataFromServer(event: PageEvent) {
-    if (event) {
-      this.getData.parameters.set('page', event.pageIndex);
-      this.getData.parameters.set('size', event.pageSize);
+  getDataFromServer(paginatorEvent: PageEvent, sortByEvent: any) {
+    if (paginatorEvent) {
+      this.getData.parameters.set('page', paginatorEvent.pageIndex);
+      this.getData.parameters.set('size', paginatorEvent.pageSize);
+    } else if (sortByEvent) {
+      this.getData.parameters.set('sortBy', sortByEvent.currentTarget.innerText);
+      this.getData.parameters.set('ariaSort', sortByEvent.currentTarget.ariaSort);
     } else {
       this.getData.parameters.set('page', 0);
       this.getData.parameters.set('size', 5);
       this.getData.parameters.set('sortBy', 'id');
+      this.getData.parameters.set('ariaSort', 'descending');
     }
-
 
     this.gridDataService.getGridData(this.getData).subscribe(data => {
       if (data.message) {
@@ -81,5 +86,13 @@ export class CommonTableComponent implements OnInit {
     }, error => {
       alert(error);
     });
+  }
+
+  onHeader(event: any) {
+    if (event.currentTarget.ariaSort === null) {
+      this.getDataFromServer(undefined, event);
+    } else if (event.currentTarget.ariaSort.toString() !== 'descending') {
+      this.getDataFromServer(undefined, event);
+    }
   }
 }

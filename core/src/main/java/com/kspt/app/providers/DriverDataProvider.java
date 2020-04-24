@@ -1,6 +1,5 @@
 package com.kspt.app.providers;
 
-import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GridDataModel;
@@ -8,9 +7,7 @@ import com.kspt.app.models.table.MetaDataModel;
 import com.kspt.app.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

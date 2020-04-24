@@ -1,5 +1,5 @@
 <mat-toolbar xmlns="http://www.w3.org/1999/html">
-  <div class="icon"><i class="fas fa-taxi"></i></div>
+  <div (click)="home()" class="icon"><i class="fas fa-taxi"></i></div>
 
   <span *ngIf="isAuthenticated" (click)="profile()">Profile</span>
   <span *ngIf="isClient" (click)="requestCar()">Request Car</span>

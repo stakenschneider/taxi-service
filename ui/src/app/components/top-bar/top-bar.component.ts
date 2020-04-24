@@ -47,16 +47,15 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
   logOut() {
+    this.isAdmin = false;
+    this.isDriver = false;
+    this.isClient = false;
     this.storeService.setIsAuth(false);
-    return this.router.navigateByUrl('/home');
+    return this.router.navigateByUrl('/sign-in');
   }
 
   home() {
     return this.router.navigateByUrl('/home');
-  }
-
-  notFound() {
-    return this.router.navigateByUrl('/not-found');
   }
 
   profile() {

@@ -6,6 +6,10 @@ import com.kspt.app.models.table.GridDataModel;
 import com.kspt.app.models.table.MetaDataModel;
 import com.kspt.app.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,18 +29,19 @@ public class DriverDataProvider implements IDataProvider {
     }
 
     @Override
-    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters) {
-        List<Driver> drivers = driverRepository.findAll();
+    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters, Pageable pageable) {
+        Page<Driver> page = driverRepository.findAll(pageable);
+        List<Driver> drivers = page.getContent();
         if (drivers.isEmpty()) {
             return new ResponseOrMessage<>("Drivers not found");
         }
+
         GridDataModel dataModel = new GridDataModel();
         MetaDataModel metaDataModel = new MetaDataModel();
 
         String[] columns = {"No.", "First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted", "Passport", "Car"};
         metaDataModel.setColumns(columns);
-        int countOfDrivers = drivers.size();
-        metaDataModel.setTotalCount((long) countOfDrivers);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         drivers.forEach(driver -> {

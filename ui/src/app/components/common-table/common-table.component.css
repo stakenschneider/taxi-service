@@ -1,0 +1,11 @@
+.mat-row:hover {
+  background-color: #f3f0f0;
+}
+
+/* TODO make height variable*/
+mat-table {
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}

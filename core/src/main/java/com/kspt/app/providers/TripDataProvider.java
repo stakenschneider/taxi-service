@@ -10,13 +10,11 @@ import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GridDataModel;
 import com.kspt.app.models.table.MetaDataModel;
-import com.kspt.app.repository.ClientRepository;
 import com.kspt.app.repository.DriverRepository;
 import com.kspt.app.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -28,59 +26,50 @@ import java.util.*;
 @Component
 @Qualifier("tripTable")
 public class TripDataProvider implements IDataProvider {
-    TripRepository tripRepository;
-    DriverRepository driverRepository;
-    ClientRepository clientRepository;
+    private TripRepository tripRepository;
+    private DriverRepository driverRepository;
 
-    public TripDataProvider(TripRepository tripRepository, ClientRepository clientRepository, DriverRepository driverRepository) {
+    GridDataModel dataModel = new GridDataModel();
+    MetaDataModel metaDataModel = new MetaDataModel();
+
+    public TripDataProvider(TripRepository tripRepository, DriverRepository driverRepository) {
         this.tripRepository = tripRepository;
-        this.clientRepository = clientRepository;
         this.driverRepository = driverRepository;
     }
 
     @Override
-    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters) {
+    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters, Pageable pageable) {
         if (!parameters.containsKey("for")) {
             return new ResponseOrMessage<>("Wrong parameter \"for\"");
         }
         switch ((String) parameters.get("for")) {
             case "ADMIN":
-                return getDataForAdmin(parameters);
+                return getDataForAdmin(pageable);
 
             case "DRIVER":
-                return getDataForDriver(parameters);
+                return getDataForDriver(parameters, pageable);
 
             case "CLIENT":
-                return getDataForClient(parameters);
+                return getDataForClient(parameters, pageable);
 
             default:
                 return new ResponseOrMessage<>("Wrong parameter \"for\"");
         }
     }
 
-    public ResponseOrMessage<GridDataModel> getDataForAdmin(Map<String, Object> parameters) {
-        if (!parameters.containsKey("page") || !parameters.containsKey("size") || !parameters.containsKey("sortBy")) {
-            return new ResponseOrMessage<>("Wrong parameter \"page\" or \"size\"or \"sortBy\"");
-        }
-
-        GridDataModel dataModel = new GridDataModel();
-        MetaDataModel metaDataModel = new MetaDataModel();
-
-        String[] columns = {"No.", "Rate", "Payment Method", "Price", "Status", "Rating",
-                "date Of Creation", "date Of Completion",
-                "client full name", "driver full name", "full start address", "full finish address"};
-        metaDataModel.setColumns(columns);
-        metaDataModel.setTotalCount(tripRepository.count());
-
-        Page<Trip> page = tripRepository.findAll(PageRequest.of(Integer.parseInt((String) parameters.get("page")),
-                Integer.parseInt((String) parameters.get("size")),
-                Sort.by((String) parameters.get("sortBy"))));
-
+    public ResponseOrMessage<GridDataModel> getDataForAdmin(Pageable pageable) {
+        Page<Trip> page = tripRepository.findAll(pageable);
         List<Trip> trips = page.getContent();
 
         if (trips.isEmpty()) {
             return new ResponseOrMessage<>("Trips not found");
         }
+
+        String[] columns = {"No.", "Rate", "Payment Method", "Price", "Status", "Rating",
+                "date Of Creation", "date Of Completion",
+                "client full name", "driver full name", "full start address", "full finish address"};
+        metaDataModel.setColumns(columns);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -129,23 +118,21 @@ public class TripDataProvider implements IDataProvider {
         return new ResponseOrMessage<>(dataModel);
     }
 
-    public ResponseOrMessage<GridDataModel> getDataForClient(Map<String, Object> parameters) {
-
+    public ResponseOrMessage<GridDataModel> getDataForClient(Map<String, Object> parameters, Pageable pageable) {
         if (!parameters.containsKey("personId")) {
             return new ResponseOrMessage<>("Wrong parameter");
         }
 
-        List<Trip> trips = tripRepository.findAllByClientId((long) (int) parameters.get("personId")).orElse(null);
-        if (trips == null) {
+        Page<Trip> page = tripRepository.findAllByClientId((long) (int) parameters.get("personId"), pageable).orElse(null);
+
+        if (page == null) {
             return new ResponseOrMessage<>("Trips not found");
         }
 
-        GridDataModel dataModel = new GridDataModel();
-        MetaDataModel metaDataModel = new MetaDataModel();
+        List<Trip> trips = page.getContent();
         String[] columns = {"No.", "date of creation", "Start Address", "Finish Address"};
         metaDataModel.setColumns(columns);
-        int countOfTrips = trips.size();
-        metaDataModel.setTotalCount((long) countOfTrips);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -164,29 +151,27 @@ public class TripDataProvider implements IDataProvider {
         return new ResponseOrMessage<>(dataModel);
     }
 
-    public ResponseOrMessage<GridDataModel> getDataForDriver(Map<String, Object> parameters) {
+    public ResponseOrMessage<GridDataModel> getDataForDriver(Map<String, Object> parameters, Pageable pageable) {
         if (!parameters.containsKey("part")) {
             return new ResponseOrMessage<>("Wrong parameter \"part\"");
-        }
-        switch ((String) parameters.get("part")) {
-            case "history":
-                return getDataForDriverHistory(parameters);
-            case "free":
-                return getDataForDriverFreeTrips(parameters);
-            default:
-                return new ResponseOrMessage<>("Wrong parameter DRIVER -> \"part\"");
-        }
-    }
-
-    private ResponseOrMessage<GridDataModel> getDataForDriverFreeTrips(Map<String, Object> parameters) {
-        if (!parameters.containsKey("personId")) {
-            return new ResponseOrMessage<>("Wrong parameter");
         }
 
         Driver driver = driverRepository.findById((long) (int) parameters.get("personId")).orElse(null);
         if (driver == null) {
             return new ResponseOrMessage<>("Driver not found");
         }
+
+        switch ((String) parameters.get("part")) {
+            case "history":
+                return getDataForDriverHistory(driver, pageable);
+            case "free":
+                return getDataForDriverFreeTrips(driver, pageable);
+            default:
+                return new ResponseOrMessage<>("Wrong parameter DRIVER -> \"part\"");
+        }
+    }
+
+    private ResponseOrMessage<GridDataModel> getDataForDriverFreeTrips(Driver driver, Pageable pageable) {
 
         Car car = driver.getCar();
         if (car == null) {
@@ -198,17 +183,18 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("You must register passport before book a trip");
         }
 
-        List<Trip> trips = tripRepository.findAllByStatusAndTripRate(Constants.Status.CREATE, car.getCarRate()).orElse(null);
-        if (trips == null) {
+        Page<Trip> page = tripRepository.findAllByStatusAndTripRate(
+                Constants.Status.CREATE, car.getCarRate(), pageable).orElse(null);
+
+        if (page == null) {
             return new ResponseOrMessage<>("Trips not found");
         }
 
-        GridDataModel dataModel = new GridDataModel();
-        MetaDataModel metaDataModel = new MetaDataModel();
+        List<Trip> trips = page.getContent();
+
         String[] columns = {"No.", "Price", "Payment Method", "Start Address", "Finish Address", "Client Rating"};
         metaDataModel.setColumns(columns);
-        int countOfTrips = trips.size();
-        metaDataModel.setTotalCount((long) countOfTrips);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -229,28 +215,18 @@ public class TripDataProvider implements IDataProvider {
         return new ResponseOrMessage<>(dataModel);
     }
 
-    private ResponseOrMessage<GridDataModel> getDataForDriverHistory(Map<String, Object> parameters) {
-        if (!parameters.containsKey("personId")) {
-            return new ResponseOrMessage<>("Wrong parameter");
-        }
+    private ResponseOrMessage<GridDataModel> getDataForDriverHistory(Driver driver, Pageable pageable) {
+        Page<Trip> page = tripRepository.findAllByDriverId(driver.getId(), pageable).orElse(null);
 
-        Driver driver = driverRepository.findById((long) (int) parameters.get("personId")).orElse(null);
-        if (driver == null) {
-            return new ResponseOrMessage<>("Driver not found");
-        }
-
-        List<Trip> trips = tripRepository.findAllByDriverId(driver.getId()).orElse(null);
-        if (trips == null) {
+        if (page == null) {
             return new ResponseOrMessage<>("Trips not found");
         }
 
-        GridDataModel dataModel = new GridDataModel();
-        MetaDataModel metaDataModel = new MetaDataModel();
+        List<Trip> trips = page.getContent();
 
         String[] columns = {"No.", "Rating", "Price", "Start Address", "Finish Address", "Client name", "Date of Creation", "Date of Completion"};
         metaDataModel.setColumns(columns);
-        int countOfTrips = trips.size();
-        metaDataModel.setTotalCount((long) countOfTrips);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
         trips.forEach(trip -> {
@@ -280,8 +256,6 @@ public class TripDataProvider implements IDataProvider {
     }
 
     public String formatDate(Date date) {
-        SimpleDateFormat dateFormat = null;
-        dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH);
-        return dateFormat.format(date);
+        return new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", Locale.ENGLISH).format(date);
     }
 }

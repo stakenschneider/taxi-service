@@ -6,6 +6,10 @@ import com.kspt.app.models.table.GridDataModel;
 import com.kspt.app.models.table.MetaDataModel;
 import com.kspt.app.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,11 +29,13 @@ public class ClientDataProvider implements IDataProvider {
     }
 
     @Override
-    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters) {
-        List<Client> clients = clientRepository.findAll();
+    public ResponseOrMessage<GridDataModel> getData(Map<String, Object> parameters, Pageable pageable) {
+        Page<Client> page = clientRepository.findAll(pageable);
+        List<Client> clients = page.getContent();
         if (clients.isEmpty()) {
-            return new ResponseOrMessage<>("Clients not found");
+            return new ResponseOrMessage<>("Drivers not found");
         }
+
         GridDataModel dataModel = new GridDataModel();
         MetaDataModel metaDataModel = new MetaDataModel();
 

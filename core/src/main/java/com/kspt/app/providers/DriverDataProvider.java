@@ -1,5 +1,6 @@
 package com.kspt.app.providers;
 
+import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GridDataModel;
@@ -39,13 +40,15 @@ public class DriverDataProvider implements IDataProvider {
         GridDataModel dataModel = new GridDataModel();
         MetaDataModel metaDataModel = new MetaDataModel();
 
-        String[] columns = {"No.", "First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted", "Passport", "Car"};
+        String[] columns = {"No.", "Id", "First Name", "Last Name", "Email", "Login", "Phone Number", "Rating", "Deleted", "Passport", "Car"};
         metaDataModel.setColumns(columns);
         metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        drivers.forEach(driver -> {
+        int index = 0;
+        for (Driver driver : drivers) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(driver.getId());
             row.add(driver.getFirstName());
             row.add(driver.getLastName());
@@ -54,10 +57,10 @@ public class DriverDataProvider implements IDataProvider {
             row.add(driver.getPhoneNumber());
             row.add(driver.getRating());
             row.add(driver.isDeleted());
-            row.add("series "+driver.getPassport().getSeries()+" number "+driver.getPassport().getNumber());
-            row.add(driver.getCar().getColor()+" "+driver.getCar().getModel()+" "+driver.getCar().getNumber());
+            row.add("series " + driver.getPassport().getSeries() + " number " + driver.getPassport().getNumber());
+            row.add(driver.getCar().getColor() + " " + driver.getCar().getModel() + " " + driver.getCar().getNumber());
             data.add(row);
-        });
+        };
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);

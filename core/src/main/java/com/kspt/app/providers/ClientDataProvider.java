@@ -1,5 +1,6 @@
 package com.kspt.app.providers;
 
+import com.kspt.app.entities.Trip;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.table.GridDataModel;
@@ -39,14 +40,15 @@ public class ClientDataProvider implements IDataProvider {
         GridDataModel dataModel = new GridDataModel();
         MetaDataModel metaDataModel = new MetaDataModel();
 
-        String[] columns = {"No.", "First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted"};
+        String[] columns = {"No.", "Id","First Name", "Last Name", "Email","Login", "Phone Number", "Rating","Deleted"};
         metaDataModel.setColumns(columns);
-        int countOfClients = clients.size();
-        metaDataModel.setTotalCount((long) countOfClients);
+        metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        clients.forEach(client -> {
+        int index = 0;
+        for (Client client: clients) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(client.getId());
             row.add(client.getFirstName());
             row.add(client.getLastName());
@@ -56,7 +58,7 @@ public class ClientDataProvider implements IDataProvider {
             row.add(client.getRating());
             row.add(client.isDeleted());
             data.add(row);
-        });
+        };
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);

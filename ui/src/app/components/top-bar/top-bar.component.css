@@ -45,7 +45,11 @@ span:hover:not(.filler) {
   color: #cac7c7;
 }
 
-.icon, .bell:hover{
+.bell:hover{
+  color: #cac7c7;
+}
+
+.icon :hover{
   color: #cac7c7;
 }
 

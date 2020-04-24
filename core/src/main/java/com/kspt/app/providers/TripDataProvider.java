@@ -65,15 +65,17 @@ public class TripDataProvider implements IDataProvider {
             return new ResponseOrMessage<>("Trips not found");
         }
 
-        String[] columns = {"No.", "Rate", "Payment Method", "Price", "Status", "Rating",
+        String[] columns = {"No.", "Id", "Rate", "Payment Method", "Price", "Status", "Rating",
                 "date Of Creation", "date Of Completion",
                 "client full name", "driver full name", "full start address", "full finish address"};
         metaDataModel.setColumns(columns);
         metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        trips.forEach(trip -> {
+        int index = 0;
+        for (Trip trip : trips) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(trip.getId());
             row.add(trip.getTripRate());
             row.add(trip.getPaymentMethod());
@@ -112,7 +114,8 @@ public class TripDataProvider implements IDataProvider {
                 row.add("-");
             }
             data.add(row);
-        });
+        }
+        ;
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);
@@ -130,13 +133,15 @@ public class TripDataProvider implements IDataProvider {
         }
 
         List<Trip> trips = page.getContent();
-        String[] columns = {"No.", "date of creation", "Start Address", "Finish Address"};
+        String[] columns = {"No.", "Id", "date of creation", "Start Address", "Finish Address"};
         metaDataModel.setColumns(columns);
         metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        trips.forEach(trip -> {
+        int index = 0;
+        for (Trip trip : trips) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(trip.getId());
             row.add(formatDate(trip.getDateOfCreation()));
             Address startAddress = trip.getStartAddress();
@@ -144,7 +149,8 @@ public class TripDataProvider implements IDataProvider {
             Address finishAddress = trip.getFinishAddress();
             row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
             data.add(row);
-        });
+        }
+        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
@@ -192,13 +198,15 @@ public class TripDataProvider implements IDataProvider {
 
         List<Trip> trips = page.getContent();
 
-        String[] columns = {"No.", "Price", "Payment Method", "Start Address", "Finish Address", "Client Rating"};
+        String[] columns = {"No.", "Id", "Price", "Payment Method", "Start Address", "Finish Address", "Client Rating"};
         metaDataModel.setColumns(columns);
         metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        trips.forEach(trip -> {
+        int index = 0;
+        for (Trip trip : trips) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(trip.getId());
             row.add(trip.getPrice() + "$");
             row.add(trip.getPaymentMethod());
@@ -208,7 +216,8 @@ public class TripDataProvider implements IDataProvider {
             row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
             row.add(trip.getClient().getRating());
             data.add(row);
-        });
+        }
+        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
@@ -224,13 +233,15 @@ public class TripDataProvider implements IDataProvider {
 
         List<Trip> trips = page.getContent();
 
-        String[] columns = {"No.", "Rating", "Price", "Start Address", "Finish Address", "Client name", "Date of Creation", "Date of Completion"};
+        String[] columns = {"No.", "Id", "Rating", "Price", "Start Address", "Finish Address", "Client name", "Date of Creation", "Date of Completion"};
         metaDataModel.setColumns(columns);
         metaDataModel.setTotalCount(page.getTotalElements());
 
         ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        trips.forEach(trip -> {
+        int index = 0;
+        for (Trip trip : trips) {
             ArrayList<Object> row = new ArrayList<>();
+            row.add(++index);
             row.add(trip.getId());
             row.add(trip.getRating());
             row.add(trip.getPrice() + "$");
@@ -248,7 +259,8 @@ public class TripDataProvider implements IDataProvider {
                 row.add(formatDate(finishDate));
             }
             data.add(row);
-        });
+        }
+        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);

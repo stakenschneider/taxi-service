@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from '../../components/dialog/dialog.component';
 import {openSnackBar} from '../../open.snack.bar';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {UiGridData} from '../../../models/table/ui.grid.data.model';
 
 export interface DialogData {
   trip: Trip;
@@ -21,6 +22,7 @@ export interface DialogData {
 export class TakeTripComponent implements OnInit {
   getDataForTrips: any = {};
   parametersForTrips: Map<string, any> = new Map<string, any>();
+  uiGridData: UiGridData = new UiGridData();
 
   // tslint:disable-next-line:variable-name
   constructor(private _snackBar: MatSnackBar, private router: Router, private driverService: DriverService,

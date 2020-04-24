@@ -5,6 +5,7 @@ import {Driver} from '../../../models/actor/driver.model';
 import {StoreService} from '../../../services/store.service';
 import {DriverService} from '../../../services/driver.service';
 import {AdminService} from '../../../services/admin.service';
+import {UiGridData} from '../../../models/table/ui.grid.data.model';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ import {AdminService} from '../../../services/admin.service';
 export class ProfileComponent implements OnInit {
   getDataForTrips: any = {};
   parametersForTrips: Map<string, any> = new Map<string, any>();
-
+  uiGridData: UiGridData = new UiGridData();
   public person: any;
   public driver: Driver;
 

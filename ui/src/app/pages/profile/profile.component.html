@@ -3,9 +3,16 @@
   <div *ngIf="person" class='row'>
     <!--PERSON COLUMN-->
     <div id="left" class='col-xs-12 col-md-1'>
-      <div id="first"><img id="avatar"
-                           src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
-                           alt="avatar"/>
+      <div id="first">
+        <img *ngIf="person.personType === 'CLIENT'" class="avatar"
+             src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
+             alt="avatar"/>
+        <img *ngIf="person.personType === 'DRIVER'" class="avatar"
+             src="https://i.ytimg.com/vi/UKhAlFKmXKk/hqdefault.jpg"
+             alt="avatar"/>
+        <img *ngIf="person.personType === 'ADMIN'" class="avatar"
+             src="        https://pbs.twimg.com/profile_images/2675252167/e1f3a62560f70d8f567ed33b029cadac_400x400.jpeg"
+             alt="avatar"/>
         <div id="nameRow">
           <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
           <div *ngIf="person.personType !== 'ADMIN'" id="rating" class="text fullName"> {{person.rating}}<i
@@ -27,8 +34,8 @@
       <!--      TRIPS CLIENT TABLE-->
       <div *ngIf="showTrips" class="second">
         <div class="table">
-<!--          TODO think about what do on click-->
-          <app-common-table [getData]="getDataForTrips"></app-common-table>
+          <!--          TODO think about what do on click-->
+          <app-common-table [getData]="getDataForTrips" [uiGridData]="uiGridData"></app-common-table>
         </div>
       </div>
       <!--      SET PASSPORT FORM-->

@@ -6,8 +6,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {UiGridData} from '../../../models/table/ui.grid.data.model';
 import {PageEvent} from '@angular/material/paginator';
-import {openSnackBar} from '../../open.snack.bar';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-common-table',
@@ -30,7 +28,7 @@ export class CommonTableComponent implements OnInit {
   length: number;
   pageEvent: PageEvent;
 
-  constructor(private _snack: MatSnackBar, private gridDataService: GridDataService) {
+  constructor(private gridDataService: GridDataService) {
   }
 
   ngOnInit(): void {

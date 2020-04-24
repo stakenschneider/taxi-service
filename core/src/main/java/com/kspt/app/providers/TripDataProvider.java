@@ -115,7 +115,7 @@ public class TripDataProvider implements IDataProvider {
             }
             data.add(row);
         }
-        ;
+
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);
@@ -150,7 +150,6 @@ public class TripDataProvider implements IDataProvider {
             row.add(finishAddress.getCity() + ", " + finishAddress.getStreet() + ", " + finishAddress.getNumberHouse());
             data.add(row);
         }
-        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
@@ -217,7 +216,6 @@ public class TripDataProvider implements IDataProvider {
             row.add(trip.getClient().getRating());
             data.add(row);
         }
-        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
@@ -260,7 +258,6 @@ public class TripDataProvider implements IDataProvider {
             }
             data.add(row);
         }
-        ;
 
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);

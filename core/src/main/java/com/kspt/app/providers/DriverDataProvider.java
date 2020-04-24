@@ -57,7 +57,7 @@ public class DriverDataProvider implements IDataProvider {
             row.add("series " + driver.getPassport().getSeries() + " number " + driver.getPassport().getNumber());
             row.add(driver.getCar().getColor() + " " + driver.getCar().getModel() + " " + driver.getCar().getNumber());
             data.add(row);
-        };
+        }
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);

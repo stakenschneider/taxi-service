@@ -55,7 +55,7 @@ public class ClientDataProvider implements IDataProvider {
             row.add(client.getRating());
             row.add(client.isDeleted());
             data.add(row);
-        };
+        }
         dataModel.setData(data);
         dataModel.setMetaData(metaDataModel);
         return new ResponseOrMessage<>(dataModel);

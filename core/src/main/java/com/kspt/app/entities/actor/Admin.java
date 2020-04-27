@@ -1,6 +1,5 @@
 package com.kspt.app.entities.actor;
 
-import com.kspt.app.configuration.Constants.PersonType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,6 +23,5 @@ public class Admin extends Person {
         this.firstName = firstName;
         this.lastName = secondName;
         this.phoneNumber = phoneNumber;
-        this.personType = PersonType.ADMIN;
     }
 }

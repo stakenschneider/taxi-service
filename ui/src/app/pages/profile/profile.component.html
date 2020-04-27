@@ -4,27 +4,27 @@
     <!--PERSON COLUMN-->
     <div id="left" class='col-xs-12 col-md-1'>
       <div id="first">
-        <img *ngIf="person.personType === 'CLIENT'" class="avatar"
+        <img *ngIf="personType === 'CLIENT'" class="avatar"
              src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
              alt="avatar"/>
-        <img *ngIf="person.personType === 'DRIVER'" class="avatar"
+        <img *ngIf="personType === 'DRIVER'" class="avatar"
              src="https://i.ytimg.com/vi/UKhAlFKmXKk/hqdefault.jpg"
              alt="avatar"/>
-        <img *ngIf="person.personType === 'ADMIN'" class="avatar"
+        <img *ngIf="personType === 'ADMIN'" class="avatar"
              src="        https://pbs.twimg.com/profile_images/2675252167/e1f3a62560f70d8f567ed33b029cadac_400x400.jpeg"
              alt="avatar"/>
         <div id="nameRow">
           <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
-          <div *ngIf="person.personType !== 'ADMIN'" id="rating" class="text fullName"> {{person.rating}}<i
+          <div *ngIf="personType !== 'ADMIN'" id="rating" class="text fullName"> {{person.rating}}<i
             class="far fa-star"></i></div>
         </div>
         <div class="text" id="userName">{{person.credentials.username}}</div>
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
-        <button class="myButton" *ngIf="(person.personType === 'CLIENT') || (person.personType === 'DRIVER')"
+        <button class="myButton" *ngIf="(personType === 'CLIENT') || (personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
-        <button class="myButton" *ngIf="(person.personType === 'ADMIN')"
+        <button class="myButton" *ngIf="(personType === 'ADMIN')"
                 (click)="generate()">GENERATE!
         </button>
       </div>
@@ -39,7 +39,7 @@
         </div>
       </div>
       <!--      SET PASSPORT FORM-->
-      <div *ngIf="person.personType === 'DRIVER'" class="second">
+      <div *ngIf="personType === 'DRIVER'" class="second">
         <mat-expansion-panel
           (opened)="panelOpenState = true"
           (closed)="panelOpenState = false">
@@ -65,7 +65,7 @@
         </mat-expansion-panel>
       </div>
       <!--      SET CAR FORM-->
-      <div *ngIf="person.personType === 'DRIVER'" class="second">
+      <div *ngIf="personType === 'DRIVER'" class="second">
         <mat-expansion-panel (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>

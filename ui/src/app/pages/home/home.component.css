@@ -26,7 +26,8 @@
 
 .header {
   display: flex;
-  min-height: 100vh;
+  height: 93.5%;
+  /*min-height: 100vh;*/
   padding: 8px 50px;
   background-color: #333;
   background-image: url("https://s3.envato.com/files/78790596/1644_23.jpg");

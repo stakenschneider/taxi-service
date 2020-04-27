@@ -35,6 +35,5 @@ public class Driver extends Person {
         this.lastName = secondName;
         this.available = true;
         this.rating = 5.0;
-        this.personType = PersonType.DRIVER;
     }
 }

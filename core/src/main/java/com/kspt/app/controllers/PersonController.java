@@ -1,7 +1,7 @@
 package com.kspt.app.controllers;
 
-import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.person.RegistrationModel;
+import com.kspt.app.models.person.SignInResponse;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class PersonController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseOrMessage<Person> signIn(@RequestBody Map<String, String> emailOrUserName) {
+    public ResponseOrMessage<SignInResponse> signIn(@RequestBody Map<String, String> emailOrUserName) {
         return service.signIn(emailOrUserName);
     }
 

@@ -32,6 +32,8 @@ export class ProfileComponent implements OnInit {
   public showTrips = false;
   public panelOpenState = false;
 
+  public personType: string;
+
   public tripsHistoryTitle = 'Show trips';
 
   constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
@@ -62,6 +64,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getPerson() {
+    this.personType = this.storeService.getPersonType();
     this.dataService.getPersonById(this.storeService.getId(), this.storeService.getPersonType()).subscribe(
       data => {
         if (data.message === null) {
@@ -83,9 +86,9 @@ export class ProfileComponent implements OnInit {
       this.showTrips = !this.showTrips;
       this.tripsHistoryTitle = 'Show trips';
     } else {
-      if (this.person.personType === 'CLIENT') {
+      if (this.storeService.getPersonType() === 'CLIENT') {
         this.showHistoryOfTripsForClient();
-      } else if (this.person.personType === 'DRIVER') {
+      } else if (this.storeService.getPersonType() === 'DRIVER') {
         this.showHistoryOfTripsForDriver();
       }
       this.showTrips = true;

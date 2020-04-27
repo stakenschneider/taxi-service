@@ -1,6 +1,5 @@
 package com.kspt.app.entities.actor;
 
-import com.kspt.app.configuration.Constants.PersonType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,5 @@ public class Client extends Person {
         this.firstName = firstName;
         this.lastName = secondName;
         this.rating = 5.0;
-        this.personType = PersonType.CLIENT;
     }
 }

@@ -1,10 +1,12 @@
 package com.kspt.app.service;
 
+import com.kspt.app.configuration.Constants;
 import com.kspt.app.entities.Credentials;
 import com.kspt.app.entities.actor.Client;
 import com.kspt.app.entities.actor.Driver;
 import com.kspt.app.entities.actor.Person;
 import com.kspt.app.models.person.RegistrationModel;
+import com.kspt.app.models.person.SignInResponse;
 import com.kspt.app.models.response.ResponseOrMessage;
 import com.kspt.app.models.person.IdAndPersonTypeModel;
 import com.kspt.app.repository.ClientRepository;
@@ -59,23 +61,33 @@ public class PersonService {
         }
     }
 
-    public ResponseOrMessage<Person> signIn(Map<String, String> emailOrUserName) {
+    public ResponseOrMessage<SignInResponse> signIn(Map<String, String> emailOrUserName) {
         if (emailOrUserName.containsKey("emailOrUserName")) {
             final Credentials credentials = credentialsRepository.findByEmail(emailOrUserName.get("emailOrUserName"))
                     .orElseGet(() -> credentialsRepository.findByUsername(emailOrUserName.get("emailOrUserName")).orElse(null));
             //TODO Polymorphic Queries
             if (credentials != null) {
-                Person person = clientRepository.findByCredentials(credentials).orElseGet(
-                        () -> adminRepository.findByCredentials(credentials).orElseGet(
-                                () -> driverRepository.findByCredentials(credentials).orElse(null)));
-                if (person == null){
-                    return new ResponseOrMessage<>("Person not found");
+                SignInResponse response = new SignInResponse();
+                Person person = clientRepository.findByCredentials(credentials).orElse(null);
+                response.setPersonType(Constants.PersonType.CLIENT);
+                if (person == null) {
+                    person = adminRepository.findByCredentials(credentials).orElse(null);
+                    response.setPersonType(Constants.PersonType.ADMIN);
+                    if (person == null) {
+                        person = driverRepository.findByCredentials(credentials).orElse(null);
+                        response.setPersonType(Constants.PersonType.DRIVER);
+                        if (person == null) {
+                            return new ResponseOrMessage<>("Person not found");
+                        }
+                    }
                 }
 
-                if (person.isDeleted()){
+                if (person.isDeleted()) {
                     return new ResponseOrMessage<>("Person was deleted");
                 }
-                return new ResponseOrMessage<>(person);
+                response.setPersonId(person.id);
+                response.setPassword(person.getCredentials().getPassword());
+                return new ResponseOrMessage<>(response);
             } else return new ResponseOrMessage<>("Incorrect username");
         } else return new ResponseOrMessage<>("Wrong parameter");
     }
@@ -97,7 +109,7 @@ public class PersonService {
                 return new ResponseOrMessage<>("Wrong with role parameter");
         }
 
-        if (person == null){
+        if (person == null) {
             return new ResponseOrMessage<>("Person not found");
         }
 

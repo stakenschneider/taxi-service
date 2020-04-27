@@ -4,7 +4,6 @@ import {environment} from '../core/enviroment';
 import {Person} from '../models/actor/person.model';
 import {ResponseOrMessage} from '../models/response/response.or.message.model';
 import {Trip} from '../models/trip.model';
-import {ApiResult} from '../models/response/api.result.model';
 
 @Injectable()
 export class DataService {

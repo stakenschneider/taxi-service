@@ -1,3 +1,5 @@
+core/.idea
+
 # User-specific stuff
 core/.idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -94,4 +96,3 @@ gradle-app.setting
 
 # macOS
 .DS_Store
-core/.idea/dataSources/0efb3ffd-8b41-4d29-92f4-e5d470c57d06.xml

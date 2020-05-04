@@ -1,37 +1,30 @@
 package com.kspt.app.controllers;
 
-import com.kspt.app.models.person.RegistrationModel;
-import com.kspt.app.models.person.SignInResponse;
-import com.kspt.app.models.response.ResponseOrMessage;
-import com.kspt.app.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.kspt.app.models.person.UserModel;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Base64;
 
 /**
  * Created by Masha on 10.03.2020
  */
+@CrossOrigin
 @RestController
 public class PersonController {
-    @Autowired
-    private PersonService service;
 
-    @PostMapping("/sign-up")
-    public ResponseOrMessage<Boolean> signUp(@RequestBody RegistrationModel model) {
-        return service.signUp(model);
+    @RequestMapping("/login")
+    public boolean login(@RequestBody UserModel user) {
+        return user.getUserName().equals("user") && user.getPassword().equals("password");
     }
 
-    @PostMapping("/sign-in")
-    public ResponseOrMessage<SignInResponse> signIn(@RequestBody Map<String, String> emailOrUserName) {
-        return service.signIn(emailOrUserName);
+    @RequestMapping("/user")
+    public Principal user(HttpServletRequest request) {
+        String authToken = request.getHeader("Authorization").substring("Basic".length()).trim();
+        return () -> new String(Base64.getDecoder().decode(authToken)).split(":")[0];
     }
-
-    // TODO implement or delete
-//    @PostMapping("/sign-out")
-//    public boolean signOut() {
-//        return service.signOut();
-//    }
 }

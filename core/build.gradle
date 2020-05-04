@@ -22,6 +22,7 @@ repositories {
 dependencies {
     // generate data for table
     implementation 'com.github.javafaker:javafaker:1.0.2'
+
     // https://mvnrepository.com/artifact/org.mindrot.bcrypt/bcrypt for hash generate passwords
     compile group: 'org.mindrot', name: 'jbcrypt', version: '0.3m'
     
@@ -44,6 +45,10 @@ dependencies {
     // useful annotations
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 

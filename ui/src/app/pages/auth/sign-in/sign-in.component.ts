@@ -4,6 +4,9 @@ import {AuthService} from '../../../../services/auth.service';
 import * as bcrypt from 'bcryptjs';
 import {StoreService} from '../../../../services/store.service';
 import {MatDialog} from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,9 +18,14 @@ export class SignInComponent implements OnInit {
   public password: string;
   public flag: boolean;
   hide = true;
+  model: any = {};
 
   constructor(public dialog: MatDialog,
-              private router: Router, private authService: AuthService, private storeService: StoreService) {
+              private router: Router,
+              private authService: AuthService,
+              private storeService: StoreService,
+              private route: ActivatedRoute,
+              private http: HttpClient) {
   }
 
   openDialog() {
@@ -25,6 +33,7 @@ export class SignInComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    sessionStorage.setItem('token', '');
   }
 
   signIn() {
@@ -51,6 +60,27 @@ export class SignInComponent implements OnInit {
 
   createAccount() {
     return this.router.navigateByUrl('/sign-up');
+  }
+
+  login() {
+    const url = 'http://localhost:8080/login';
+    this.model.username = this.email;
+    this.model.password = this.password;
+
+    this.http.post<Observable<boolean>>(url, {
+      userName: this.model.username,
+      password: this.model.password
+    }).subscribe(isValid => {
+      if (isValid) {
+        sessionStorage.setItem(
+          'token',
+          btoa(this.model.username + ':' + this.model.password)
+        );
+        this.router.navigate(['']);
+      } else {
+        alert('Authentication failed.');
+      }
+    });
   }
 }
 

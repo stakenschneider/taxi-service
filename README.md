@@ -1,5 +1,5 @@
 # Taxi-service
-A SPA demo project with Spring Framework and Angular
+A SPA project with Spring Framework and Angular
 
 ## Frontend
 - Angular 9

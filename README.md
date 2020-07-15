@@ -1,2 +1,2 @@
 # Taxi-service
-A SPA demo project with Spring Framework and Angular
+A SPA demo project with Spring Boot Framework and Angular

@@ -22,6 +22,7 @@
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
+<!--        TODO если поездок нет не показывать эту кнопку-->
         <button class="myButton" *ngIf="(personType === 'CLIENT') || (personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
         <button class="myButton" *ngIf="(personType === 'ADMIN')"

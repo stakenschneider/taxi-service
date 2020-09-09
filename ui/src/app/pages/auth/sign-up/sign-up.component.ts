@@ -68,6 +68,7 @@ export class SignUpComponent implements OnInit {
       this.firstName, this.lastName, personType).subscribe(
       data => {
         if (data.body) {
+           // TODO показать сообщение с задержкой типо все окей
           this.router.navigateByUrl('/sign-in');
         } else {
           alert(data.message);

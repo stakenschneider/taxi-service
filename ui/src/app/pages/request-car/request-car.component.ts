@@ -127,6 +127,7 @@ export class RequestCarComponent implements OnInit {
     );
   }
 
+  // TODO высветить примерную стоимость поездки
   requestCar(): void {
     if (this.rateTitle && this.paymentMethodsTitle && this.fromNumber && this.fromStreet && this.fromCity &&
       this.toStreet && this.toNumber && this.toCity) {

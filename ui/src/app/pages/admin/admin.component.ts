@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
     this.getDataForTrips.parameters = this.parametersForTrips;
 
     this.uiGridDataForClient.showFilter = false;
-    this.uiGridDataForClient.showPaginator = false;
+    this.uiGridDataForClient.showPaginator = true;
     this.getDataForClient.dataName = 'clientTable';
     this.parametersForClient.set('', '');
     this.getDataForClient.parameters = this.parametersForClient;

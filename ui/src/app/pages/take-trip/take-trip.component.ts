@@ -84,6 +84,6 @@ export class TakeTripComponent implements OnInit {
   }
 
   onCellClick(e: any) {
-    this.reserveTrip(e.row[0]);
+    this.reserveTrip(e.row[1]);
   }
 }

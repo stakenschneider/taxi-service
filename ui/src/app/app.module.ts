@@ -44,6 +44,9 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSelectModule} from '@angular/material/select';
+import { StepperRegistrationForDriverComponent } from './components/stepper-registration-for-driver/stepper-registration-for-driver.component';
 
 const appRoutes: Routes = [
   {path: '', component: ProfileComponent},
@@ -76,7 +79,8 @@ const appRoutes: Routes = [
     DialogContentComponent,
     AdminComponent,
     SnackBarComponent,
-    CommonTableComponent],
+    CommonTableComponent,
+    StepperRegistrationForDriverComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
@@ -102,7 +106,9 @@ const appRoutes: Routes = [
     MatToolbarModule,
     CdkTableModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatStepperModule,
+    MatSelectModule
   ],
   providers: [
     AdminService,

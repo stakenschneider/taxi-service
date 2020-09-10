@@ -18,25 +18,13 @@ export class ProfileComponent implements OnInit {
   uiGridData: UiGridData = new UiGridData();
   public person: any;
   public driver: Driver;
-
-  public carColors: Array<string>;
-  public carModels: Array<string>;
-  // TODO this is must be in formGrop
-  public carNumber: string;
-  public colorTitle: string;
-  public modelTitle: string;
-
-  public passportSeries: string;
-  public passportNumber: string;
-
   public showTrips = false;
-  public panelOpenState = false;
-
+  public registrationButton = false;
   public personType: string;
-
   public tripsHistoryTitle = 'Show trips';
 
-  constructor(private router: Router, private driverService: DriverService, private adminService: AdminService,
+  // tslint:disable-next-line:variable-name max-line-length
+  constructor( private router: Router, private driverService: DriverService, private adminService: AdminService,
               private dataService: DataService, private storeService: StoreService) {
     this.dataService = dataService;
     this.adminService = adminService;
@@ -50,17 +38,6 @@ export class ProfileComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/sign-in');
     }
-
-    // TODO load when open or when person is DRIVER
-    this.dataService.getCarColorList().subscribe(
-      data => {
-        this.carColors = data;
-      });
-
-    this.dataService.getCarModelList().subscribe(
-      data => {
-        this.carModels = data;
-      });
   }
 
   getPerson() {
@@ -79,6 +56,10 @@ export class ProfileComponent implements OnInit {
       error => {
         alert(error);
       });
+  }
+
+  registration() {
+    this.registrationButton = !this.registrationButton;
   }
 
   showHistoryOfTrips() {
@@ -111,32 +92,6 @@ export class ProfileComponent implements OnInit {
     this.getDataForTrips.parameters = this.parametersForTrips;
   }
 
-  setCar() {
-    if (this.colorTitle && this.modelTitle && this.carNumber) {
-      this.driverService.setCar(this.storeService.getId(), this.carNumber, this.modelTitle, this.colorTitle).subscribe(
-        data => {
-          alert(data.message);
-        }, error => alert(error)
-      );
-      //  TODO after this must be disabled inputs
-    } else {
-      alert('All fields required');
-    }
-  }
-
-  setPassport() {
-    if (this.passportSeries && this.passportNumber) {
-      this.driverService.setPassport(this.storeService.getId(), this.passportSeries, this.passportNumber).subscribe(
-        data => {
-          alert(data.message);
-        }, error => alert(error)
-      );
-      //  TODO after this must be disabled inputs
-    } else {
-      alert('All fields required');
-    }
-  }
-
   generate() {
     this.adminService.generate(20).subscribe(
       data => {
@@ -161,7 +116,9 @@ export class ProfileComponent implements OnInit {
   // }
 
   // TODO IMPLEMENT OR DELETE
-  changeCar() {}
+  changeCar() {
+  }
+
 }
 
 

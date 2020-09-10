@@ -22,88 +22,33 @@
         <div class="text"><i class="far fa-envelope"></i> <a id="email "
                                                              href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
         </div>
-<!--        TODO если поездок нет не показывать эту кнопку-->
         <button class="myButton" *ngIf="(personType === 'CLIENT') || (personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
         <button class="myButton" *ngIf="(personType === 'ADMIN')"
-                (click)="generate()">GENERATE!
-        </button>
+                (click)="generate()">GENERATE!</button>
+        <button class="myButton" *ngIf="(personType === 'DRIVER' && (!person.passport || !person.car))"
+                (click)="registration()">Регестрация</button>
       </div>
     </div>
     <!--CONTENT COLUMN-->
     <div class='col-xs-12 col-md' id="right">
       <!--      TRIPS CLIENT TABLE-->
+      <!--        TODO если поездок нет написать об этом-->
       <div *ngIf="showTrips" class="second">
         <div class="table">
           <!--          TODO think about what do on click-->
           <app-common-table [getData]="getDataForTrips" [uiGridData]="uiGridData"></app-common-table>
         </div>
       </div>
-      <!--      SET PASSPORT FORM-->
-      <div *ngIf="personType === 'DRIVER'" class="second">
-        <mat-expansion-panel
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Passport panel
-            </mat-panel-title>
-            <mat-panel-description>
-              {{person.passport ? 'ok' : 'empty'}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <p *ngIf="!person.passport">
-            <input [(ngModel)]="passportSeries" type="text" placeholder="series">
-            <input [(ngModel)]="passportNumber" type="text" placeholder="number">
-            <button (click)="setPassport()">SAVE</button>
-          </p>
 
-          <p *ngIf="person.passport">
-            <input disabled type="text" placeholder="{{person.passport.series }}">
-            <input disabled type="text" placeholder="{{person.passport.number}}">
-            <button (click)="setPassport()">change</button>
-          </p>
-        </mat-expansion-panel>
+      <div *ngIf="personType === 'DRIVER' && !person.passport && !person.car && !registrationButton && !showTrips" class="second" >
+        Вы обязаны пройти регистрацию
       </div>
-      <!--      SET CAR FORM-->
-      <div *ngIf="personType === 'DRIVER'" class="second">
-        <mat-expansion-panel (opened)="panelOpenState = true"
-                             (closed)="panelOpenState = false">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Car panel
-            </mat-panel-title>
-            <mat-panel-description>
-              {{person.car ? 'ok' : 'empty'}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
 
-          <div *ngIf="person.car">
-            <div class="child">{{person.car.color}} {{person.car.model}} {{person.car.number}}</div>
-            <button (click)="changeCar()">Change car</button>
-
-          </div>
-
-
-          <div *ngIf="!person.car">
-            <div class="child">MODEL:</div>
-            <div class="rate">
-              <select class=" can-disable" [(ngModel)]="modelTitle" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let title of carModels" [ngValue]="title">{{title}}</option>
-              </select>
-            </div>
-            <div class="child">COLOR:</div>
-            <div class="rate">
-              <select [(ngModel)]="colorTitle" [ngModelOptions]="{standalone: true}">
-                <option *ngFor="let title of carColors" [ngValue]="title">{{title}}</option>
-              </select>
-            </div>
-            <input [(ngModel)]="carNumber" type="text" placeholder="number">
-            <button (click)="setCar()">SAVE</button>
-          </div>
-
-        </mat-expansion-panel>
+      <div *ngIf="personType === 'DRIVER' && !showTrips && registrationButton" >
+        <app-stepper-registration-for-driver></app-stepper-registration-for-driver>
       </div>
+
     </div>
   </div>
 </div>

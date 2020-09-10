@@ -31,6 +31,10 @@ export class CommonTableComponent implements OnInit {
   constructor(private gridDataService: GridDataService) {
   }
 
+  changeValue(row: any,  event: any) {
+    this.editField = event.target.textContent;
+  }
+
   ngOnInit(): void {
     this.getDataFromServer(undefined, undefined);
   }
@@ -42,10 +46,6 @@ export class CommonTableComponent implements OnInit {
 
   onCellClick(e: any, row: any) {
     this.cellClickEvent.emit({row, mouseEvent: e});
-  }
-
-  changeValue(id: number, property: string, event: any) {
-    this.editField = event.target.textContent;
   }
 
   onPageEvent(event?: PageEvent) {

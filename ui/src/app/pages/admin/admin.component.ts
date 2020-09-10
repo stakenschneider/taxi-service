@@ -23,9 +23,10 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.uiGridDataForTrips.pageSizeOptions = [5, 10, 15];
     this.uiGridDataForTrips.showFilter = true;
     this.uiGridDataForTrips.showPaginator = true;
+    this.uiGridDataForTrips.cellsIsEditable = true;
+
     this.getDataForTrips.dataName = 'tripTable';
     this.parametersForTrips.set('for', 'ADMIN');
     this.getDataForTrips.parameters = this.parametersForTrips;

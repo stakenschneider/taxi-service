@@ -87,6 +87,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
   notification() {
-    return this.router.navigateByUrl('/notification');
+    // TODO implement
+    // return this.router.navigateByUrl('/notification');
   }
 }

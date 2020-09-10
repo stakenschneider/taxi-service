@@ -48,8 +48,9 @@ export class CommonTableComponent implements OnInit {
     this.editField = event.target.textContent;
   }
 
-  onPageEvent(event: PageEvent) {
+  onPageEvent(event?: PageEvent) {
     this.getDataFromServer(event, undefined);
+    return event;
   }
 
   getDataFromServer(paginatorEvent: PageEvent, sortByEvent: any) {

@@ -1,7 +1,9 @@
 <div *ngIf="tripDataSource">
   <mat-form-field *ngIf="uiGridData.showFilter">
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+    <label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+    </label>
   </mat-form-field>
 
   <div class="mat-elevation-z8">
@@ -23,10 +25,8 @@
     <mat-paginator *ngIf="uiGridData.showPaginator"
                    [length]="length"
                    [pageSize]="pageSize"
-                   (page)="pageEvent = $event"
-                   (click)="onPageEvent(pageEvent)"
+                   (page)="pageEvent = onPageEvent($event)"
                    [pageSizeOptions]="uiGridData.pageSizeOptions"
                    showFirstLastButtons ></mat-paginator>
-
   </div>
 </div>

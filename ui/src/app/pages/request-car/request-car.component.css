@@ -4,6 +4,10 @@ iframe {
   height: 93%;
 }
 
+form{
+  opacity: 0.85;
+}
+
 #conn {
   position: relative;
 }
@@ -54,28 +58,28 @@ input {
 }
 
 .rating {
-  float:left;
+  float: left;
 }
 
 /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
   follow these rules. Every browser that supports :checked also supports :not(), so
   it doesn’t make the test unnecessarily selective */
 .rating:not(:checked) > input {
-  position:absolute;
-  top:-9999px;
-  clip:rect(0,0,0,0);
+  position: absolute;
+  top: -9999px;
+  clip: rect(0, 0, 0, 0);
 }
 
 .rating:not(:checked) > label {
-  float:right;
-  width:1em;
+  float: right;
+  width: 1em;
   /* padding:0 .1em; */
-  overflow:hidden;
-  white-space:nowrap;
-  cursor:pointer;
-  font-size:300%;
-   line-height:1.2;
-  color:#ddd;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 300%;
+  line-height: 1.2;
+  color: #ddd;
 }
 
 .rating:not(:checked) > label:before {
@@ -108,6 +112,55 @@ input {
   /*left:2px;*/
 }
 
-div.rating{
+div.rating {
   height: 60px;
+}
+
+mat-button-toggle-group {
+  height: 48px;
+}
+
+.mat-button-toggle-standalone, .mat-button-toggle-group {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-button-toggle {
+  width: 100%;
+}
+
+#req__ma__form {
+  font-size: 2.1rem;
+  color: #16191c;
+}
+
+.button__request__car{
+  width: 100%;
+  color: black;
+  border-radius: 13px;
+  height: 35px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  background-color: #e4f5d3;
+}
+
+.button__request__car:hover{
+  background-color: #def1c9;
+}
+
+.button__request__car:active{
+  background-color: #dbf1c2;
+}
+
+.button__deny__trip{
+  background-color: #f5d3de;
+}
+
+.button__deny__trip:hover{
+  background-color: #f5cdda;
+}
+.button__deny__trip:active{
+  background-color: #eebece;
 }

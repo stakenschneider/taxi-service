@@ -10,10 +10,10 @@
 
   <div *ngIf="isAuthenticated" (click)="notification()" class="bell"><i class="fas fa-bell"></i></div>
 
-  <button *ngIf="isAuthenticated" class="menu-butt" [matMenuTriggerFor]="beforeMenu">
+  <div *ngIf="isAuthenticated" class="menu-butt" [matMenuTriggerFor]="beforeMenu">
     <img class="image" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
          alt="masha">
-  </button>
+  </div>
   <mat-menu #beforeMenu="matMenu" xPosition="before">
     <mat-list>
       <div class="dropdown-content" (click)="profile()">Profile</div>

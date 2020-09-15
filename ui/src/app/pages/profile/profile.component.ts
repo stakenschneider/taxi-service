@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name max-line-length
   constructor( private router: Router, private driverService: DriverService, private adminService: AdminService,
-              private dataService: DataService, private storeService: StoreService) {
+               private dataService: DataService, private storeService: StoreService) {
     this.dataService = dataService;
     this.adminService = adminService;
     this.storeService = storeService;

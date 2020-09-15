@@ -1,23 +1,25 @@
 <mat-vertical-stepper [linear]="true" #stepper>
+  <!--  PASSPORT-->
   <mat-step [stepControl]="passportFormGroup">
     <form [formGroup]="passportFormGroup">
       <ng-template matStepLabel>Please, entry you passport data</ng-template>
       <mat-form-field>
         <mat-label>Passport code</mat-label>
-        <input  matInput placeholder="Passport series" formControlName="passportSeries" required>
+        <input matInput placeholder="Passport series" formControlName="passportSeries" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Passport number</mat-label>
         <input matInput placeholder="Passport number" formControlName="passportNumber" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button (click)="setPassport()" mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
+  <!--  CAR-->
   <mat-step [stepControl]="carFormGroup">
     <form [formGroup]="carFormGroup">
-      <ng-template matStepLabel>Fill your car data</ng-template>
+      <ng-template matStepLabel>Please, entry your car data</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Car Model</mat-label>
         <mat-select formControlName="carModel">
@@ -37,14 +39,28 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <input matInput required formControlName="carNumber"  type="text" placeholder="number">
+        <input matInput required formControlName="carNumber" type="text" placeholder="number">
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
+        <button (click)="setCar()" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <!--  PHONE-->
+  <mat-step [stepControl]="phoneForm">
+    <form [formGroup]="phoneForm">
+      <ng-template matStepLabel>Please, entry you phone number</ng-template>
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input matInput placeholder="PhoneNumber" formControlName="phoneNumber" required>
+      </mat-form-field>
+      <div>
         <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
+  <!--  DONE-->
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>

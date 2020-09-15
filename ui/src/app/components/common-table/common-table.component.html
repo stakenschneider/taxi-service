@@ -1,4 +1,4 @@
-<div *ngIf="tripDataSource">
+<div *ngIf="tripDataSource && length!=0">
   <mat-form-field *ngIf="uiGridData.showFilter">
     <mat-label>Filter</mat-label>
     <label>
@@ -35,3 +35,4 @@
                    showFirstLastButtons></mat-paginator>
   </div>
 </div>
+<div *ngIf="length==0">No data</div>

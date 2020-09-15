@@ -11,9 +11,7 @@ import {Subscription} from 'rxjs';
 export class TopBarComponent implements OnInit, OnDestroy {
   public isAuthenticated: boolean;
   private authChangedSubscriber: Subscription;
-  isClient: boolean;
-  isDriver: boolean;
-  isAdmin: boolean;
+  personType: string;
 
   constructor(private router: Router, private storeService: StoreService) {
   }
@@ -23,20 +21,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
       x => {
         this.isAuthenticated = x;
         if (this.isAuthenticated) {
-          switch (this.storeService.getPersonType()) {
-            case 'CLIENT':
-              this.isClient = true;
-              break;
-            case 'DRIVER':
-              this.isDriver = true;
-              break;
-            case 'ADMIN':
-              this.isAdmin = true;
-              break;
-            default:
-              this.isAuthenticated = false;
-              break;
-          }
+          this.personType = this.storeService.getPersonType();
         }
       }
     );
@@ -47,9 +32,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
 
   logOut() {
-    this.isAdmin = false;
-    this.isDriver = false;
-    this.isClient = false;
+    this.personType = undefined;
     this.storeService.setIsAuth(false);
     return this.router.navigateByUrl('/sign-in');
   }

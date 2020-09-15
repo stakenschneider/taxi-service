@@ -2,17 +2,21 @@
   <div (click)="home()" class="icon"><i class="fas fa-taxi"></i></div>
 
   <span *ngIf="isAuthenticated" (click)="profile()">Profile</span>
-  <span *ngIf="isClient" (click)="requestCar()">Request Car</span>
-  <span *ngIf="isDriver" (click)="takeTrip()">Take Trip</span>
-  <span *ngIf="isAdmin" (click)="allData()">All Data</span>
+  <span *ngIf="personType=='CLIENT'" (click)="requestCar()">Request Car</span>
+  <span *ngIf="personType=='DRIVER'" (click)="takeTrip()">Take Trip</span>
+  <span *ngIf="personType=='ADMIN'" (click)="allData()">All Data</span>
 
   <span class="filler"></span>
 
   <div *ngIf="isAuthenticated" (click)="notification()" class="bell"><i class="fas fa-bell"></i></div>
 
   <div *ngIf="isAuthenticated" class="menu-butt" [matMenuTriggerFor]="beforeMenu">
-    <img class="image" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
-         alt="masha">
+    <img  *ngIf="personType=='ADMIN'"  class="image"  src="        https://pbs.twimg.com/profile_images/2675252167/e1f3a62560f70d8f567ed33b029cadac_400x400.jpeg"
+          alt="avatar"/>
+    <img  *ngIf="personType=='DRIVER'"  class="image" src="https://i.ytimg.com/vi/UKhAlFKmXKk/hqdefault.jpg"
+          alt="avatar"/>
+    <img  *ngIf="personType=='CLIENT'"  class="image"  src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
+          alt="avatar"/>
   </div>
   <mat-menu #beforeMenu="matMenu" xPosition="before">
     <mat-list>

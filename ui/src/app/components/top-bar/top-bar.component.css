@@ -1,6 +1,8 @@
 .image {
   height: 32px;
+  width: 32px;
   border-radius: 30px;
+  object-fit: cover;
 }
 
 .filler {

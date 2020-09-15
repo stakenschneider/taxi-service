@@ -23,9 +23,13 @@
 
 .avatar{
   max-width: 100%;
+  border-radius: 50%!important;
+  width: 270px;
+  height: 270px;
+  object-fit: cover;
 }
 
-.text{
+.margin-bottom{
   margin-bottom: 5px;
 }
 
@@ -70,4 +74,41 @@
 .fa-star{
   margin-left: 5px;
   height: 70%;
+}
+
+.border-top {
+  border-top: 1px solid #e1e4e8!important;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.link-gray-dark {
+  color: #24292e!important;
+  cursor: pointer;
+}
+
+/*.link-gray {*/
+/*  color: #586069!important;*/
+/*}*/
+
+/*.no-underline {*/
+/*  text-decoration: none!important;*/
+/*}*/
+
+/*.no-wrap {*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: end;*/
+/*  margin-top: 10px;*/
+/*}*/
+
+/*.margin-right{*/
+/*  margin-right: 5px;*/
+/*  height: 17px;*/
+/*  width: 17px;*/
+/*}*/
+
+.icon-size{
+  height: 14px;
+  width: 14px;
 }

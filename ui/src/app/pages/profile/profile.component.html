@@ -4,6 +4,7 @@
     <!--PERSON COLUMN-->
     <div id="left" class='col-xs-12 col-md-1'>
       <div id="first">
+        <!--        TODO перевести в person info column component-->
         <img *ngIf="personType === 'CLIENT'" class="avatar"
              src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg"
              alt="avatar"/>
@@ -13,23 +14,41 @@
         <img *ngIf="personType === 'ADMIN'" class="avatar"
              src="        https://pbs.twimg.com/profile_images/2675252167/e1f3a62560f70d8f567ed33b029cadac_400x400.jpeg"
              alt="avatar"/>
+
         <div id="nameRow">
-          <div class="text fullName">{{person.firstName}}  {{person.lastName}}</div>
-          <div *ngIf="personType !== 'ADMIN'" id="rating" class="text fullName"> {{person.rating}}<i
-            class="far fa-star"></i></div>
+          <div class="margin-bottom fullName">{{person.firstName}}  {{person.lastName}}</div>
+          <div *ngIf="personType !== 'ADMIN'" id="rating" class="margin-bottom fullName"> {{person.rating}}
+            <i class="far fa-star"></i></div>
         </div>
-        <div class="text" id="userName">{{person.credentials.username}}</div>
-        <div class="text"><i class="far fa-envelope"></i> <a id="email "
-                                                             href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
-        </div>
+        <div class="margin-bottom" id="userName">{{person.credentials.username}}</div>
+
         <button class="myButton" *ngIf="(personType === 'CLIENT') || (personType === 'DRIVER')"
                 (click)="showHistoryOfTrips()">{{tripsHistoryTitle}}</button>
+
         <button class="myButton" *ngIf="(personType === 'ADMIN')"
-                (click)="generate()">GENERATE!</button>
+                (click)="generate()">GENERATE!
+        </button>
+
         <button class="myButton" *ngIf="(personType === 'DRIVER' && (!person.passport || !person.car))"
-                (click)="registration()">Регестрация</button>
+                (click)="registration()">Регстрация
+        </button>
+
+        <div class="border-top">
+          <h2 class="h4 mb-2">INFO</h2>
+          <div *ngIf="person.phoneNumber" class="margin-bottom link-gray-dark"><i
+            class="fas fa-mobile-alt icon-size"></i>{{person.phoneNumber}}</div>
+          <div class="margin-bottom"><i class="far fa-envelope icon-size"></i><a class="link-gray-dark"
+                                                                                 href="mailto:{{person.credentials.email}}"> {{person.credentials.email}}</a>
+          </div>
+          <div *ngIf="person.car" class="margin-bottom"><i
+            class="fas fa-certificate icon-size"></i>{{person.car.carRate}}</div>
+          <div *ngIf="person.car" class="margin-bottom"><i
+            class="fas fa-car icon-size"></i>{{person.car.color}} {{person.car.model}} {{person.car.number}}</div>
+        </div>
+        <!--          TODO статистика для клиента и драйвера-->
       </div>
     </div>
+
     <!--CONTENT COLUMN-->
     <div class='col-xs-12 col-md' id="right">
       <!--      TRIPS CLIENT TABLE-->
@@ -41,12 +60,14 @@
         </div>
       </div>
 
-      <div *ngIf="personType === 'DRIVER' && !person.passport && !person.car && !registrationButton && !showTrips" class="second" >
+      <div *ngIf="personType === 'DRIVER' && !person.passport && !person.car && !registrationButton && !showTrips"
+           class="second">
         Вы обязаны пройти регистрацию
       </div>
 
-      <div *ngIf="personType === 'DRIVER' && !showTrips && registrationButton" >
-        <app-stepper-registration-for-driver></app-stepper-registration-for-driver>
+      <!--      REGISTARTION STEPPER-->
+      <div *ngIf="personType === 'DRIVER' && !showTrips && registrationButton">
+        <app-stepper-registration-for-driver [person]="person"></app-stepper-registration-for-driver>
       </div>
 
     </div>

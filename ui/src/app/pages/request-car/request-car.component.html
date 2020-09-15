@@ -3,14 +3,13 @@
   <iframe src="https://yandex.ru/map-widget/v1/-/CKuNjB71" allowfullscreen></iframe>
 </div>
 
-
 <div id="conn" class="container-fluid">
   <div class='row'>
     <div class='col-xs-12 col-md-6 col-lg-4 pp' id="left">
       <!--      REQUEST MAP FORM-->
       <div class="request-form">
         <form method="post">
-          <div id="req__ma__form">REQUEST MAP FORM</div>
+          <div class="header__title">{{firstFrameTitle}}</div>
           <div class="child">FROM:</div>
           <div class="address ">
             <input [attr.disabled]="disabled ? '' : null" [(ngModel)]="fromCity" [ngModelOptions]="{standalone: true}"
@@ -65,17 +64,14 @@
       <!--STATUS-->
       <div *ngIf="statusFrameShow" class="request-form">
         <form method="post">
-          <div>{{statusFrameTitle}}</div>
-          <mat-progress-bar *ngIf="!contentStatusFrame" mode="indeterminate"></mat-progress-bar>
+          <div class="header__title">{{statusFrameTitle}}</div>
+          <mat-progress-bar *ngIf="!contentStatusFrame" mode="indeterminate" class="margin-top"></mat-progress-bar>
           <div *ngIf="contentStatusFrame">
-            <div class="child">Name: {{trip.driver.firstName}}</div>
-            <div class="child">Last name: {{trip.driver.lastName}}</div>
-            <div class="child">phoneNumber: {{trip.driver.phoneNumber}}</div>
-            <div class="child">Rating: {{trip.driver.rating}}</div>
-            <div class="child">Color: {{trip.driver.car.color}}</div>
-            <div class="child">Model: {{trip.driver.car.model}}</div>
-            <div class="child">Number: {{trip.driver.car.number}}</div>
-            <div class="child">Price: {{trip.price}}$</div>
+            <img _ngcontent-naa-c160="" src="https://i.ytimg.com/vi/UKhAlFKmXKk/hqdefault.jpg" alt="avata" class="avatar__req_car ng-star-inserted">
+            <div class="child text__style__driver"> {{trip.driver.firstName}} {{trip.driver.lastName}} {{trip.driver.rating}} <i class="far fa-star"></i></div>
+            <div class="child text__style__driver">{{trip.driver.car.color}} {{trip.driver.car.model}} {{trip.driver.car.number}}</div>
+            <div class="child text__style__driver">{{trip.driver.phoneNumber}}</div>
+            <div class="child text__style__driver">{{trip.price}}$</div>
           </div>
         </form>
       </div>
@@ -85,10 +81,10 @@
       <!--END-->
       <div *ngIf="endFrameShow" class="request-form">
         <form method="post">
-          <div>{{endFrameTitle}}</div>
+          <div class="header__title">{{endFrameTitle}}</div>
           <div class="child">Please set grade:</div>
           <div class="child">
-            <div class="row">
+            <div class="row row_2">
               <div class="rating">
                 <input [(ngModel)]="starRating" type="radio" id="star5" name="rating" value="5"/><label for="star5"
                                                                                                         title="Rock">5
@@ -109,7 +105,10 @@
             </div>
           </div>
           <div class="child">
-            <button (click)="setGrade()">OK</button>
+
+            <button class="button__request__car"  (click)="setGrade()" type="submit">OK</button>
+
+<!--            <button (click)="setGrade()">OK</button>-->
           </div>
         </form>
       </div>

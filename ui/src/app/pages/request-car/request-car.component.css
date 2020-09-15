@@ -26,7 +26,7 @@ form {
 }
 
 .child {
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 input {
@@ -130,11 +130,6 @@ mat-button-toggle-group {
   width: 100%;
 }
 
-#req__ma__form {
-  font-size: 2.1rem;
-  color: #16191c;
-}
-
 .button__request__car{
   width: 100%;
   color: black;
@@ -163,4 +158,35 @@ mat-button-toggle-group {
 }
 .button__deny__trip:active{
   background-color: #eebece;
+}
+
+.row_2{
+  justify-content: center;
+}
+
+.header__title{
+  font-size: 1.7rem;
+  color: #16191c;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.text__style__driver{
+  color: black;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.avatar__req_car{
+  max-width: 100%;
+  border-radius: 50%!important;
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  margin: 20px 90px
+}
+
+.margin-top{
+  margin-top: 10px;
 }

@@ -5,6 +5,8 @@ import {Address} from '../../../models/info/address.model';
 import {StoreService} from '../../../services/store.service';
 import {Router} from '@angular/router';
 import {Trip} from '../../../models/trip.model';
+import {openSnackBar} from '../../open.snack.bar';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 declare let EventSource: any;
 
@@ -14,6 +16,7 @@ declare let EventSource: any;
   styleUrls: ['./request-car.component.css']
 })
 export class RequestCarComponent implements OnInit {
+  // TODO переделать в форму
   public fromCity: string;
   public fromStreet: string;
   public fromNumber: number;
@@ -36,12 +39,13 @@ export class RequestCarComponent implements OnInit {
   public disabled = false;
   public trip: Trip;
 
+  firstFrameTitle = 'REQUEST MAP FORM';
   statusFrameTitle: string;
   endFrameTitle: string;
   starRating: any;
   contentStatusFrame = false;
 
-  constructor(private router: Router, private dataService: DataService,
+  constructor(private _snackBar: MatSnackBar, private router: Router, private dataService: DataService,
               private clientService: ClientService, private storeService: StoreService) {
     this.dataService = dataService;
     this.storeService = storeService;
@@ -146,7 +150,7 @@ export class RequestCarComponent implements OnInit {
         }
       );
     } else {
-      alert('All fields must be filled');
+      openSnackBar(this._snackBar, 'All fields must be filled', 5);
     }
   }
 
@@ -176,6 +180,7 @@ export class RequestCarComponent implements OnInit {
         alert(error);
       }
     );
+    openSnackBar(this._snackBar, 'Оценка учтена', 5);
   }
 
   setRate(value: string) {
